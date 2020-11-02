@@ -1,6 +1,80 @@
 ﻿@page "/BuyBook"
-<h3>BuyBook</h3>
+@using SEP3_Tier1.Models
+
+
+<h3>Invoice</h3>
+
+<div class="container">
+    <table class="table table-bordered">
+        <tr>
+            <th>Name</th>
+            <td>@buyer.firstName @buyer.lastName</td>
+        </tr>
+        <tr>
+            <th>Address</th>
+            <td>@buyer.location</td>
+        </tr>
+        <tr>
+            <th>Phone Number</th>
+            <td>@buyer.phoneNumber</td>
+        </tr>
+        <tr>
+            <th>Email</th>
+            <td>@buyer.email</td>
+        </tr>
+    </table>
+</div>
+
+<hr class="dashed">
+
+<h3>Payment</h3>
+
+
+<EditForm Model="@card">
+    
+    <div class="form-group">
+        Card Number: <br/>
+        <InputNumber @bind-Value="card.CardNumber"/>
+    </div>
+
+    <div class="form-group">
+        Expiration Month: <br/>
+        <InputNumber @bind-Value="card.ExpirationMonth"/>
+    </div>
+
+    <div class="form-group">
+        Expiration Year: <br/>
+        <InputNumber @bind-Value="card.ExpirationYear"/>
+    </div>
+
+    <div class="form-group">
+        CVV: <br/>
+        <InputNumber @bind-Value="card.Cvv"/>
+    </div>
+
+</EditForm>
+
 
 @code {
+
     
+
+    Customer buyer = new Customer() {
+        username = "Markus",
+        password = "1234",
+        firstName = "Markus",
+        Id = 1,
+        lastName = "Lorensen",
+        location = "Horsens City",
+        phoneNumber = 60489027,
+        email = "markuslorensen@gmail.com"
+    };
+    
+    Card card = new Card();
+    
+    
+    
+    
+    
+
 }
