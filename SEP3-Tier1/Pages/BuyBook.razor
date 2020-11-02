@@ -30,7 +30,7 @@
 <h3>Payment</h3>
 
 
-<EditForm Model="@card">
+<EditForm Model="@card" OnValidSubmit="@ConfirmPurchase">
     
     <div class="form-group">
         Card Number: <br/>
@@ -51,14 +51,17 @@
         CVV: <br/>
         <InputNumber @bind-Value="card.Cvv"/>
     </div>
+    
+    <div class="action">
+        <button class="btn btn-primary" type="submit">Purchase</button>
+    </div>
 
 </EditForm>
 
 
 @code {
-
+    Card card = new Card();
     
-
     Customer buyer = new Customer() {
         username = "Markus",
         password = "1234",
@@ -70,9 +73,10 @@
         email = "markuslorensen@gmail.com"
     };
     
-    Card card = new Card();
-    
-    
+
+    private void ConfirmPurchase() {
+        Console.WriteLine("Purchase button pressed");
+    }
     
     
     
