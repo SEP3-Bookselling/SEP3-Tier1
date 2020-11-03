@@ -60,7 +60,9 @@
 
 
 @code {
-    Card card = new Card();
+    Card card = new Card() {
+        Type = "MasterCard"
+    };
     
     Customer buyer = new Customer() {
         username = "Markus",
@@ -75,7 +77,7 @@
     
 
     private void ConfirmPurchase() {
-        Console.WriteLine("Purchase button pressed");
+        Console.WriteLine(card.ToString());
     }
     
     

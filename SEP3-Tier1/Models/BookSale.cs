@@ -14,7 +14,7 @@
         
         public User seller { get; set; }
        
-        //Create method to autogenerate ID value 
+        //Create method to autogenerate ID value
         public int ID { get; }
 
         
