@@ -25,16 +25,17 @@
 @code{
 
 
-    private IList<string> allSales;
-    private IList<string> salesToShow;
+    private IList<string> allSales = new List<string>();
+    private IList<string> salesToShow = new List<string>();
 
     protected override async Task OnInitializedAsync() {
-        salesToShow = new List<string> {
-            "data",
-            "data2"
-        };
-       // allSales = await SaleService.GetSaleAsync();
-       // salesToShow = allSales;
+       // salesToShow = new List<string> {
+       //     "data",
+       //     "data2"
+       // };
+        
+       allSales = await SaleService.GetSaleAsync();
+       salesToShow = allSales;
     }
 
 }

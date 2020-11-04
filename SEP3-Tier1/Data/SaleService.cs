@@ -21,7 +21,7 @@ namespace SEP3_Tier1.Data
         
         
         public async Task<IList<string>> GetSaleAsync() {
-            Task<string> stringAsync = client.GetStringAsync(uri + "/sales");
+            Task<string> stringAsync = client.GetStringAsync(uri + "/data");
             string message = await stringAsync;
             List<string> result = JsonSerializer.Deserialize<List<string>>(message);
             return result;
