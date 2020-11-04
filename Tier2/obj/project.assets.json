@@ -8,31 +8,24 @@
     ".NETCoreApp,Version=v3.1": []
   },
   "packageFolders": {
-    "C:\\Users\\aans\\.nuget\\packages\\": {},
-    "C:\\Microsoft\\Xamarin\\NuGet": {}
+    "C:\\Users\\Sonny\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\aans\\RiderProjects\\Own projects\\SEP3-Tier1\\Tier2\\Tier2.csproj",
+      "projectUniqueName": "C:\\Users\\Sonny\\Dropbox\\SEP3\\SEP3-Tier1\\Tier2\\Tier2.csproj",
       "projectName": "Tier2",
-      "projectPath": "C:\\Users\\aans\\RiderProjects\\Own projects\\SEP3-Tier1\\Tier2\\Tier2.csproj",
-      "packagesPath": "C:\\Users\\aans\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\aans\\RiderProjects\\Own projects\\SEP3-Tier1\\Tier2\\obj\\",
+      "projectPath": "C:\\Users\\Sonny\\Dropbox\\SEP3\\SEP3-Tier1\\Tier2\\Tier2.csproj",
+      "packagesPath": "C:\\Users\\Sonny\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Sonny\\Dropbox\\SEP3\\SEP3-Tier1\\Tier2\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Microsoft\\Xamarin\\NuGet"
-      ],
       "configFilePaths": [
-        "C:\\Users\\aans\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+        "C:\\Users\\Sonny\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "netcoreapp3.1"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -66,7 +59,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.401\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.402\\RuntimeIdentifierGraph.json"
       }
     }
   }

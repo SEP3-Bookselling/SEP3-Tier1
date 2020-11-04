@@ -20,6 +20,7 @@ namespace SEP3_Tier1.Data
         
         public Task<IList<BookSale>> GetSaleAsync() {
             Task<string> stringAsync = client.GetStringAsync(uri + "/sales");
+            return null;
         }
 
         public Task AddSaleAsync() {

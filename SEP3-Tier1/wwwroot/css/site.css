@@ -180,9 +180,4 @@ app {
         /* Never collapse the sidebar for wide screens */
         display: block;
     }
-    
-    
-    hr.dashed {
-        border-top: 3px dashed #bbb;
-    }
 }
