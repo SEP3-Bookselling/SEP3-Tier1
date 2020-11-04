@@ -5,4 +5,8 @@
         <RootNamespace>SEP3_Tier1</RootNamespace>
     </PropertyGroup>
 
+    <ItemGroup>
+      <PackageReference Include="Syncfusion.Blazor" Version="18.3.0.44" />
+    </ItemGroup>
+
 </Project>

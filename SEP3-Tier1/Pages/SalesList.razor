@@ -1,5 +1,6 @@
 ﻿@page "/SalesList"
 @using SEP3_Tier1.Models
+@using Syncfusion.Blazor.Grids
 
 <h3>SalesList</h3>
 
@@ -34,14 +35,15 @@
         seller = new User(),
         subject = "stuff"
     };
-
+    
+    
     public List<BookSale> GridData { get; set; }
 
+    
     protected override void OnInitialized()
     {
-         GridData.Add(booksale);
-        
-        
+        GridData = new List<BookSale>();
+        GridData.Add(booksale);
     }
 
 
