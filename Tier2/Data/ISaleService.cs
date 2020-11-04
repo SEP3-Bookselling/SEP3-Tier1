@@ -6,7 +6,7 @@ namespace SEP3_Tier1.Data
 {
     public interface ISaleService
     {
-        Task<IList<string>> GetSaleAsync();
+        Task<IList<BookSale>> GetSaleAsync();
         Task AddSaleAsync(string sale);
         Task RemoveSaleAsync(int saleId);
         Task UpdateAsync(string sale);

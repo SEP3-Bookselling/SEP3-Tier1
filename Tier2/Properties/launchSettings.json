@@ -20,7 +20,7 @@
     "Tier2": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "",
+      "launchUrl": "sales",
       "applicationUrl": "https://localhost:5003;http://localhost:5004",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"

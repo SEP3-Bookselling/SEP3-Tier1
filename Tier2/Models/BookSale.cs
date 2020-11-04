@@ -2,7 +2,7 @@
 
 namespace SEP3_Tier1.Models
 {
-    public class BookSale
+    public class BookSale : IBookSale
     {
         [JsonPropertyName("title")]
         public string title { get; set; }

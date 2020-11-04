@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using FileData;
 using SEP3_Tier1.Models;
 
 namespace SEP3_Tier1.Data
@@ -11,21 +13,30 @@ namespace SEP3_Tier1.Data
     public class CloudSaleService : ISaleService
     {
         
-        private string SaleFile = "sales.json";
+        private string _saleFile = "sales.json";
         private IList<BookSale> _sales;
         private string uri = "https://localhost:5003";
         private HttpClient client;
+        private FileContext _fileContext = new FileContext();
 
         public CloudSaleService()
         {
             client = new HttpClient();
+
+            if (!File.Exists(_saleFile))
+            {
+                Seed();
+            }
         }
 
-        public async Task<IList<string>> GetSaleAsync() {
-            Task<string> stringAsync = client.GetStringAsync(uri + "/sales");
-            string message = await stringAsync;
-            List<string> result = JsonSerializer.Deserialize<List<string>>(message);
-            return result;
+        private void Seed()
+        {
+           
+        }
+
+        public async Task<IList<BookSale>> GetSaleAsync()
+        {
+            return _fileContext.BookSales;
         }
 
         public async Task AddSaleAsync(string sale) {
@@ -49,6 +60,6 @@ namespace SEP3_Tier1.Data
             await client.PatchAsync($"{uri}/sales/{sale}", content);
         }
         
-       
+        
     }
 }

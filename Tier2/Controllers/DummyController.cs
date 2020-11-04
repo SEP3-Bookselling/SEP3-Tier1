@@ -10,7 +10,7 @@ namespace Tier2.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class DummyController : ControllerBase
+    public class DummyController : Controller
     {
         private ISaleService _service;
         public DummyController(ISaleService service)
@@ -19,11 +19,11 @@ namespace Tier2.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IList<string>>> GetSaleAsync([FromQuery] string title)
+        public async Task<ActionResult<IList<BookSale>>> GetSaleAsync()
         {
             try
             {
-                IList<string> bookSales = await _service.GetSaleAsync();
+                IList<BookSale> bookSales = await _service.GetSaleAsync();
                 return Ok(bookSales);
             }
             catch (Exception e)
