@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.IO;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
@@ -16,14 +15,15 @@ namespace SEP3_Tier1.Data
 
 
         public SaleService() {
-          client = new HttpClient();
+            client = new HttpClient();
         }
         
         
-        public async Task<string> GetSaleAsync() {
+        
+        public async Task<IList<string>> GetSaleAsync() {
             Task<string> stringAsync = client.GetStringAsync(uri + "/sales");
             string message = await stringAsync;
-            string result = JsonSerializer.Deserialize<string>(message);
+            List<string> result = JsonSerializer.Deserialize<List<string>>(message);
             return result;
         }
 
@@ -47,6 +47,5 @@ namespace SEP3_Tier1.Data
 
             await client.PatchAsync($"{uri}/sales/{sale}", content);
         }
-      
     }
 }

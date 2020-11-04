@@ -1,0 +1,40 @@
+﻿@page "/SalesList"
+@using SEP3_Tier1.Models
+@using SEP3_Tier1.Data
+@inject ISaleService SaleService
+
+<h3>SalesList</h3>
+
+<div class="container">
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>Data</th>
+        </tr> 
+        </thead>
+        <tbody>
+        @foreach (var item in salesToShow) {
+            <tr>
+                <td>@item</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>
+
+@code{
+
+
+    private IList<string> allSales;
+    private IList<string> salesToShow;
+
+    protected override async Task OnInitializedAsync() {
+        salesToShow = new List<string> {
+            "data",
+            "data2"
+        };
+       // allSales = await SaleService.GetSaleAsync();
+       // salesToShow = allSales;
+    }
+
+}

@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using SEP3_Tier1.Data;
 
 namespace SEP3_Tier1
 {
@@ -25,6 +26,7 @@ namespace SEP3_Tier1
         public void ConfigureServices(IServiceCollection services) {
             services.AddRazorPages();
             services.AddServerSideBlazor();
+            services.AddSingleton<ISaleService, SaleService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
