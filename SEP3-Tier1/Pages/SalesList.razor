@@ -9,7 +9,7 @@
     <table class="table table-bordered">
         <thead>
         <tr>
-            <th>String</th>
+            <th>Data</th>
         </tr> 
         </thead>
         <tbody>
@@ -29,8 +29,12 @@
     private IList<string> salesToShow;
 
     protected override async Task OnInitializedAsync() {
-        allSales = await SaleService.GetSaleAsync();
-        salesToShow = allSales;
+        salesToShow = new List<string> {
+            "data",
+            "data2"
+        };
+       // allSales = await SaleService.GetSaleAsync();
+       // salesToShow = allSales;
     }
 
 }
