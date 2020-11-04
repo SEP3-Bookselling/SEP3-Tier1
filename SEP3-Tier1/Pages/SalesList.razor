@@ -1,50 +1,36 @@
 ﻿@page "/SalesList"
 @using SEP3_Tier1.Models
-@using Syncfusion.Blazor.Grids
+@using SEP3_Tier1.Data
+@inject ISaleService SaleService
 
 <h3>SalesList</h3>
 
-<div class="col-lg-12 control-section">
-    <div class="content-wrapper">
-        <div class="row">
-            <SfGrid DataSource="@GridData" AllowPaging="true">
-                <GridPageSettings PageCount="5" PageSizes="true"></GridPageSettings>
-                <GridColumns>
-                    <GridColumn Field=@nameof(booksale.title) HeaderText="Title" TextAlign="TextAlign.Right"  Width="120"></GridColumn>
-                    @* <GridColumn Field=@nameof(OrdersDetails.CustomerID) HeaderText="Customer Name" Width="150"></GridColumn> *@
-                    @* <GridColumn Field=@nameof(OrdersDetails.OrderDate) HeaderText="Order Date" Format="d" Type="ColumnType.Date" TextAlign="TextAlign.Right"  Width="130"></GridColumn> *@
-                    @* <GridColumn Field=@nameof(OrdersDetails.Freight) HeaderText="Freight" Format="C2" TextAlign="TextAlign.Right"  Width="120"></GridColumn>                    *@
-                    @* <GridColumn Field=@nameof(OrdersDetails.ShipCountry) HeaderText="Ship Country" Width="150"></GridColumn> *@
-                </GridColumns>
-            </SfGrid>
-        </div>
-    </div>
+<div class="container">
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>String</th>
+        </tr> 
+        </thead>
+        <tbody>
+        @foreach (var item in salesToShow) {
+            <tr>
+                <td>@item</td>
+            </tr>
+        }
+        </tbody>
+    </table>
 </div>
 
 @code{
 
-    BookSale booksale = new BookSale()
-    {
-        title = "The Book",
-        author = "Markus",
-        condition = "Great",
-        edition = "1",
-        hardCopy = true,
-        image = "stuff",
-        price = 31,
-        seller = new User(),
-        subject = "stuff"
-    };
-    
-    
-    public List<BookSale> GridData { get; set; }
 
-    
-    protected override void OnInitialized()
-    {
-        GridData = new List<BookSale>();
-        GridData.Add(booksale);
+    private IList<string> allSales;
+    private IList<string> salesToShow;
+
+    protected override async Task OnInitializedAsync() {
+        allSales = await SaleService.GetSaleAsync();
+        salesToShow = allSales;
     }
-
 
 }
