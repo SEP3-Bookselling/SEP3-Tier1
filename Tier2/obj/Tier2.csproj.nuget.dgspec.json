@@ -1,23 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\magic\\Desktop\\Mappe 1\\VIA University\\3 Semester\\SEP3\\SEP3-Tier1\\Tier2\\Tier2.csproj": {}
+    "C:\\Users\\Sonny\\Dropbox\\SEP3\\SEP3-Tier1\\Tier2\\Tier2.csproj": {}
   },
   "projects": {
-    "C:\\Users\\magic\\Desktop\\Mappe 1\\VIA University\\3 Semester\\SEP3\\SEP3-Tier1\\Tier2\\Tier2.csproj": {
+    "C:\\Users\\Sonny\\Dropbox\\SEP3\\SEP3-Tier1\\Tier2\\Tier2.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\magic\\Desktop\\Mappe 1\\VIA University\\3 Semester\\SEP3\\SEP3-Tier1\\Tier2\\Tier2.csproj",
+        "projectUniqueName": "C:\\Users\\Sonny\\Dropbox\\SEP3\\SEP3-Tier1\\Tier2\\Tier2.csproj",
         "projectName": "Tier2",
-        "projectPath": "C:\\Users\\magic\\Desktop\\Mappe 1\\VIA University\\3 Semester\\SEP3\\SEP3-Tier1\\Tier2\\Tier2.csproj",
-        "packagesPath": "C:\\Users\\magic\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\magic\\Desktop\\Mappe 1\\VIA University\\3 Semester\\SEP3\\SEP3-Tier1\\Tier2\\obj\\",
+        "projectPath": "C:\\Users\\Sonny\\Dropbox\\SEP3\\SEP3-Tier1\\Tier2\\Tier2.csproj",
+        "packagesPath": "C:\\Users\\Sonny\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Sonny\\Dropbox\\SEP3\\SEP3-Tier1\\Tier2\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-        ],
         "configFilePaths": [
-          "C:\\Users\\magic\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\Sonny\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.1"
@@ -56,7 +53,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.401\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.402\\RuntimeIdentifierGraph.json"
         }
       }
     }
