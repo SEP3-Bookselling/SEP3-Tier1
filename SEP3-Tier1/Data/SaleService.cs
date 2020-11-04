@@ -31,7 +31,7 @@ namespace SEP3_Tier1.Data
             string saleAsJson = JsonSerializer.Serialize(sale);
             
             HttpContent content = new StringContent(saleAsJson, Encoding.UTF8, "application/json");
-            await client.PostAsync(uri + )
+            await client.PostAsync(uri + "/sales", content);
         }
 
         public async Task RemoveSaleAsync(string sale) {
