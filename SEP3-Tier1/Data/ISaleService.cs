@@ -9,7 +9,7 @@ namespace SEP3_Tier1.Data
         //Change to correct return types
         Task<string> GetSaleAsync();
         Task AddSaleAsync(string sale);
-        Task RemoveSaleAsync(string sale);
+        Task RemoveSaleAsync(int saleId);
         Task UpdateAsync(string sale);
     }
 }
