@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using SEP3_Tier1.Data;
 
 namespace Tier2
 {
@@ -26,6 +27,7 @@ namespace Tier2
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddSingleton<ISaleService, CloudSaleService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

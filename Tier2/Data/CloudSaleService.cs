@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.IO;
+using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
@@ -8,22 +8,23 @@ using SEP3_Tier1.Models;
 
 namespace SEP3_Tier1.Data
 {
-    public class SaleService : ISaleService
+    public class CloudSaleService : ISaleService
     {
-
+        
+        private string SaleFile = "sales.json";
+        private IList<BookSale> _sales;
         private string uri = "https://localhost:5003";
         private HttpClient client;
 
-
-        public SaleService() {
-          client = new HttpClient();
+        public CloudSaleService()
+        {
+            client = new HttpClient();
         }
-        
-        
-        public async Task<string> GetSaleAsync() {
+
+        public async Task<IList<string>> GetSaleAsync() {
             Task<string> stringAsync = client.GetStringAsync(uri + "/sales");
             string message = await stringAsync;
-            string result = JsonSerializer.Deserialize<string>(message);
+            List<string> result = JsonSerializer.Deserialize<List<string>>(message);
             return result;
         }
 
@@ -47,6 +48,7 @@ namespace SEP3_Tier1.Data
 
             await client.PatchAsync($"{uri}/sales/{sale}", content);
         }
-      
+        
+       
     }
 }
