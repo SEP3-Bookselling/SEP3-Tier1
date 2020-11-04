@@ -1,19 +1,18 @@
 ﻿{
   "version": "1.0.0",
   "restore": {
-    "projectUniqueName": "C:\\Users\\aans\\RiderProjects\\Own projects\\SEP3-Tier1\\Tier2\\Tier2.csproj",
+    "projectUniqueName": "C:\\Users\\magic\\Desktop\\Mappe 1\\VIA University\\3 Semester\\SEP3\\SEP3-Tier1\\Tier2\\Tier2.csproj",
     "projectName": "Tier2",
-    "projectPath": "C:\\Users\\aans\\RiderProjects\\Own projects\\SEP3-Tier1\\Tier2\\Tier2.csproj",
-    "outputPath": "C:\\Users\\aans\\RiderProjects\\Own projects\\SEP3-Tier1\\Tier2\\obj\\",
+    "projectPath": "C:\\Users\\magic\\Desktop\\Mappe 1\\VIA University\\3 Semester\\SEP3\\SEP3-Tier1\\Tier2\\Tier2.csproj",
+    "outputPath": "C:\\Users\\magic\\Desktop\\Mappe 1\\VIA University\\3 Semester\\SEP3\\SEP3-Tier1\\Tier2\\obj\\",
     "projectStyle": "PackageReference",
     "fallbackFolders": [
-      "C:\\Microsoft\\Xamarin\\NuGet"
+      "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
     ],
     "originalTargetFrameworks": [
       "netcoreapp3.1"
     ],
     "sources": {
-      "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
       "https://api.nuget.org/v3/index.json": {}
     },
     "frameworks": {
