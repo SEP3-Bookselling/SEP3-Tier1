@@ -76,3 +76,5 @@ fabric.properties
 /SEP3-Tier1/bin/
 /.idea/
 /SEP3-Tier1/wwwroot/favicon.ico
+/Tier2/obj/
+/Tier2/bin/
