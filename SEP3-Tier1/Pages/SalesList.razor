@@ -29,14 +29,11 @@
     private IList<string> salesToShow = new List<string>();
 
     protected override async Task OnInitializedAsync() {
-       // salesToShow = new List<string> {
-       //     "data",
-       //     "data2"
-       // };
-        
-       string itemToShow = await SaleService.GetSaleAsync();
+        string itemToShow = await SaleService.GetSaleAsync();
+        Console.WriteLine(itemToShow);
         allSales.Add(itemToShow);
-       salesToShow = allSales;
+        Console.WriteLine(allSales);
+        salesToShow = allSales;
     }
 
 }
