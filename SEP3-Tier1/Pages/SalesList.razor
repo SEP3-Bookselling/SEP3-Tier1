@@ -34,7 +34,8 @@
        //     "data2"
        // };
         
-       allSales = await SaleService.GetSaleAsync();
+       string itemToShow = await SaleService.GetSaleAsync();
+        allSales.Add(itemToShow);
        salesToShow = allSales;
     }
 
