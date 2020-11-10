@@ -32,12 +32,12 @@ namespace SEP3_Tier1.Data
             
             HttpContent content = new StringContent(saleAsJson, Encoding.UTF8, "application/json");
             
-            await client.PostAsync(uri + "/sales", content);
+            await client.PostAsync(uri + "/data", content);
         }
 
         
         public async Task RemoveSaleAsync(int saleId) {
-            await client.DeleteAsync($"{uri}/sales/{saleId}");
+            await client.DeleteAsync($"{uri}/data/{saleId}");
         }
 
         public async Task UpdateAsync(string sale) {
@@ -45,7 +45,7 @@ namespace SEP3_Tier1.Data
             
             HttpContent content = new StringContent(saleAsJson, Encoding.UTF8, "application/json");
 
-            await client.PatchAsync($"{uri}/sales/{sale}", content);
+            await client.PatchAsync($"{uri}/data/{sale}", content);
         }
     }
 }
