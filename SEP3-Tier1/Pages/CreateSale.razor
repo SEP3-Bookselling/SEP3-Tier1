@@ -1,29 +1,39 @@
 ﻿@page "/CreateSale"
 @using SEP3_Tier1.Data
+@using Syncfusion.Blazor.Navigations
 @inject ISaleService SaleService
 
 <h3>CreateSale</h3>
 
-<EditForm Model="@item" OnValidSubmit="@SaveSaleToFile">
+<EditForm Model="@item">
     <div class="form-group">
         Item:
         <InputText @bind-Value="item"/>
     </div>
     
     <p class="action">
-        <button class="btn" type="submit">Add Item</button>
+        <button class="btn btn-primary" @onclick="SaveSaleToFile">
+            Add Item
+        </button>
     </p>
 
 </EditForm>
 
 @code {
 
-    private string item = new string("");
+    private string item;
 
 
-    private void SaveSaleToFile() {
-        SaleService.AddSaleAsync(item);
+    private async Task SaveSaleToFile() {
+        await SaleService.AddSaleAsync(item);
+        StateHasChanged();
         Console.WriteLine(item);
     }
+
+    protected override async Task OnInitializedAsync() {
+        item = "";
+    }
+    
+    
 
 }

@@ -33,6 +33,7 @@ namespace SEP3_Tier1.Data
             HttpContent content = new StringContent(saleAsJson, Encoding.UTF8, "application/json");
             
             await client.PostAsync(uri + "/data", content);
+
         }
 
         
