@@ -1,9 +1,20 @@
-﻿namespace SEP3_Tier1.Network
+﻿using SEP3_Tier1.Models;
+using SEP3_Tier1.Models.Users;
+
+namespace SEP3_Tier1.Network
 {
     public class Request
     {
         public object ob { get; set; }
         public RequestEnum RequestEnum { get; set; }
+        
+        public BookSale BookSale { get; set; }
+        public User User { get; set; }
+        public Card Card { get; set; }
+
+        // Prototype
         public string HelloWorld { get; set; }
+
+        
     }
 }
