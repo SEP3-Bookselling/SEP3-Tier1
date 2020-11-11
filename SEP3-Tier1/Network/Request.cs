@@ -5,8 +5,7 @@ namespace SEP3_Tier1.Network
 {
     public class Request
     {
-        public object ob { get; set; }
-        public RequestEnum RequestEnum { get; set; }
+        public EnumRequest RequestEnum { get; set; }
         
         public BookSale BookSale { get; set; }
         public User User { get; set; }

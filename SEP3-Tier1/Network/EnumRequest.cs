@@ -3,7 +3,7 @@
 namespace SEP3_Tier1.Network
 {
     [Newtonsoft.Json.JsonConverter(typeof(JsonStringEnumConverter))]
-    public enum RequestEnum
+    public enum EnumRequest
     {
         // Creating new objects in database
         CreateBookSale,
