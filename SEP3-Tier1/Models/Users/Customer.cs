@@ -1,7 +1,6 @@
 ﻿using System.Text.Json.Serialization;
-using Microsoft.AspNetCore.Components;
 
-namespace SEP3_Tier1.Models
+namespace SEP3_Tier1.Models.Users
 {
     public class Customer : User
     {

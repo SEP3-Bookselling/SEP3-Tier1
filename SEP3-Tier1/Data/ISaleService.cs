@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using SEP3_Tier1.Models;
+﻿using System.Threading.Tasks;
 
 namespace SEP3_Tier1.Data
 {
