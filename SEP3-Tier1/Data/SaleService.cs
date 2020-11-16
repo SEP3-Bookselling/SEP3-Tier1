@@ -1,7 +1,10 @@
-﻿using System.Net.Http;
+﻿using System;
+using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using SEP3_Tier1.Models;
+using SEP3_Tier1.Network;
 
 namespace SEP3_Tier1.Data
 {
@@ -18,15 +21,19 @@ namespace SEP3_Tier1.Data
         
         
         
-        public async Task<string> GetSaleAsync() {
+        public async Task<BookSale> GetSaleAsync() {
             Task<string> stringAsync = client.GetStringAsync(uri + "/data");
             string message = await stringAsync;
-            string result = JsonSerializer.Deserialize<string>(message);
+            BookSale result = JsonSerializer.Deserialize<BookSale>(message);
             return result;
         }
 
-        public async Task AddSaleAsync(string sale) {
-            string saleAsJson = JsonSerializer.Serialize(sale);
+        public async Task AddSaleAsync(BookSale sale) {
+            Console.WriteLine(sale.ToString() + "At addSaleAsync");
+            string saleAsJson = JsonSerializer.Serialize(new Request {
+                BookSale = sale,
+                RequestEnum = EnumRequest.CreateBookSale
+            });
             
             HttpContent content = new StringContent(saleAsJson, Encoding.UTF8, "application/json");
             
@@ -39,7 +46,7 @@ namespace SEP3_Tier1.Data
             await client.DeleteAsync($"{uri}/data/{saleId}");
         }
 
-        public async Task UpdateAsync(string sale) {
+        public async Task UpdateAsync(BookSale sale) {
             string saleAsJson = JsonSerializer.Serialize(sale);
             
             HttpContent content = new StringContent(saleAsJson, Encoding.UTF8, "application/json");
