@@ -63,11 +63,11 @@ namespace SEP3_Tier1.Models
                    + "\"condition\":" + "\"" + condition + "\","
                    + "\"subject\":" + "\"" + subject + "\","
                    + "\"image\":" + "\"" + image + "\","
-                   + "\"price\":" + "" + price + ","
-                   + "\"hardCopy\":" + "\"" + hardCopy + "\","
+                   + "\"price\":" + price + ","
+                   + "\"hardCopy\":" + hardCopy + ","
                    + "\"customerID\":" + customerId + ","
-                   + "\"available\":" + "\"" + available + "\","
-                   + "\"id\":" + "" + id
+                   + "\"available\":" + available + ","
+                   + "\"id\":" + id
                    + "}";
 
         }
