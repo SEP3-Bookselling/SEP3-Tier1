@@ -1,5 +1,6 @@
 ﻿@page "/SalesList"
 @using SEP3_Tier1.Data
+@using SEP3_Tier1.Models
 @inject ISaleService SaleService
 
 <h3>SalesList</h3>
@@ -24,11 +25,11 @@
 @code{
 
 
-    private IList<string> allSales = new List<string>();
-    private IList<string> salesToShow = new List<string>();
+    private IList<BookSale> allSales = new List<BookSale>();
+    private IList<BookSale> salesToShow = new List<BookSale>();
 
     protected override async Task OnInitializedAsync() {
-        string itemToShow = await SaleService.GetSaleAsync();
+        BookSale itemToShow = await SaleService.GetSaleAsync();
         Console.WriteLine(itemToShow);
         allSales.Add(itemToShow);
         Console.WriteLine(allSales);

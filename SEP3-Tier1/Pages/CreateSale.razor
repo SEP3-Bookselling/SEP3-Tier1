@@ -1,18 +1,57 @@
 ﻿@page "/CreateSale"
 @using SEP3_Tier1.Data
+@using SEP3_Tier1.Models
 @inject ISaleService SaleService
 
 <h3>CreateSale</h3>
 
-<EditForm Model="@item">
+<EditForm Model="@bookSale">
+    <DataAnnotationsValidator/>
+    
+    
     <div class="form-group">
-        Item:
-        <InputText @bind-Value="item"/>
+        Book Title: <br/>
+        <InputText @bind-Value="bookSale.title"/>
+        <ValidationMessage For="() => bookSale.title"/>
     </div>
+    <div>
+        Author: <br/>
+        <InputText @bind-Value="bookSale.author"/>
+        <ValidationMessage For="() => bookSale.author"/>
+    </div>
+    <div class="form-group">
+        Condition: <br/>
+        <InputSelect @bind-Value="bookSale.condition">
+            @foreach (var condition in conditions) {
+                <option>@condition</option>
+            }
+        </InputSelect>
+        <ValidationMessage For="() => bookSale.condition"/>
+    </div>
+    <div>
+        Subject: <br/>
+        <InputText @bind-Value="bookSale.subject"/>
+        <ValidationMessage For="() => bookSale.subject"/>
+    </div>
+    <div>
+        Image: <br/>
+        <InputText @bind-Value="bookSale.image"/>
+        <ValidationMessage For="() => bookSale.image"/>
+    </div>
+    <div>
+        <input type="checkbox" @onchange="eventArgs => { CheckBoxClicked(eventArgs.Value); }"/>Hard Copy<br/>
+    </div>
+    <div>
+        Price: <br/>
+        <InputNumber @bind-Value="bookSale.price"/>
+        <ValidationMessage For="() => bookSale.price"/>
+    </div>
+
     
     <p class="action">
-        <button class="btn btn-primary" @onclick="SaveSaleToFile">
-            Add Item
+        <br/>
+        <button class="btn btn-primary" @onclick="SaveSale">
+            Create Sale
         </button>
     </p>
 
@@ -20,19 +59,35 @@
 
 @code {
 
-    private string item;
+    private BookSale bookSale;
+    private IList<string> conditions;
+
+    private void CheckBoxClicked(object checkedValue) {
+        if ((bool) checkedValue) {
+            bookSale.hardCopy = true;
+        }
+        else
+            bookSale.hardCopy = false;
+    }
 
 
-    private async Task SaveSaleToFile() {
-        await SaleService.AddSaleAsync(item);
-        StateHasChanged();
-        Console.WriteLine(item);
+    private async Task SaveSale() {
+        await SaleService.AddSaleAsync(bookSale);
+        Console.WriteLine(bookSale.ToString());
     }
 
     protected override async Task OnInitializedAsync() {
-        item = "";
+        bookSale = new BookSale();
+        conditions = new List<string>() {
+            "",
+            "Mint",
+            "Good",
+            "Used",
+            "Bad"
+        };
     }
     
+    // Todo figure out how to send images through tiers
     
-
+    
 }

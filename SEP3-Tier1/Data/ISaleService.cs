@@ -1,13 +1,14 @@
 ﻿using System.Threading.Tasks;
+using SEP3_Tier1.Models;
 
 namespace SEP3_Tier1.Data
 {
     public interface ISaleService
     {
         //Change to correct return types
-        Task<string> GetSaleAsync();
-        Task AddSaleAsync(string sale);
+        Task<BookSale> GetSaleAsync();
+        Task AddSaleAsync(BookSale sale);
         Task RemoveSaleAsync(int saleId);
-        Task UpdateAsync(string sale);
+        Task UpdateAsync(BookSale sale);
     }
 }
