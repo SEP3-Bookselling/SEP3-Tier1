@@ -14,7 +14,7 @@ namespace SEP3_Tier1.Models.Users
         public string password { get; set; }
         
         [JsonPropertyName("id")]
-        public int Id { get; set; }
+        public int? Id { get; set; }
 
     }
 }

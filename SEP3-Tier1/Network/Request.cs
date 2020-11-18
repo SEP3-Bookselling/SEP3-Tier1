@@ -13,7 +13,6 @@ namespace SEP3_Tier1.Network
 
         // Prototype
         public string HelloWorld { get; set; }
-
-        
+        public Customer Customer { get; set; }
     }
 }
