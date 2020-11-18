@@ -27,6 +27,8 @@
 
     private IList<BookSale> allSales = new List<BookSale>();
     private IList<BookSale> salesToShow = new List<BookSale>();
+    
+    
 
     protected override async Task OnInitializedAsync() {
         BookSale itemToShow = await SaleService.GetSaleAsync();
@@ -34,6 +36,7 @@
         allSales.Add(itemToShow);
         Console.WriteLine(allSales);
         salesToShow = allSales;
+        Console.WriteLine(salesToShow + "\n" + allSales);
     }
 
 }
