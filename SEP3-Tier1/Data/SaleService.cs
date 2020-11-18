@@ -11,16 +11,13 @@ namespace SEP3_Tier1.Data
 {
     public class SaleService : ISaleService
     {
-
         private string uri = "https://localhost:5010";
         private HttpClient client;
-
-
+        
         public SaleService() {
             client = new HttpClient();
         }
-
-
+        
         public async Task<List<BookSale>> GetAllBookSales()
         {
             Task<string> stringAsync = client.GetStringAsync(uri + "/Data");
