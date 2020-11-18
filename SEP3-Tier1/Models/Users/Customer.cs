@@ -5,8 +5,8 @@ namespace SEP3_Tier1.Models.Users
     public class Customer : User
     {
         
-        [JsonPropertyName("location")]
-        public string location { get; set; }
+        [JsonPropertyName("address")]
+        public string address { get; set; }
         
         [JsonPropertyName("firstName")]
         public string firstName { get; set; }
