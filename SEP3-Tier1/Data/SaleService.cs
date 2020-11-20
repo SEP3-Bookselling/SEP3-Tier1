@@ -13,7 +13,7 @@ namespace SEP3_Tier1.Data
     {
 
         private string uri = "https://localhost:5010";
-        private HttpClient client;
+        private readonly HttpClient client;
 
 
         public SaleService() {
@@ -21,7 +21,7 @@ namespace SEP3_Tier1.Data
         }
 
 
-        public async Task<List<BookSale>> GetAllBookSales()
+        public async Task<IList<BookSale>> GetAllBookSales()
         {
             Task<string> stringAsync = client.GetStringAsync(uri + "/Data");
             string message = await stringAsync;

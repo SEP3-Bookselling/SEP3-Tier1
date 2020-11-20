@@ -7,7 +7,7 @@ namespace SEP3_Tier1.Data
     public interface ISaleService
     {
         //Change to correct return types
-        Task<List<BookSale>> GetAllBookSales();
+        Task<IList<BookSale>> GetAllBookSales();
         Task<BookSale> GetSaleAsync();
         Task AddSaleAsync(BookSale sale);
         Task RemoveSaleAsync(int saleId);

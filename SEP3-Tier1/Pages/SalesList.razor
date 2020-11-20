@@ -6,37 +6,74 @@
 <h3>SalesList</h3>
 
 <div class="container">
-    <table class="table table-bordered">
-        <thead>
-        <tr>
-            <th>Data</th>
-        </tr> 
-        </thead>
-        <tbody>
-        @foreach (var item in salesToShow) {
+    
+    @if (salesToShow == null)
+    {
+        <p>
+            <em>Loading...</em>
+        </p>
+    }
+    else
+    {
+        <table class="table table-bordered">
+            <thead>
             <tr>
-                <td>@item</td>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Edition</th>
+                <th>Condition</th>
+                <th>Subject</th>
+                <th>Image</th>
+                <th>Price</th>
+                <th>HardCopy</th>
+                <th>Username</th>
+                <th>Id</th>
+
             </tr>
-        }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+            @foreach (BookSale item in salesToShow)
+            {
+                <tr>
+                    <td>@item.title</td>
+                    <td>@item.author</td>
+                    <td>@item.edition</td>
+                    <td>@item.condition</td>
+                    <td>@item.subject</td>
+                    <td>@item.image</td>
+                    <td>@item.price</td>
+                    <td>@item.hardCopy</td>
+                    <td>@item.username</td>
+                    <td>@item.bookSaleID</td>
+                </tr>
+            }
+            </tbody>
+        </table>}
 </div>
 
 @code{
 
 
-    private IList<BookSale> allSales = new List<BookSale>();
-    private IList<BookSale> salesToShow = new List<BookSale>();
+    private IList<BookSale> allSales;
+    private IList<BookSale> salesToShow;
     
     
 
-    protected override async Task OnInitializedAsync() {
-        BookSale itemToShow = await SaleService.GetSaleAsync();
+    /*protected override async Task OnInitializedAsync() {
+        IList<BookSale> itemToShow = await SaleService.GetAllBookSales();
         Console.WriteLine(itemToShow);
-        allSales.Add(itemToShow);
+        //allSales.Add(itemToShow);
         Console.WriteLine(allSales);
         salesToShow = allSales;
         Console.WriteLine(salesToShow + "\n" + allSales);
+    }*/
+
+    protected override async Task OnInitializedAsync()
+    {
+        //Console.WriteLine(SaleService.GetAllBookSales() + "\t ooga booga");
+        allSales = await SaleService.GetAllBookSales();
+        salesToShow = allSales;
+
     }
 
 }

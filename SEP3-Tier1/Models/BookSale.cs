@@ -38,15 +38,12 @@ namespace SEP3_Tier1.Models
         [JsonPropertyName("hardCopy")]
         public bool hardCopy { get; set; }
         
-        [JsonPropertyName("isAvailable")]
-        public bool available { get; set; }
+        [JsonPropertyName("username")]
+        public string username { get; set; }
         
         //Create method to autogenerate ID value
-        [JsonPropertyName("customerId")]
-        public int customerId { get; set; }
-        
-        [JsonPropertyName("id")]
-        public int id { get; set; }
+        [JsonPropertyName("bookSaleID")]
+        public int bookSaleID { get; set; }
         
         
         
@@ -65,11 +62,9 @@ namespace SEP3_Tier1.Models
                    + "\"image\":" + "\"" + image + "\","
                    + "\"price\":" + price + ","
                    + "\"hardCopy\":" + hardCopy + ","
-                   + "\"customerID\":" + customerId + ","
-                   + "\"available\":" + available + ","
-                   + "\"id\":" + id
+                   + "\"username\":" + "\"" + username + "\"" +","
+                   + "\"id\":" + bookSaleID
                    + "}";
-
         }
 
 
