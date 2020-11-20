@@ -13,7 +13,7 @@
 <div class="form-group"><input type="text" placeholder="Lastname" @bind-value="customer.lastName"></div>
 <div class="form-group"><input type="text" placeholder="Email" @bind-value="customer.email"></div>
 <div class="form-group"><input type="text" placeholder="Phonenumber" @bind-value="customer.phoneNumber"></div>
-<button class="btn btn-outline-dark" type="submit"/>
+    <button class="btn btn-outline-dark" type="submit">Submit</button>
 </EditForm>
 
 @code {
@@ -31,7 +31,7 @@
 
     public void SubmitCustomer()
     {
-        Console.WriteLine("Virker");
+        Console.WriteLine(customer.postcode);
         NavigationManager.NavigateTo("/");
     }
 
