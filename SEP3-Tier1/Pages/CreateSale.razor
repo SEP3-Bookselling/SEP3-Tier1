@@ -5,57 +5,57 @@
 
 <h3>CreateSale</h3>
 
-<EditForm Model="@bookSale">
+<EditForm Model="@bookSaleNoId">
     <DataAnnotationsValidator/>
 
 
     <div class="form-group">
         Book Title: <br/>
-        <InputText @bind-Value="bookSale.title"/>
-        <ValidationMessage For="() => bookSale.title"/>
+        <InputText @bind-Value="bookSaleNoId.title"/>
+        <ValidationMessage For="() => bookSaleNoId.title"/>
     </div>
     <div>
         Author: <br/>
-        <InputText @bind-Value="bookSale.author"/>
-        <ValidationMessage For="() => bookSale.author"/>
+        <InputText @bind-Value="bookSaleNoId.author"/>
+        <ValidationMessage For="() => bookSaleNoId.author"/>
     </div>
     <div>
-        Author: <br/>
-        <InputText @bind-Value="bookSale.author"/>
-        <ValidationMessage For="() => bookSale.author"/>
+        Edition: <br/>
+        <InputText @bind-Value="bookSaleNoId.edition"/>
+        <ValidationMessage For="() => bookSaleNoId.edition"/>
     </div>
     <div class="form-group">
         Condition: <br/>
-        <InputSelect @bind-Value="bookSale.condition">
+        <InputSelect @bind-Value="bookSaleNoId.condition">
             @foreach (var condition in conditions)
             {
                 <option>@condition</option>
             }
         </InputSelect>
-        <ValidationMessage For="() => bookSale.condition"/>
+        <ValidationMessage For="() => bookSaleNoId.condition"/>
     </div>
     <div>
         Subject: <br/>
-        <InputText @bind-Value="bookSale.subject"/>
-        <ValidationMessage For="() => bookSale.subject"/>
+        <InputText @bind-Value="bookSaleNoId.subject"/>
+        <ValidationMessage For="() => bookSaleNoId.subject"/>
     </div>
     <div>
         Image: <br/>
-        <InputText @bind-Value="bookSale.image"/>
-        <ValidationMessage For="() => bookSale.image"/>
+        <InputText @bind-Value="bookSaleNoId.image"/>
+        <ValidationMessage For="() => bookSaleNoId.image"/>
     </div>
     <div>
         <input type="checkbox" @onchange="eventArgs => { CheckBoxClicked(eventArgs.Value); }"/>Hard Copy<br/>
     </div>
         <div>
             Description: <br/>
-            <InputTextArea @bind-Value="bookSale.description"/>
-            <ValidationMessage For="() => bookSale.description"/>
+            <InputTextArea @bind-Value="bookSaleNoId.description"/>
+            <ValidationMessage For="() => bookSaleNoId.description"/>
         </div>
     <div>
         Price: <br/>
-        <InputNumber @bind-Value="bookSale.price"/>
-        <ValidationMessage For="() => bookSale.price"/>
+        <InputNumber @bind-Value="bookSaleNoId.price"/>
+        <ValidationMessage For="() => bookSaleNoId.price"/>
     </div>
 
 
@@ -72,29 +72,29 @@
 
     //Branch Created?
 
-    private BookSale bookSale;
+    private BookSaleNoID bookSaleNoId;
     private IList<string> conditions;
 
     private void CheckBoxClicked(object checkedValue)
     {
         if ((bool) checkedValue)
         {
-            bookSale.hardCopy = true;
+            bookSaleNoId.hardCopy = true;
         }
         else
-            bookSale.hardCopy = false;
+            bookSaleNoId.hardCopy = false;
     }
 
 
     private async Task SaveSale()
     {
-        await SaleService.AddSaleAsync(bookSale);
-        Console.WriteLine(bookSale.ToString());
+        await SaleService.CreateBookSale(bookSaleNoId);
+        Console.WriteLine(bookSaleNoId.ToString());
     }
 
     protected override async Task OnInitializedAsync()
     {
-        bookSale = new BookSale();
+        bookSaleNoId = new BookSaleNoID(){username = "Magic Fish"};
         conditions = new List<string>()
         {
             "",
@@ -103,6 +103,7 @@
             "Used",
             "Bad"
         };
+        
     }
 
     // Todo figure out how to send images through tiers

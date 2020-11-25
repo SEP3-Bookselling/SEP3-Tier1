@@ -23,29 +23,29 @@ namespace SEP3_Tier1.Data
 
         public async Task<IList<BookSale>> GetAllBookSales()
         {
-            Task<string> stringAsync = client.GetStringAsync(uri + "/Data");
+            Task<string> stringAsync = client.GetStringAsync(uri + "/Sales");
             string message = await stringAsync;
             List<BookSale> result = JsonSerializer.Deserialize<List<BookSale>>(message);
             return result;
         }
 
         public async Task<BookSale> GetSaleAsync() {
-            Task<string> stringAsync = client.GetStringAsync(uri + "/data");
+            Task<string> stringAsync = client.GetStringAsync(uri + "/Sales");
             string message = await stringAsync;
             BookSale result = JsonSerializer.Deserialize<BookSale>(message);
             return result;
         }
 
-        public async Task AddSaleAsync(BookSale sale) {
-            Console.WriteLine(sale.ToString() + "At addSaleAsync");
-            string saleAsJson = JsonSerializer.Serialize(new Request {
-                BookSale = sale,
-                RequestEnum = EnumRequest.CreateBookSale
-            });
+        public async Task CreateBookSale(BookSaleNoID bookSaleNoId) {
+            Console.WriteLine("I AM IN THE HOLE FATHER");
+            string bookSaleNoIDAsJson = JsonSerializer.Serialize(bookSaleNoId);
             
-            HttpContent content = new StringContent(saleAsJson, Encoding.UTF8, "application/json");
+            HttpContent content = new StringContent(bookSaleNoIDAsJson,
+                Encoding.UTF8,
+                "application/json");
             
-            await client.PostAsync(uri + "/data", content);
+            HttpResponseMessage responseMessage = await client.PostAsync(uri + "/Sales", content);
+            Console.WriteLine(responseMessage.ToString() + "\t <-- RIGHT EHRE");
 
         }
 

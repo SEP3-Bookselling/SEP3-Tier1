@@ -6,7 +6,7 @@ namespace SEP3_Tier1.Network
     public enum EnumRequest
     {
         // Creating new objects in database
-        CreateBookSale,
+        CreateBookSaleNoID,
         CreateUser,
         
         // Getting from database
