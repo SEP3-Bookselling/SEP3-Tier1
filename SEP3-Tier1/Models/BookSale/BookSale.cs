@@ -46,7 +46,7 @@ namespace SEP3_Tier1.Models
         
         //Create method to autogenerate ID value
         [JsonPropertyName("bookSaleID")]
-        public int? bookSaleID { get; set; }
+        public int bookSaleID { get; set; }
         
         
         
