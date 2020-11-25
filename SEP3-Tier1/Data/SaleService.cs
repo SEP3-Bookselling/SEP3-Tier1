@@ -23,14 +23,14 @@ namespace SEP3_Tier1.Data
 
         public async Task<IList<BookSale>> GetAllBookSales()
         {
-            Task<string> stringAsync = client.GetStringAsync(uri + "/Data");
+            Task<string> stringAsync = client.GetStringAsync(uri + "/sales");
             string message = await stringAsync;
             List<BookSale> result = JsonSerializer.Deserialize<List<BookSale>>(message);
             return result;
         }
 
         public async Task<BookSale> GetSaleAsync() {
-            Task<string> stringAsync = client.GetStringAsync(uri + "/data");
+            Task<string> stringAsync = client.GetStringAsync(uri + "/sales");
             string message = await stringAsync;
             BookSale result = JsonSerializer.Deserialize<BookSale>(message);
             return result;
@@ -45,13 +45,14 @@ namespace SEP3_Tier1.Data
             
             HttpContent content = new StringContent(saleAsJson, Encoding.UTF8, "application/json");
             
-            await client.PostAsync(uri + "/data", content);
+            await client.PostAsync(uri + "/sales", content);
 
         }
 
         
         public async Task RemoveSaleAsync(int saleId) {
-            await client.DeleteAsync($"{uri}/data/{saleId}");
+            await client.DeleteAsync($"{uri}/sales/{saleId}");
+            Console.WriteLine("Removed");
         }
 
         public async Task UpdateAsync(BookSale sale) {
