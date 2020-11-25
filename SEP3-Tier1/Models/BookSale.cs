@@ -38,6 +38,9 @@ namespace SEP3_Tier1.Models
         [JsonPropertyName("hardCopy")]
         public bool hardCopy { get; set; }
         
+        [JsonPropertyName("description")]
+        public string description { get; set; }
+        
         [JsonPropertyName("username")]
         public string username { get; set; }
         
@@ -62,6 +65,7 @@ namespace SEP3_Tier1.Models
                    + "\"image\":" + "\"" + image + "\","
                    + "\"price\":" + price + ","
                    + "\"hardCopy\":" + hardCopy + ","
+                   + "\"description\":" + "\"" + description + "\"" +","
                    + "\"username\":" + "\"" + username + "\"" +","
                    + "\"id\":" + bookSaleID
                    + "}";
