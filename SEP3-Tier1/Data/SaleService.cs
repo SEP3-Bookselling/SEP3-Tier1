@@ -51,7 +51,8 @@ namespace SEP3_Tier1.Data
 
         
         public async Task RemoveSaleAsync(int saleId) {
-            await client.DeleteAsync($"{uri}/data/{saleId}");
+            await client.DeleteAsync($"{uri}/sales/{saleId}");
+            Console.WriteLine("Removed");
         }
 
         public async Task UpdateAsync(BookSale sale) {

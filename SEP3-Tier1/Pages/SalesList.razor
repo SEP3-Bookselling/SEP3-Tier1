@@ -1,6 +1,7 @@
 ﻿@page "/SalesList"
 @using SEP3_Tier1.Data
 @using SEP3_Tier1.Models
+@using Syncfusion.Blazor.Navigations
 @inject ISaleService SaleService
 
 <h3>SalesList</h3>
@@ -28,6 +29,7 @@
                 <th>HardCopy</th>
                 <th>Username</th>
                 <th>Id</th>
+                <th>Delete</th>
 
             </tr>
             </thead>
@@ -45,6 +47,7 @@
                     <td>@item.hardCopy</td>
                     <td>@item.username</td>
                     <td>@item.bookSaleID</td>
+                    <td><button @onclick="@(() => DeleteSale(item.bookSaleID))"></button></td>
                 </tr>
             }
             </tbody>
@@ -67,6 +70,13 @@
         salesToShow = allSales;
         Console.WriteLine(salesToShow + "\n" + allSales);
     }*/
+
+    private async Task DeleteSale(int id) {
+        BookSale toRemove = salesToShow.First(t => t.bookSaleID == id);
+        await SaleService.RemoveSaleAsync(id);
+        salesToShow.Remove(toRemove);
+
+    }
 
     protected override async Task OnInitializedAsync()
     {
