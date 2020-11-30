@@ -5,6 +5,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using SEP3_Tier1.Models;
+using SEP3_Tier1.Models.BookSale;
 using SEP3_Tier1.Network;
 
 namespace SEP3_Tier1.Data
@@ -36,11 +37,11 @@ namespace SEP3_Tier1.Data
             return result;
         }
 
-        public async Task CreateBookSale(BookSaleNoID bookSaleNoId) {
+        public async Task CreateBookSale(BookSale bookSale) {
             Console.WriteLine("I AM IN THE HOLE FATHER");
-            string bookSaleNoIDAsJson = JsonSerializer.Serialize(bookSaleNoId);
+            string bookSaleAsJson = JsonSerializer.Serialize(bookSale);
             
-            HttpContent content = new StringContent(bookSaleNoIDAsJson,
+            HttpContent content = new StringContent(bookSaleAsJson,
                 Encoding.UTF8,
                 "application/json");
             

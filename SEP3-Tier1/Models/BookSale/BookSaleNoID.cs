@@ -1,9 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
-namespace SEP3_Tier1.Models
+namespace SEP3_Tier1.Models.BookSale
 {
-    public class BookSaleNoID
+    public class BookSaleNoId
     {
         [JsonPropertyName("title")]
         [Required(ErrorMessage = "Please enter a title")]
