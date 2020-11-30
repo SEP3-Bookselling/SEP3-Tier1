@@ -11,9 +11,6 @@ namespace SEP3_Tier1.Network
         public User User { get; set; }
         public Card Card { get; set; }
         public string GetAllBookSales { get; set; }
-
-        // Prototype
-        public string HelloWorld { get; set; }
         public Customer Customer { get; set; }
     }
 }

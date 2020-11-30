@@ -1,9 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using LoginExample.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
@@ -27,7 +30,14 @@ namespace SEP3_Tier1
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddSingleton<ISaleService, SaleService>();
-            services.AddSingleton<ICustomerService, CustomerService>();
+            services.AddSingleton<IUserService, UserService>();
+            services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("MustBeAdmin", a =>
+                    a.RequireAuthenticatedUser().RequireClaim("Role", "Admin"));
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

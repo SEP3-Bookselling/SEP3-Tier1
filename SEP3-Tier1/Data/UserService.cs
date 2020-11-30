@@ -1,19 +1,22 @@
-﻿using System.Net.Http;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
 using SEP3_Tier1.Models.Users;
 using SEP3_Tier1.Network;
 using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace SEP3_Tier1.Data
 {
-    public class CustomerService : ICustomerService
+    public class UserService : IUserService
     {
         private string uri = "https://localhost:5010";
         private HttpClient client;
+        private IList<User> _users;
 
-        public CustomerService()
+        public UserService()
         {
             client = new HttpClient();
         }
@@ -34,6 +37,19 @@ namespace SEP3_Tier1.Data
         public Task<Customer> GetCustomerAsync()
         {
             throw new System.NotImplementedException();
+        }
+        
+        public User ValidateUser(string userName, string password) {
+            User first = _users.FirstOrDefault(user => user.username.Equals(userName));
+            if (first == null) {
+                throw new Exception("User not found");
+            }
+
+            if (!first.password.Equals(password)) {
+                throw new Exception("Incorrect password");
+            }
+
+            return first;
         }
     }
 }
