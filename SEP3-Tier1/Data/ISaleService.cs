@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using SEP3_Tier1.Models;
+using SEP3_Tier1.Models.BookSale;
 
 namespace SEP3_Tier1.Data
 {
@@ -9,7 +10,7 @@ namespace SEP3_Tier1.Data
         //Change to correct return types
         Task<IList<BookSale>> GetAllBookSales();
         Task<BookSale> GetSaleAsync();
-        Task AddSaleAsync(BookSale sale);
+        Task CreateBookSale(BookSale bookSale);
         Task RemoveSaleAsync(int saleId);
         Task UpdateAsync(BookSale sale);
     }

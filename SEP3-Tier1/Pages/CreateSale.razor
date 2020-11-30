@@ -1,14 +1,15 @@
 ﻿@page "/CreateSale"
 @using SEP3_Tier1.Data
 @using SEP3_Tier1.Models
+@using SEP3_Tier1.Models.BookSale
 @inject ISaleService SaleService
 
 <h3>CreateSale</h3>
 
 <EditForm Model="@bookSale">
     <DataAnnotationsValidator/>
-    
-    
+
+
     <div class="form-group">
         Book Title: <br/>
         <InputText @bind-Value="bookSale.title"/>
@@ -19,10 +20,16 @@
         <InputText @bind-Value="bookSale.author"/>
         <ValidationMessage For="() => bookSale.author"/>
     </div>
+    <div>
+        Edition: <br/>
+        <InputText @bind-Value="bookSale.edition"/>
+        <ValidationMessage For="() => bookSale.edition"/>
+    </div>
     <div class="form-group">
         Condition: <br/>
         <InputSelect @bind-Value="bookSale.condition">
-            @foreach (var condition in conditions) {
+            @foreach (var condition in conditions)
+            {
                 <option>@condition</option>
             }
         </InputSelect>
@@ -41,13 +48,18 @@
     <div>
         <input type="checkbox" @onchange="eventArgs => { CheckBoxClicked(eventArgs.Value); }"/>Hard Copy<br/>
     </div>
+        <div>
+            Description: <br/>
+            <InputTextArea @bind-Value="bookSale.description"/>
+            <ValidationMessage For="() => bookSale.description"/>
+        </div>
     <div>
         Price: <br/>
         <InputNumber @bind-Value="bookSale.price"/>
         <ValidationMessage For="() => bookSale.price"/>
     </div>
 
-    
+
     <p class="action">
         <br/>
         <button class="btn btn-primary" @onclick="SaveSale">
@@ -59,11 +71,15 @@
 
 @code {
 
+    //Branch Created?
+
     private BookSale bookSale;
     private IList<string> conditions;
 
-    private void CheckBoxClicked(object checkedValue) {
-        if ((bool) checkedValue) {
+    private void CheckBoxClicked(object checkedValue)
+    {
+        if ((bool) checkedValue)
+        {
             bookSale.hardCopy = true;
         }
         else
@@ -71,23 +87,27 @@
     }
 
 
-    private async Task SaveSale() {
-        await SaleService.AddSaleAsync(bookSale);
+    private async Task SaveSale()
+    {
+        await SaleService.CreateBookSale(bookSale);
         Console.WriteLine(bookSale.ToString());
     }
 
-    protected override async Task OnInitializedAsync() {
-        bookSale = new BookSale();
-        conditions = new List<string>() {
+    protected override async Task OnInitializedAsync()
+    {
+        bookSale = new BookSale {username = "Crisiluluman"};
+        conditions = new List<string>()
+        {
             "",
             "Mint",
             "Good",
             "Used",
             "Bad"
         };
+
     }
-    
+
     // Todo figure out how to send images through tiers
-    
-    
+
+
 }
