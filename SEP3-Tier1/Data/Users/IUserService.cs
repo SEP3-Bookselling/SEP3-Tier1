@@ -6,7 +6,11 @@ namespace SEP3_Tier1.Data
     public interface IUserService
 
     {
-        public User ValidateUser(string userName, string password);
+        //User
+        User ValidateUser(string userName, string password);
+        Task<User> getSpecificUser(User user);
+
+        //Customer
         Task AddCustomerAsyncTask(Customer customer);
         Task<Customer> GetCustomerAsync();
     }

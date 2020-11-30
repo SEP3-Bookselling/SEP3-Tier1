@@ -20,7 +20,32 @@ namespace SEP3_Tier1.Data
         {
             client = new HttpClient();
         }
-        
+
+        public async Task<User> getSpecificUser(User user)
+        {
+            String username = "Crisiluluman";
+
+            user.username = "Crisiluluman";
+            
+            Console.WriteLine("I AM IN THE HOLE MOTHER");
+            string userJsonString = JsonSerializer.Serialize(user);
+            
+            HttpContent content = new StringContent(userJsonString,
+                Encoding.UTF8,
+                "application/json");
+            
+            HttpResponseMessage responseMessage = await client.PostAsync(uri + "/Users", content);          
+            
+            Task<string> stringAsync = client.GetStringAsync(uri + "/Users");
+            string message = await stringAsync;
+            User result = JsonSerializer.Deserialize<User>(message);
+
+
+            Console.WriteLine(result.username.Equals(username));
+            return result;
+            
+        }
+
         public async Task AddCustomerAsyncTask(Customer customer)
         {
             string customerJson = JsonSerializer.Serialize(new Request
