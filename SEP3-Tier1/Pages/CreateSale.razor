@@ -1,61 +1,62 @@
 ﻿@page "/CreateSale"
 @using SEP3_Tier1.Data
 @using SEP3_Tier1.Models
+@using SEP3_Tier1.Models.BookSale
 @inject ISaleService SaleService
 
 <h3>CreateSale</h3>
 
-<EditForm Model="@bookSaleNoId">
+<EditForm Model="@bookSale">
     <DataAnnotationsValidator/>
 
 
     <div class="form-group">
         Book Title: <br/>
-        <InputText @bind-Value="bookSaleNoId.title"/>
-        <ValidationMessage For="() => bookSaleNoId.title"/>
+        <InputText @bind-Value="bookSale.title"/>
+        <ValidationMessage For="() => bookSale.title"/>
     </div>
     <div>
         Author: <br/>
-        <InputText @bind-Value="bookSaleNoId.author"/>
-        <ValidationMessage For="() => bookSaleNoId.author"/>
+        <InputText @bind-Value="bookSale.author"/>
+        <ValidationMessage For="() => bookSale.author"/>
     </div>
     <div>
         Edition: <br/>
-        <InputText @bind-Value="bookSaleNoId.edition"/>
-        <ValidationMessage For="() => bookSaleNoId.edition"/>
+        <InputText @bind-Value="bookSale.edition"/>
+        <ValidationMessage For="() => bookSale.edition"/>
     </div>
     <div class="form-group">
         Condition: <br/>
-        <InputSelect @bind-Value="bookSaleNoId.condition">
+        <InputSelect @bind-Value="bookSale.condition">
             @foreach (var condition in conditions)
             {
                 <option>@condition</option>
             }
         </InputSelect>
-        <ValidationMessage For="() => bookSaleNoId.condition"/>
+        <ValidationMessage For="() => bookSale.condition"/>
     </div>
     <div>
         Subject: <br/>
-        <InputText @bind-Value="bookSaleNoId.subject"/>
-        <ValidationMessage For="() => bookSaleNoId.subject"/>
+        <InputText @bind-Value="bookSale.subject"/>
+        <ValidationMessage For="() => bookSale.subject"/>
     </div>
     <div>
         Image: <br/>
-        <InputText @bind-Value="bookSaleNoId.image"/>
-        <ValidationMessage For="() => bookSaleNoId.image"/>
+        <InputText @bind-Value="bookSale.image"/>
+        <ValidationMessage For="() => bookSale.image"/>
     </div>
     <div>
         <input type="checkbox" @onchange="eventArgs => { CheckBoxClicked(eventArgs.Value); }"/>Hard Copy<br/>
     </div>
         <div>
             Description: <br/>
-            <InputTextArea @bind-Value="bookSaleNoId.description"/>
-            <ValidationMessage For="() => bookSaleNoId.description"/>
+            <InputTextArea @bind-Value="bookSale.description"/>
+            <ValidationMessage For="() => bookSale.description"/>
         </div>
     <div>
         Price: <br/>
-        <InputNumber @bind-Value="bookSaleNoId.price"/>
-        <ValidationMessage For="() => bookSaleNoId.price"/>
+        <InputNumber @bind-Value="bookSale.price"/>
+        <ValidationMessage For="() => bookSale.price"/>
     </div>
 
 
@@ -72,29 +73,29 @@
 
     //Branch Created?
 
-    private BookSaleNoID bookSaleNoId;
+    private BookSale bookSale;
     private IList<string> conditions;
 
     private void CheckBoxClicked(object checkedValue)
     {
         if ((bool) checkedValue)
         {
-            bookSaleNoId.hardCopy = true;
+            bookSale.hardCopy = true;
         }
         else
-            bookSaleNoId.hardCopy = false;
+            bookSale.hardCopy = false;
     }
 
 
     private async Task SaveSale()
     {
-        await SaleService.CreateBookSale(bookSaleNoId);
-        Console.WriteLine(bookSaleNoId.ToString());
+        await SaleService.CreateBookSale(bookSale);
+        Console.WriteLine(bookSale.ToString());
     }
 
     protected override async Task OnInitializedAsync()
     {
-        bookSaleNoId = new BookSaleNoID(){username = "Crisiluluman"};
+        bookSale = new BookSale {username = "Crisiluluman"};
         conditions = new List<string>()
         {
             "",
@@ -103,7 +104,7 @@
             "Used",
             "Bad"
         };
-        
+
     }
 
     // Todo figure out how to send images through tiers
