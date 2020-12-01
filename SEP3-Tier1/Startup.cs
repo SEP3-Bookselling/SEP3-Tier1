@@ -13,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SEP3_Tier1.Data;
+using Syncfusion.Blazor;
 
 namespace SEP3_Tier1
 {
@@ -32,6 +33,7 @@ namespace SEP3_Tier1
             services.AddSingleton<ISaleService, SaleService>();
             services.AddSingleton<IUserService, UserService>();
             services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();
+            services.AddSyncfusionBlazor();
 
             services.AddAuthorization(options =>
             {
@@ -42,6 +44,7 @@ namespace SEP3_Tier1
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env) {
+            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("MzYwNTUyQDMxMzgyZTMzMmUzMEIxV1g4TnVCRGRtNjdOODg3TGVGVWFQVzl2RWRmRGp4ZU5CUVYzZitLUGs9;MzYwNTUzQDMxMzgyZTMzMmUzMEVPZW9Ja3FiSzBLcHU2RjFUOGxwb2pqd3FMWTFUbmM1QThSR20xdUtoS2c9;MzYwNTU0QDMxMzgyZTMzMmUzMG9vRTV3ODFWVkJpVWtpSVdCaXJGSGRORXpYOHRMejZIb1hzWDdRb2JIaDA9;MzYwNTU1QDMxMzgyZTMzMmUzMGV6SVR3S0M3TndJOW9DVUsvN3l0V2gvbStSOU42Q0RjNzlPVXNFaHVSQVk9;MzYwNTU2QDMxMzgyZTMzMmUzMG5OUnRFSTZ0WFdWM3JsWE53Q2ZudlRJTGpYRWY5RytLb2xJQ25sT1pvNms9;MzYwNTU3QDMxMzgyZTMzMmUzMFlCUXBqY1FzOWJ0bjJhWW00VlV6TDVBT1poZU0rbjd5eEFOQzZrSGlQL0E9;MzYwNTU4QDMxMzgyZTMzMmUzMGNBWWtuNlZhYURlMGlIbk5SZGlFZldiYzhrbTRyL21vR1JzZXRrUlQ3akE9;MzYwNTU5QDMxMzgyZTMzMmUzMG9HaGIyYTBuZXdRdFZZaEN1WFFwK216QngwSXBvSFVuTTNzbnR3V3h4L2M9;MzYwNTYwQDMxMzgyZTMzMmUzMEtzRk5UeUlKK1lMNmxkVEpzSThjd3dRNFlOK1lScit1WWtlcTAwY0hpVm89;MzYwNTYxQDMxMzgyZTMzMmUzMEt6dDRzbVB1Q2RBN3pPUUx4dytsa1NHWGFUVHptKzBKWDhYVW82ckluZmc9");
             if (env.IsDevelopment()) {
                 app.UseDeveloperExceptionPage();
             }
