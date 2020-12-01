@@ -49,6 +49,7 @@
                     <td>@item.username</td>
                     <td>@item.bookSaleID</td>
                     <td><button @onclick="@(() => DeleteSale(item.bookSaleID))"></button></td>
+                    <td><button @onclick="@(() => UpdateSale(item))"></button></td>
                 </tr>
             }
             </tbody>
@@ -76,7 +77,10 @@
         BookSale toRemove = salesToShow.First(t => t.bookSaleID == id);
         await SaleService.RemoveSaleAsync(id);
         salesToShow.Remove(toRemove);
+    }
 
+    private async Task UpdateSale(BookSale saleToUpdate) {
+        
     }
 
     protected override async Task OnInitializedAsync()
