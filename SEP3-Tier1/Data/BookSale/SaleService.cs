@@ -38,7 +38,6 @@ namespace SEP3_Tier1.Data
         }
 
         public async Task CreateBookSale(BookSale bookSale) {
-            Console.WriteLine("I AM IN THE HOLE FATHER");
             string bookSaleAsJson = JsonSerializer.Serialize(bookSale);
             
             HttpContent content = new StringContent(bookSaleAsJson,

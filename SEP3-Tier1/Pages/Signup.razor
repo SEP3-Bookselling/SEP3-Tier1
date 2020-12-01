@@ -32,14 +32,19 @@
     // private string lastname;
     // private string email;
     // private string phonenumber;
-    
-    private Customer customer = new Customer();
+
+    private Customer customer;
 
     public void SubmitCustomer()
     {
-        
-        UserService.AddCustomerAsyncTask(customer);
+        UserService.CreateCustomerAsyncTask(customer);
         NavigationManager.NavigateTo("/");
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        customer = new Customer ();
+        customer.role = "Customer";
     }
 
 }

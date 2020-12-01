@@ -47,14 +47,23 @@ namespace SEP3_Tier1.Data
         }
 
     
-        public async Task AddCustomerAsyncTask(Customer customer)
+        public async Task CreateCustomerAsyncTask(Customer customer)
         {
+            
             string customerJson = JsonSerializer.Serialize(customer);
             
             HttpContent content = new StringContent(customerJson, Encoding.UTF8, "application/json");
         
-        HttpResponseMessage responseMessage = await client.PostAsync(uri + "/users", content);
-            Console.Write( "1" + customer.ToString());
+        HttpResponseMessage responseMessage = await client.PostAsync(uri + "/Users", content);
+            Console.Write( "1" + customer.firstName);
+        }
+
+        public async Task<IList<Customer>> GetAllCustomersAsyncTask()
+        {
+            Task<string> stringAsync = client.GetStringAsync(uri + "/users");
+            string message = await stringAsync;
+            IList<Customer> result = JsonSerializer.Deserialize<IList<Customer>>(message);
+            return result;
         }
 
         public Task<Customer> GetCustomerAsync()

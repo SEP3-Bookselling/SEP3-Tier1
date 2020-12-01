@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using SEP3_Tier1.Models.Users;
 
 namespace SEP3_Tier1.Data
@@ -11,7 +12,8 @@ namespace SEP3_Tier1.Data
         Task<User> getSpecificUser(User user);
 
         //Customer
-        Task AddCustomerAsyncTask(Customer customer);
+        Task <IList<Customer>> GetAllCustomersAsyncTask();
+        Task CreateCustomerAsyncTask(Customer customer);
         Task<Customer> GetCustomerAsync();
     }
 }
