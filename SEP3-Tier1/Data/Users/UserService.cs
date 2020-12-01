@@ -46,17 +46,15 @@ namespace SEP3_Tier1.Data
             
         }
 
+    
         public async Task AddCustomerAsyncTask(Customer customer)
         {
-            string customerJson = JsonSerializer.Serialize(new Request
-                {
-                    Customer = customer,
-                    RequestEnum = EnumRequest.CreateUser
-                }
-            );
+            string customerJson = JsonSerializer.Serialize(customer);
             
             HttpContent content = new StringContent(customerJson, Encoding.UTF8, "application/json");
-            await client.PostAsync(uri + "/users", content);
+        
+        HttpResponseMessage responseMessage = await client.PostAsync(uri + "/users", content);
+            Console.Write( "1" + customer.ToString());
         }
 
         public Task<Customer> GetCustomerAsync()

@@ -1,4 +1,4 @@
-﻿﻿﻿using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Security.Claims;
 using System.Text.Json;
@@ -46,7 +46,9 @@ using Microsoft.JSInterop;
 
             ClaimsIdentity identity = new ClaimsIdentity();
             try {
+                //Console.WriteLine("Test: " + username + password);
                 User user = _userService.ValidateUser(username, password);
+                
                 identity = SetupClaimsForUser(user);
                 string serialisedData = JsonSerializer.Serialize(user);
                 jsRuntime.InvokeVoidAsync("sessionStorage.setItem", "currentUser", serialisedData);

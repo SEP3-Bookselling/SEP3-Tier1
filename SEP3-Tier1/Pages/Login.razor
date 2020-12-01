@@ -44,6 +44,7 @@
     public async Task PerformLogin() {
         errorMessage = "";
         try {
+            Console.WriteLine( "Login: " + username + " " + password);
             ((CustomAuthenticationStateProvider) AuthenticationStateProvider).ValidateLogin(username, password);
             username = "";
             password = "";

@@ -1,7 +1,9 @@
 ﻿@page "/CreateCustomer"
 @using SEP3_Tier1.Models.Users
+@using SEP3_Tier1.Data
 @inject NavigationManager NavigationManager
-@attribute [Authorize(Policy = "MustBeAdmin")]
+@inject IUserService UserService
+@* @attribute [Authorize(Policy = "MustBeAdmin")] *@
 
 <h3>CreateCustomer</h3>
 
@@ -22,20 +24,21 @@
 
 @code {
 
-    private string username;
-    private string password;
-    private string address;
-    private string postcode;
-    private string firstname;
-    private string lastname;
-    private string email;
-    private string phonenumber;
+    // private string username;
+    // private string password;
+    // private string address;
+    // private string postcode;
+    // private string firstname;
+    // private string lastname;
+    // private string email;
+    // private string phonenumber;
     
     private Customer customer = new Customer();
 
     public void SubmitCustomer()
     {
-        Console.WriteLine(customer.postcode);
+        
+        UserService.AddCustomerAsyncTask(customer);
         NavigationManager.NavigateTo("/");
     }
 
