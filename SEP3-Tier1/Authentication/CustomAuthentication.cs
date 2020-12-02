@@ -48,7 +48,7 @@ using SEP3_Tier1.Models.Users;
             
             ClaimsIdentity identity = new ClaimsIdentity();
             try {
-                User user = _userService.ValidateUser(username, password);
+                User user = await _userService.ValidateUserAsync(username, password);
                 identity = SetupClaimsForUser(user);
                 string serialisedData = JsonSerializer.Serialize(user);
                 jsRuntime.InvokeVoidAsync("sessionStorage.setItem", "currentUser", serialisedData);

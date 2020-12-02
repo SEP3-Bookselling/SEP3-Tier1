@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,7 +10,7 @@ using SEP3_Tier1.Models.Users;
 using SEP3_Tier1.Network;
 using JsonSerializer = System.Text.Json.JsonSerializer;
 
-namespace SEP3_Tier1.Data
+namespace SEP3_Tier1.Data.Users
 {
     public class UserService : IUserService
     {
@@ -22,33 +23,18 @@ namespace SEP3_Tier1.Data
             client = new HttpClient();
         }
 
-        public async Task<User> getSpecificUser(User user)
+        public async Task<User> getSpecificUserAsync(string username, string password)
         {
-            String username = "Crisiluluman";
-
-            user.username = "Crisiluluman";
-            
-            Console.WriteLine("I AM IN THE HOLE MOTHER");
-            string userJsonString = JsonSerializer.Serialize(user);
-            
-            HttpContent content = new StringContent(userJsonString,
-                Encoding.UTF8,
-                "application/json");
-            
-            HttpResponseMessage responseMessage = await client.PostAsync(uri + "/Users", content);          
-            
-            Task<string> stringAsync = client.GetStringAsync(uri + "/Users");
-            string message = await stringAsync;
+            Task<string> stringString = client.GetStringAsync(uri + "/users");
+            string message = await stringString;
             User result = JsonSerializer.Deserialize<User>(message);
+            Console.WriteLine(" UserService \n" + "Username: " + result.username + "\n" + "Password: " + result.password + "\n" + "Role: " + result.role);
 
-
-            Console.WriteLine(result.username.Equals(username));
             return result;
-            
         }
 
     
-        public async Task CreateCustomerAsyncTask(Customer customer)
+        public async Task CreateCustomerAsync(Customer customer)
         {
             string customerJson = JsonSerializer.Serialize(customer);
             
@@ -59,7 +45,7 @@ namespace SEP3_Tier1.Data
         Console.Write(" 2start " + customerJson + " 2end ");
         }
 
-        public async Task<IList<Customer>> GetAllCustomersAsyncTask()
+        public async Task<IList<Customer>> GetAllCustomersAsync()
         {
             Task<string> stringAsync = client.GetStringAsync(uri + "/users");
             string message = await stringAsync;
@@ -72,18 +58,35 @@ namespace SEP3_Tier1.Data
             throw new System.NotImplementedException();
         }
         
-        public User ValidateUser(string userName, string password) {
-            User first = _users.FirstOrDefault(user => user.username.Equals(userName));
-            if (first == null) {
+        /* public async Task<User> ValidateUserAsync(string userName, string password) {
+            //User first = _users.FirstOrDefault(user => user.username.Equals(userName));
+
+            User user = await getSpecificUser(userName, password);
+            if (user == null) {
                 throw new Exception("User not found");
             }
-            // HEY
 
-            if (!first.password.Equals(password)) {
+            if (!user.password.Equals(password)) {
                 throw new Exception("Incorrect password");
             }
 
-            return first;
+            return user;
+        }
+        */
+       
+        /**/ public async Task<User> ValidateUserAsync(string username, string password) {
+            //User first = _users.FirstOrDefault(user => user.username.Equals(userName));
+            //Console.WriteLine(" UserService \n" + "Username: " + username + "\n" + "Password: " + password);
+
+            HttpResponseMessage response = await client.GetAsync(uri + "/users");
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
+                string userAsJson = await response.Content.ReadAsStringAsync();
+                User resultUser = JsonSerializer.Deserialize<User>(userAsJson);
+                Console.WriteLine(" UserService \n" + "Username: " + resultUser.username + "\n" + "Password: " + resultUser.password + "\n" + "Role: " + resultUser.role);
+                return resultUser;
+            } 
+            throw new Exception("User not found");
         }
     }
 }

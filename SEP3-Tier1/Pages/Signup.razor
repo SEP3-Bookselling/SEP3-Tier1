@@ -38,7 +38,7 @@
 
     public void SubmitCustomer()
     {
-        UserService.CreateCustomerAsyncTask(customer);
+        UserService.CreateCustomerAsync(customer);
         NavigationManager.NavigateTo("/");
         Console.Write("1start" + customer.ToString() + " 1end");
     }
