@@ -8,7 +8,7 @@ using Microsoft.JSInterop;
   using SEP3_Tier1.Data;
   using SEP3_Tier1.Models.Users;
 
-  namespace LoginExample.Authentication
+  namespace SEP3_Tier1.Authentication
 {
     public class CustomAuthenticationStateProvider : AuthenticationStateProvider {
         private readonly IJSRuntime jsRuntime;
@@ -18,7 +18,7 @@ using Microsoft.JSInterop;
 
         public CustomAuthenticationStateProvider(IJSRuntime jsRuntime, IUserService userService) {
             this.jsRuntime = jsRuntime;
-            this._userService = userService;
+            _userService = userService;
         }
 
         
@@ -39,14 +39,17 @@ using Microsoft.JSInterop;
             ClaimsPrincipal cachedClaimsPrincipal = new ClaimsPrincipal(identity);
             return await Task.FromResult(new AuthenticationState(cachedClaimsPrincipal));
         }
-        public void ValidateLogin(string username, string password) {
+        public async void ValidateLoginAsync(string username, string password) {
             Console.WriteLine("Validating log in");
             if (string.IsNullOrEmpty(username)) throw new Exception("Enter username");
             if (string.IsNullOrEmpty(password)) throw new Exception("Enter password");
 
+            
             ClaimsIdentity identity = new ClaimsIdentity();
             try {
-                User user = _userService.ValidateUser(username, password);
+                User user = await _userService.getSpecificUser(username, password);
+                Console.WriteLine(" Authentication \n" + "Username: " + user.role);
+
                 identity = SetupClaimsForUser(user);
                 string serialisedData = JsonSerializer.Serialize(user);
                 jsRuntime.InvokeVoidAsync("sessionStorage.setItem", "currentUser", serialisedData);
@@ -69,6 +72,7 @@ using Microsoft.JSInterop;
         private ClaimsIdentity SetupClaimsForUser(User user) {
             List<Claim> claims = new List<Claim>();
             claims.Add(new Claim(ClaimTypes.Name, user.username));
+            claims.Add(new Claim("Password", user.password));
             claims.Add(new Claim("Role", user.role));
             ClaimsIdentity identity = new ClaimsIdentity(claims, "apiauth_type");
             return identity;

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -38,18 +39,59 @@ namespace SEP3_Tier1.Data
         {
             throw new System.NotImplementedException();
         }
-        
-        public User ValidateUser(string userName, string password) {
-            User first = _users.FirstOrDefault(user => user.username.Equals(userName));
-            if (first == null) {
+
+        public async Task<User> getSpecificUser(string username, string password)
+        {
+            Task<string> stringString = client.GetStringAsync(uri + "/users");
+            string message = await stringString;
+            User result = JsonSerializer.Deserialize<User>(message);
+            Console.WriteLine(" UserService \n" + "Username: " + result.username + "\n" + "Password: " + result.password + "\n" + "Role: " + result.role);
+
+            return result;
+        }
+
+       /* public async Task<User> ValidateUserAsync(string userName, string password) {
+            //User first = _users.FirstOrDefault(user => user.username.Equals(userName));
+
+            User user = await getSpecificUser(userName, password);
+            if (user == null) {
                 throw new Exception("User not found");
             }
 
-            if (!first.password.Equals(password)) {
+            if (!user.password.Equals(password)) {
                 throw new Exception("Incorrect password");
             }
 
-            return first;
+            return user;
         }
+        */
+       
+       /**/ public async Task<User> ValidateUserAsync(string username, string password) {
+            //User first = _users.FirstOrDefault(user => user.username.Equals(userName));
+            //Console.WriteLine(" UserService \n" + "Username: " + username + "\n" + "Password: " + password);
+
+            HttpResponseMessage response = await client.GetAsync(uri + "/users");
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
+                string userAsJson = await response.Content.ReadAsStringAsync();
+                User resultUser = JsonSerializer.Deserialize<User>(userAsJson);
+                Console.WriteLine(" UserService \n" + "Username: " + resultUser.username + "\n" + "Password: " + resultUser.password + "\n" + "Role: " + resultUser.role);
+                return resultUser;
+            } 
+            throw new Exception("User not found");
+        }
+        
+        /*
+         *            HttpClient client = new HttpClient();
+            HttpResponseMessage response = await client.GetAsync($"https://localhost:5003/users?username={username}&password={password}");
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
+                string userAsJson = await response.Content.ReadAsStringAsync();
+                User resultUser = JsonSerializer.Deserialize<User>(userAsJson);
+                return resultUser;
+            } 
+            throw new Exception("User not found");
+         * 
+         */
     }
 }
