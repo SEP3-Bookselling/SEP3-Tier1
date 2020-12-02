@@ -46,7 +46,8 @@ namespace SEP3_Tier1.Models.BookSale
         [JsonPropertyName("bookSaleID")]
         public int bookSaleID { get; set; }
         
-        
+        [JsonIgnore]
+        public bool isEditing { get; set; }
         
         
         public string ToString()

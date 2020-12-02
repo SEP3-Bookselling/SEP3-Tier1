@@ -56,12 +56,24 @@ namespace SEP3_Tier1.Data
             Console.WriteLine("Removed");
         }
 
-        public async Task UpdateAsync(BookSale sale) {
+        public async Task UpdateAsync(BookSale sale,  string title, string author, string edition, string condition, string subject, string image, double? price, bool hardCopy, string description) {
+            sale.title = title;
+            sale.author = author;
+            sale.edition = edition;
+            sale.condition = condition;
+            sale.subject = subject;
+            sale.image = image;
+            sale.price = price;
+            sale.hardCopy = hardCopy;
+            sale.description = description;
+            
+            
             string saleAsJson = JsonSerializer.Serialize(sale);
             
             HttpContent content = new StringContent(saleAsJson, Encoding.UTF8, "application/json");
 
             await client.PatchAsync($"{uri}/sales/{sale.bookSaleID}", content);
+            Console.WriteLine("Called update async" + sale.ToString());
         }
     }
 }
