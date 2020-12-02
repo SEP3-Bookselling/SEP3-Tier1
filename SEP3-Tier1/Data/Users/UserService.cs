@@ -77,6 +77,7 @@ namespace SEP3_Tier1.Data
             if (first == null) {
                 throw new Exception("User not found");
             }
+            // HEY
 
             if (!first.password.Equals(password)) {
                 throw new Exception("Incorrect password");
