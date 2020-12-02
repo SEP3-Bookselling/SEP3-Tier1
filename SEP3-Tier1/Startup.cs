@@ -13,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SEP3_Tier1.Data;
+using SEP3_Tier1.Data.Users;
 
 namespace SEP3_Tier1
 {

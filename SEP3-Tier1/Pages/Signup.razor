@@ -1,6 +1,7 @@
 ﻿@page "/CreateCustomer"
 @using SEP3_Tier1.Models.Users
 @using SEP3_Tier1.Data
+@using SEP3_Tier1.Data.Users
 @inject NavigationManager NavigationManager
 @inject IUserService UserService
 @* @attribute [Authorize(Policy = "MustBeAdmin")] *@
@@ -39,12 +40,14 @@
     {
         UserService.CreateCustomerAsyncTask(customer);
         NavigationManager.NavigateTo("/");
+        Console.Write("1start" + customer.ToString() + " 1end");
     }
 
     protected override async Task OnInitializedAsync()
     {
         customer = new Customer ();
         customer.role = "Customer";
+        
     }
 
 }

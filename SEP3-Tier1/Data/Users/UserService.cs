@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using SEP3_Tier1.Data.Users;
 using SEP3_Tier1.Models.Users;
 using SEP3_Tier1.Network;
 using JsonSerializer = System.Text.Json.JsonSerializer;
@@ -49,13 +50,13 @@ namespace SEP3_Tier1.Data
     
         public async Task CreateCustomerAsyncTask(Customer customer)
         {
-            
             string customerJson = JsonSerializer.Serialize(customer);
             
             HttpContent content = new StringContent(customerJson, Encoding.UTF8, "application/json");
         
         HttpResponseMessage responseMessage = await client.PostAsync(uri + "/Users", content);
-            Console.Write( "1" + customer.firstName);
+        Console.WriteLine();    
+        Console.Write(" 2start " + customerJson + " 2end ");
         }
 
         public async Task<IList<Customer>> GetAllCustomersAsyncTask()

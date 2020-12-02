@@ -24,5 +24,10 @@ namespace SEP3_Tier1.Models.Users
         
         [JsonPropertyName("rating")]
         public double rating { get; set; }
+
+        public override string ToString()
+        {
+            return username + " " + password + " " + role + " " + postcode + " " + address + " " + firstName + " " + lastName + " " + email + " " + phoneNumber + " " + rating;
+        }
     }
 }

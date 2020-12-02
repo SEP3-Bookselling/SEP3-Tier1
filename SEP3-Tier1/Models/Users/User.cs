@@ -5,7 +5,6 @@ namespace SEP3_Tier1.Models.Users
     public class User
     {
         
-        
         [JsonPropertyName("username")]
         public string username { get; set; }
         
@@ -14,5 +13,6 @@ namespace SEP3_Tier1.Models.Users
        
         [JsonPropertyName("role")]
         public string role { get; set; }
+
     }
 }
