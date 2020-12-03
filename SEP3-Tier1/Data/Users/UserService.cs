@@ -23,46 +23,48 @@ namespace SEP3_Tier1.Data.Users
             client = new HttpClient();
         }
 
+        /*
         public async Task<User> getSpecificUserAsync(string username, string password)
         {
-            Task<string> stringString = client.GetStringAsync(uri + "/users");
+            Task<string> stringString = client.GetStringAsync($"https://localhost:5010/users/GetSpecificUserAsync/{username}");
             string message = await stringString;
             User result = JsonSerializer.Deserialize<User>(message);
             Console.WriteLine(" UserService \n" + "Username: " + result.username + "\n" + "Password: " + result.password + "\n" + "Role: " + result.role);
 
             return result;
         }
-        
-        
-        /* public async Task<User> ValidateUserAsync(string userName, string password) {
-            //User first = _users.FirstOrDefault(user => user.username.Equals(userName));
-
-            User user = await getSpecificUser(userName, password);
-            if (user == null) {
-                throw new Exception("User not found");
-            }
-
-            if (!user.password.Equals(password)) {
-                throw new Exception("Incorrect password");
-            }
-
-            return user;
-        }
         */
-       
-        /**/ public async Task<User> ValidateUserAsync(string username, string password) {
-            //User first = _users.FirstOrDefault(user => user.username.Equals(userName));
-            //Console.WriteLine(" UserService \n" + "Username: " + username + "\n" + "Password: " + password);
-
-            HttpResponseMessage response = await client.GetAsync(uri + "/users");
+        
+        public async Task<User> getSpecificUserAsync(string username)
+        {
+            string oen = $"https://localhost:5010/users/GetSpecificUserAsync/{username}";
+            string two = $"https://localhost:5010/users?username={username}";
+            HttpResponseMessage response = await client.GetAsync(oen);
             if (response.StatusCode == HttpStatusCode.OK)
             {
                 string userAsJson = await response.Content.ReadAsStringAsync();
                 User resultUser = JsonSerializer.Deserialize<User>(userAsJson);
-                Console.WriteLine(" UserService \n" + "Username: " + resultUser.username + "\n" + "Password: " + resultUser.password + "\n" + "Role: " + resultUser.role);
                 return resultUser;
             } 
             throw new Exception("User not found");
         }
+        
+
+        
+        public async Task<IList<User>> GetAllUsersAsync()
+        {
+            Task<string> stringString = client.GetStringAsync(uri + "/users");
+            Console.WriteLine(stringString);
+            string message = await stringString;
+            IList<User> result = JsonSerializer.Deserialize<IList<User>>(message);
+
+            foreach (User user in result)
+            {
+                Console.WriteLine(user.username);
+            }
+            
+            return result;
+        }
+        
     }
 }

@@ -1,0 +1,20 @@
+﻿@page "/ModeratorPage"
+@using SEP3_Tier1.Data.Users
+@using SEP3_Tier1.Models.Users
+@inject IUserService userservice;
+
+
+<h3>ModeratorPage</h3>
+
+@code {
+
+    IList<User> users;
+    User user;
+    
+    protected override async Task OnInitializedAsync()
+    {
+        //users = await userservice.GetAllUsersAsync();
+        user = await userservice.getSpecificUserAsync("Crisiluluman");
+    }
+
+}
