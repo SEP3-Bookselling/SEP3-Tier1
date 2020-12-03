@@ -44,10 +44,7 @@
         Console.Write("1start" + customer.ToString() + " 1end");
     }
 
-    protected override async Task OnInitializedAsync()
-    {
-        
-        Console.Write(CustomerService.GetCustomerAsync("Magic Fish"));
+    protected override async Task OnInitializedAsync() {
         customer = new Customer ();
         customer.role = "Customer";
         
