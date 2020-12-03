@@ -3,12 +3,12 @@
 @using SEP3_Tier1.Models
 @using SEP3_Tier1.Models.BookSale
 @using Syncfusion.Blazor.Navigations
+@using Syncfusion.Blazor.Grids
 @inject ISaleService SaleService
 
 <h3>SalesList</h3>
 
 <div class="container">
-    
     @if (salesToShow == null)
     {
         <p>
@@ -30,6 +30,7 @@
                 <th>HardCopy</th>
                 <th>Username</th>
                 <th>Id</th>
+                <th>Update</th>
                 <th>Delete</th>
 
             </tr>
@@ -37,7 +38,7 @@
             <tbody>
             @foreach (BookSale item in salesToShow)
             {
-                <tr>
+                <tr contenteditable="true">
                     <td>@item.title</td>
                     <td>@item.author</td>
                     <td>@item.edition</td>
@@ -48,12 +49,18 @@
                     <td>@item.hardCopy</td>
                     <td>@item.username</td>
                     <td>@item.bookSaleID</td>
+                    <td><button @onclick="@(() => UpdateSale(item))"></button></td>
                     <td><button @onclick="@(() => DeleteSale(item.bookSaleID))"></button></td>
                 </tr>
             }
             </tbody>
         </table>}
+   
+    
+   
 </div>
+
+
 
 @code{
 
@@ -76,7 +83,10 @@
         BookSale toRemove = salesToShow.First(t => t.bookSaleID == id);
         await SaleService.RemoveSaleAsync(id);
         salesToShow.Remove(toRemove);
+    }
 
+    private async Task UpdateSale(BookSale saleToUpdate) {
+        
     }
 
     protected override async Task OnInitializedAsync()

@@ -12,6 +12,6 @@ namespace SEP3_Tier1.Data
         Task<BookSale> GetSaleAsync();
         Task CreateBookSale(BookSale bookSale);
         Task RemoveSaleAsync(int saleId);
-        Task UpdateAsync(BookSale sale);
+        Task UpdateAsync(BookSale sale, string title, string author, string edition, string condition, string subject, string image, double? price, bool hardCopy, string description);
     }
 }
