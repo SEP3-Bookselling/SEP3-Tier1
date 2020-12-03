@@ -6,7 +6,7 @@ namespace SEP3_Tier1.Data.Users
 {
     public interface ICustomerService
     {
-        Task<Customer> getSpecificCustomerAsync(string username);
+        Task<IList<Customer>> GetCustomerAsync(string username);
         Task <IList<Customer>> GetAllCustomersAsync();
         Task CreateCustomerAsync(Customer customer);
     }

@@ -21,11 +21,11 @@ namespace SEP3_Tier1.Data.Users
             }
 
 
-            public async Task<Customer> getSpecificCustomerAsync(string username)
+            public async Task<IList<Customer>> GetCustomerAsync(string username)
             {
-                Task<string> stringString = client.GetStringAsync(uri + "/customers");
+                Task<string> stringString = client.GetStringAsync(uri + $"/customer/{username}");
                 string message = await stringString;
-                Customer result = JsonSerializer.Deserialize<Customer>(message);
+                IList<Customer> result = JsonSerializer.Deserialize<IList<Customer>>(message);
                 
                 return result;
             }

@@ -22,7 +22,7 @@ namespace SEP3_Tier1.Network
         
         //Customers
         CreateCustomer,
-        GetCustomer,
+        GetSpecificCustomer,
         UpdateCustomer,
         DeleteCustomer,
         
