@@ -3,7 +3,7 @@
 @using SEP3_Tier1.Data
 @using SEP3_Tier1.Data.Users
 @inject NavigationManager NavigationManager
-@inject IUserService UserService
+@inject ICustomerService CustomerService
 @* @attribute [Authorize(Policy = "MustBeAdmin")] *@
 
 <h3>CreateCustomer</h3>
@@ -38,13 +38,15 @@
 
     public void SubmitCustomer()
     {
-        UserService.CreateCustomerAsync(customer);
+        
+        
         NavigationManager.NavigateTo("/");
         Console.Write("1start" + customer.ToString() + " 1end");
     }
 
     protected override async Task OnInitializedAsync()
     {
+        
         customer = new Customer ();
         customer.role = "Customer";
         

@@ -32,6 +32,7 @@ namespace SEP3_Tier1
             services.AddServerSideBlazor();
             services.AddSingleton<ISaleService, SaleService>();
             services.AddSingleton<IUserService, UserService>();
+            services.AddSingleton<ICustomerService, CustomerService>();
             services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();
 
             services.AddAuthorization(options =>
