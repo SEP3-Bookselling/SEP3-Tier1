@@ -47,6 +47,7 @@
     protected override async Task OnInitializedAsync()
     {
         
+        Console.Write(CustomerService.getSpecificCustomerAsync("SonSon"));
         customer = new Customer ();
         customer.role = "Customer";
         
