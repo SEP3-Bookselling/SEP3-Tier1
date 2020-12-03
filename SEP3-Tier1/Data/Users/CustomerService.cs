@@ -21,7 +21,7 @@ namespace SEP3_Tier1.Data.Users
             }
 
 
-            public async Task<Customer> getSpecificCustomerAsync(string username, string password)
+            public async Task<Customer> getSpecificCustomerAsync(string username)
             {
                 Task<string> stringString = client.GetStringAsync(uri + "/customers");
                 string message = await stringString;
