@@ -43,6 +43,27 @@ namespace SEP3_Tier1.Data.Users
                
             }
 
+            public async Task UpdateCustomerAsync(Customer customer, string postcode, string address, string firstName, string lastName, string email, int phoneNumber, double rating, string password)
+            {
+                customer.postcode = postcode;
+                customer.address = address;
+                customer.firstName = firstName;
+                customer.lastName = lastName;
+                customer.email = email;
+                customer.phoneNumber = phoneNumber;
+                customer.rating = rating;
+                customer.password = password;
+
+
+
+                string customerAsJson = JsonSerializer.Serialize(customer);
+            
+                HttpContent content = new StringContent(customerAsJson, Encoding.UTF8, "application/json");
+
+                await client.PatchAsync($"{uri}/customer/{customer.username}", content);
+                Console.WriteLine("Called update async" + customer.ToString());
+            }
+
             public async Task<IList<Customer>> GetAllCustomersAsync()
             {
                 Task<string> stringAsync = client.GetStringAsync(uri + "/customer");

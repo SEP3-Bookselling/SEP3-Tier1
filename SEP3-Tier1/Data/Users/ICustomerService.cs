@@ -9,5 +9,8 @@ namespace SEP3_Tier1.Data.Users
         Task<IList<Customer>> GetCustomerAsync(string username);
         Task <IList<Customer>> GetAllCustomersAsync();
         Task CreateCustomerAsync(Customer customer);
+
+        Task UpdateCustomerAsync(Customer customer, string postcode, string address, string firstName, string lastName,
+            string email, int phoneNumber, double rating, string password);
     }
 }
