@@ -191,7 +191,7 @@ else {
     
     
     protected override async Task OnInitializedAsync() {
-        allBookSalesForUser = await SaleService.GetAllBookSales();
+        allBookSalesForUser = await SaleService.GetBookSaleAsync("SonSon");
         salesToShow = allBookSalesForUser;
         currentUser = await CustomerService.GetCustomerAsync("Crisiluluman");
     }

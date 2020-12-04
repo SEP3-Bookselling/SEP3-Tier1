@@ -71,7 +71,7 @@
     
 
     /*protected override async Task OnInitializedAsync() {
-        IList<BookSale> itemToShow = await SaleService.GetAllBookSales();
+        IList<BookSale> itemToShow = await SaleService.GetBookSaleAsync();
         Console.WriteLine(itemToShow);
         //allSales.Add(itemToShow);
         Console.WriteLine(allSales);
@@ -91,8 +91,8 @@
 
     protected override async Task OnInitializedAsync()
     {
-        //Console.WriteLine(SaleService.GetAllBookSales() + "\t ooga booga");
-        allSales = await SaleService.GetAllBookSales();
+        //Console.WriteLine(SaleService.GetBookSaleAsync() + "\t ooga booga");
+        allSales = await SaleService.GetBookSaleAsync("Crisiluluman");
         salesToShow = allSales;
         
 
