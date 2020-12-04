@@ -45,7 +45,7 @@
         errorMessage = "";
         try {
             Console.WriteLine( "Login: " + username + " " + password);
-            ((CustomAuthenticationStateProvider) AuthenticationStateProvider).ValidateLoginAsync(username, password);
+            await ((CustomAuthenticationStateProvider) AuthenticationStateProvider).ValidateLoginAsync(username, password);
             username = "";
             password = "";
         } catch (Exception e) {

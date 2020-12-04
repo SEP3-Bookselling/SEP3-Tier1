@@ -36,19 +36,23 @@ namespace SEP3_Tier1.Data.Users
                 
                 HttpContent content = new StringContent(customerJson, Encoding.UTF8, "application/json");
         
-                HttpResponseMessage responseMessage = await client.PostAsync(uri + "/Customers", content);
+                HttpResponseMessage responseMessage = await client.PostAsync(uri + "/Customer", content);
                 Console.WriteLine();    
                 Console.Write(" 2start " + customerJson + " 2end ");
-
-               
             }
 
             public async Task<IList<Customer>> GetAllCustomersAsync()
             {
-                Task<string> stringAsync = client.GetStringAsync(uri + "/customers");
+                Task<string> stringAsync = client.GetStringAsync(uri + "/customer");
                 string message = await stringAsync;
                 IList<Customer> result = JsonSerializer.Deserialize<IList<Customer>>(message);
                 return result;
+            }
+
+
+            public async Task DeleteCustomerAsync(string username)
+            {
+                await client.DeleteAsync($"{uri}/customer/{username}");
             }
             
     }

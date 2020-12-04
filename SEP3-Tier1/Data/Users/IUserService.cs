@@ -9,7 +9,7 @@ namespace SEP3_Tier1.Data.Users
     {
         //User
         //Task<User> ValidateUserAsync(string userName, string password);
-        Task<IList<User>> GetAllUsersAsync();
+        Task<IList<User>> GetAllUsersAsync(string username);
         Task<User> getSpecificUserAsync(string username);
 
     }

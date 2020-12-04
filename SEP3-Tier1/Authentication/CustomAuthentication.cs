@@ -40,7 +40,7 @@ using SEP3_Tier1.Models.Users;
             ClaimsPrincipal cachedClaimsPrincipal = new ClaimsPrincipal(identity);
             return await Task.FromResult(new AuthenticationState(cachedClaimsPrincipal));
         }
-        public async void ValidateLoginAsync(string username, string password) {
+        public async Task ValidateLoginAsync(string username, string password) {
             Console.WriteLine("Validating log in");
             if (string.IsNullOrEmpty(username)) throw new Exception("Enter username");
             if (string.IsNullOrEmpty(password)) throw new Exception("Enter password");

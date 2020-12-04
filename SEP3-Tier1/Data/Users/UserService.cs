@@ -23,48 +23,32 @@ namespace SEP3_Tier1.Data.Users
             client = new HttpClient();
         }
 
-        /*
-        public async Task<User> getSpecificUserAsync(string username, string password)
-        {
-            Task<string> stringString = client.GetStringAsync($"https://localhost:5010/users/GetSpecificUserAsync/{username}");
-            string message = await stringString;
-            User result = JsonSerializer.Deserialize<User>(message);
-            Console.WriteLine(" UserService \n" + "Username: " + result.username + "\n" + "Password: " + result.password + "\n" + "Role: " + result.role);
 
-            return result;
+        public async Task<IList<User>> GetAllUsersAsync(string username)
+        {
+            string message = await client.GetStringAsync(uri + "/users"); 
+            List<User> result = JsonSerializer.Deserialize<List<User>>(message);
+            return result;        
         }
-        */
-        
+
         public async Task<User> getSpecificUserAsync(string username)
         {
-            string oen = $"https://localhost:5010/users/GetSpecificUserAsync/{username}";
-            string two = $"https://localhost:5010/users?username={username}";
-            HttpResponseMessage response = await client.GetAsync(oen);
-            if (response.StatusCode == HttpStatusCode.OK)
-            {
-                string userAsJson = await response.Content.ReadAsStringAsync();
-                User resultUser = JsonSerializer.Deserialize<User>(userAsJson);
-                return resultUser;
-            } 
-            throw new Exception("User not found");
-        }
-        
-
-        
-        public async Task<IList<User>> GetAllUsersAsync()
-        {
-            Task<string> stringString = client.GetStringAsync(uri + "/users");
-            Console.WriteLine(stringString);
-            string message = await stringString;
-            IList<User> result = JsonSerializer.Deserialize<IList<User>>(message);
-
-            foreach (User user in result)
-            {
-                Console.WriteLine(user.username);
-            }
+            IList<User> users = await GetAllUsersAsync(username);
+            User user = users.FirstOrDefault(user => user.username.Equals(username));
+            string password = user.password;
+            Console.WriteLine($"\t\t USername: {user.username} : Password: {user.password}" );
             
-            return result;
+            if (user == null)
+            {
+                throw new Exception("User not found");
+            }
+
+            if (!user.password.Equals(password))
+            {
+                throw new Exception("Password incorrect, try again");
+            }
+
+            return user;        
         }
-        
     }
 }

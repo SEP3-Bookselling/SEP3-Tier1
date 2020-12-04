@@ -2,19 +2,85 @@
 @using SEP3_Tier1.Data.Users
 @using SEP3_Tier1.Models.Users
 @inject IUserService userservice;
+@inject ICustomerService CustomerService;
 
 
 <h3>ModeratorPage</h3>
 
+
+<div class="container">
+    @if (customers == null)
+    {
+        <p>
+            <em>Loading...</em>
+        </p>
+    }
+    else
+    {
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>Username</th>
+                <th>Address</th>
+                <th>Postcode</th>
+                <th>Firstname</th>
+                <th>Lastname</th>
+                <th>Email</th>
+                <th>Phonenumber</th>
+                <th>Rating</th>
+                <th>Delete</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (Customer item in customers)
+            {
+                <tr contenteditable="true">
+                    <td>@item.username</td>
+                    <td>@item.address</td>
+                    <td>@item.postcode</td>
+                    <td>@item.firstName</td>
+                    <td>@item.lastName</td>
+                    <td>@item.email</td>
+                    <td>@item.phoneNumber</td>
+                    <td>@item.rating</td>
+                    <td>
+                        <button @onclick="(() => DeleteCustomer(item.username))">
+                            <i class="oi oi-trash" style="color:red"/>
+                        </button>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    }
+
+
+
+</div>
+
+
 @code {
+
+    IList<Customer> customers;
 
     IList<User> users;
     User user;
-    
+    string username = null;
+
     protected override async Task OnInitializedAsync()
     {
-        //users = await userservice.GetAllUsersAsync();
-        user = await userservice.getSpecificUserAsync("Crisiluluman");
+    //users = await userservice.GetAllUsersAsync(username);
+        customers = await CustomerService.GetAllCustomersAsync();
+    //user = await userservice.getSpecificUserAsync("AnneLindberg");
+    //Console.WriteLine(user.username);
+    }
+
+
+    public async Task DeleteCustomer(string username)
+    {
+        Customer toRemove = customers.First(t => t.username == username);
+        await CustomerService.DeleteCustomerAsync(username);
+        customers.Remove(toRemove);
     }
 
 }
