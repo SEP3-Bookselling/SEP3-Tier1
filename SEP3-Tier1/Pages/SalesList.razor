@@ -92,7 +92,7 @@
     protected override async Task OnInitializedAsync()
     {
         //Console.WriteLine(SaleService.GetBookSaleAsync() + "\t ooga booga");
-        allSales = await SaleService.GetBookSaleAsync("Crisiluluman");
+        allSales = await SaleService.GetBookSaleAsync("");
         salesToShow = allSales;
         
 

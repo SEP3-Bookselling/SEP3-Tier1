@@ -141,8 +141,9 @@ else {
         }
         </tbody>
     </table>
+    
+    
 }
-
 
 
 
@@ -191,8 +192,12 @@ else {
     
     
     protected override async Task OnInitializedAsync() {
-        allBookSalesForUser = await SaleService.GetBookSaleAsync("SonSon");
+        allBookSalesForUser = await SaleService.GetBookSaleAsync("Crisiluluman");
         salesToShow = allBookSalesForUser;
+
+        foreach (var item in allBookSalesForUser) {
+            Console.WriteLine(item.ToString());
+        }
         currentUser = await CustomerService.GetCustomerAsync("Crisiluluman");
     }
 
