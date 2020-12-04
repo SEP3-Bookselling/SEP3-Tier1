@@ -2,9 +2,11 @@
 @using SEP3_Tier1.Models.Users
 @using System.Dynamic
 @using SEP3_Tier1.Data
+@using SEP3_Tier1.Data.Users
 @using SEP3_Tier1.Models.BookSale
 
 @inject ISaleService SaleService
+@inject ICustomerService CustomerService
 
 
 <h3>Profile Page</h3>
@@ -93,6 +95,52 @@ else {
         }
         </tbody>
     </table>
+    
+    
+}
+
+@if (currentUser == null) {
+    <p>
+        <em>Loading...</em>
+    </p>
+} else if (!currentUser.Any()) {
+    <p>
+        <em>No User Were Found</em>
+    </p>
+}
+else {
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Username</th>
+            <th>Password</th>
+            <th>Role</th>
+            <th>Postcode</th>
+            <th>Address</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>Phone Number</th>
+            <th>Rating</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (Customer customer in currentUser) {
+            <tr contenteditable="true">
+                <td>@customer.username</td>
+                <td>@customer.password</td>
+                <td>@customer.role</td>
+                <td>@customer.postcode</td>
+                <td>@customer.address</td>
+                <td>@customer.firstName</td>
+                <td>@customer.lastName</td>
+                <td>@customer.email</td>
+                <td>@customer.phoneNumber</td>
+                <td>@customer.rating</td>
+                </tr>
+        }
+        </tbody>
+    </table>
 }
 
 
@@ -101,6 +149,7 @@ else {
 @code {
     private IList<BookSale> allBookSalesForUser;
     private IList<BookSale> salesToShow;
+    private IList<Customer> currentUser;
 
     private string updatedTitle = "";
     private string updatedAuthor = "";
@@ -145,6 +194,7 @@ else {
     protected override async Task OnInitializedAsync() {
         allBookSalesForUser = await SaleService.GetAllBookSales();
         salesToShow = allBookSalesForUser;
+        currentUser = await CustomerService.GetCustomerAsync("Crisiluluman");
     }
 
 }
