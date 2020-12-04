@@ -11,7 +11,6 @@ namespace SEP3_Tier1.Network
         public BookSale BookSale { get; set; }
         // public BookSaleNoID BookSaleNoId { get; set; }
         public User User { get; set; }
-        public Card Card { get; set; }
         public string GetAllBookSales { get; set; }
         public Customer Customer { get; set; }
     }
