@@ -70,15 +70,6 @@
     
     
 
-    /*protected override async Task OnInitializedAsync() {
-        IList<BookSale> itemToShow = await SaleService.GetBookSaleAsync();
-        Console.WriteLine(itemToShow);
-        //allSales.Add(itemToShow);
-        Console.WriteLine(allSales);
-        salesToShow = allSales;
-        Console.WriteLine(salesToShow + "\n" + allSales);
-    }*/
-
     private async Task DeleteSale(int id) {
         BookSale toRemove = salesToShow.First(t => t.bookSaleID == id);
         await SaleService.RemoveSaleAsync(id);
@@ -91,7 +82,6 @@
 
     protected override async Task OnInitializedAsync()
     {
-        //Console.WriteLine(SaleService.GetBookSaleAsync() + "\t ooga booga");
         allSales = await SaleService.GetBookSaleAsync("");
         salesToShow = allSales;
         

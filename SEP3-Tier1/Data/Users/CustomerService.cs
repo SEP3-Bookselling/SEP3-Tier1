@@ -26,7 +26,6 @@ namespace SEP3_Tier1.Data.Users
                 Task<string> stringString = client.GetStringAsync(uri + $"/customer?username={username}");
                 string message = await stringString;
                 IList<Customer> result = JsonSerializer.Deserialize<IList<Customer>>(message);    
-                Console.WriteLine(result);
                 return result;
             }
 
@@ -37,8 +36,7 @@ namespace SEP3_Tier1.Data.Users
                 HttpContent content = new StringContent(customerJson, Encoding.UTF8, "application/json");
         
                 HttpResponseMessage responseMessage = await client.PostAsync(uri + "/Customer", content);
-                Console.WriteLine(responseMessage);    
-                Console.Write(" 2start " + customerJson + " 2end ");
+            
 
                
             }
@@ -61,7 +59,6 @@ namespace SEP3_Tier1.Data.Users
                 HttpContent content = new StringContent(customerAsJson, Encoding.UTF8, "application/json");
 
                 await client.PatchAsync($"{uri}/customer/{customer.username}", content);
-                Console.WriteLine("Called update async" + customer.ToString());
             }
 
             public async Task<IList<Customer>> GetAllCustomersAsync()

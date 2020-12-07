@@ -90,7 +90,6 @@
     private async Task SaveSale()
     {
         await SaleService.CreateBookSale(bookSale);
-        Console.WriteLine(bookSale.ToString());
     }
 
     protected override async Task OnInitializedAsync()

@@ -45,14 +45,12 @@ namespace SEP3_Tier1.Data
                 "application/json");
             
             HttpResponseMessage responseMessage = await client.PostAsync(uri + "/Sales", content);
-            Console.WriteLine(responseMessage.ToString() + "\t <-- RIGHT EHRE");
 
         }
 
         
         public async Task RemoveSaleAsync(int saleId) {
             await client.DeleteAsync($"{uri}/sales/{saleId}");
-            Console.WriteLine("Removed");
         }
 
         public async Task UpdateAsync(BookSale sale,  string title, string author, string edition, string condition, string subject, string image, double? price, bool hardCopy, string description) {
@@ -72,7 +70,6 @@ namespace SEP3_Tier1.Data
             HttpContent content = new StringContent(saleAsJson, Encoding.UTF8, "application/json");
 
             await client.PatchAsync($"{uri}/sales/{sale.bookSaleID}", content);
-            Console.WriteLine("Called update async" + sale.ToString());
         }
     }
 }
