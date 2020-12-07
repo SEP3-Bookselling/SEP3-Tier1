@@ -37,8 +37,10 @@ namespace SEP3_Tier1.Data.Users
                 HttpContent content = new StringContent(customerJson, Encoding.UTF8, "application/json");
         
                 HttpResponseMessage responseMessage = await client.PostAsync(uri + "/Customer", content);
-                Console.WriteLine();    
+                Console.WriteLine(responseMessage);    
                 Console.Write(" 2start " + customerJson + " 2end ");
+
+               
             }
 
             public async Task<IList<Customer>> GetAllCustomersAsync()

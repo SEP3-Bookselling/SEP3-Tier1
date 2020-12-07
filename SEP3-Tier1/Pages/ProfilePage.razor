@@ -141,8 +141,9 @@ else {
         }
         </tbody>
     </table>
+    
+    
 }
-
 
 
 
@@ -180,7 +181,6 @@ else {
         updatedPrice = saleToBeUpdated.price;
         updatedHardCopy = saleToBeUpdated.hardCopy;
         EditSale(id);
-
     }
 
     private void EditSale(int id) {
@@ -192,8 +192,12 @@ else {
     
     
     protected override async Task OnInitializedAsync() {
-        allBookSalesForUser = await SaleService.GetAllBookSales();
+        allBookSalesForUser = await SaleService.GetBookSaleAsync("Crisiluluman");
         salesToShow = allBookSalesForUser;
+
+        foreach (var item in allBookSalesForUser) {
+            Console.WriteLine(item.ToString());
+        }
         currentUser = await CustomerService.GetCustomerAsync("Crisiluluman");
     }
 

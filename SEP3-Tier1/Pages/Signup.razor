@@ -36,10 +36,8 @@
 
     private Customer customer;
 
-    public void SubmitCustomer()
-    {
-        
-        
+    public void SubmitCustomer() {
+        CustomerService.CreateCustomerAsync(customer);
         NavigationManager.NavigateTo("/");
         Console.Write("1start" + customer.ToString() + " 1end");
     }
