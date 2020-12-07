@@ -45,7 +45,7 @@ namespace SEP3_Tier1.Data.Users
 
             public async Task UpdateCustomerAsync(Customer customer, string postcode, string address, string firstName, string lastName, string email, int phoneNumber, double rating, string password)
             {
-                customer.postcode = postcode;
+                customer.postCode = postcode;
                 customer.address = address;
                 customer.firstName = firstName;
                 customer.lastName = lastName;

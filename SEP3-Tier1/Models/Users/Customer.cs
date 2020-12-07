@@ -4,8 +4,8 @@ namespace SEP3_Tier1.Models.Users
 {
     public class Customer : User
     {
-        [JsonPropertyName("postcode")]
-        public string postcode { get; set;}
+        [JsonPropertyName("postCode")]
+        public string postCode { get; set;}
         
         [JsonPropertyName("address")]
         public string address { get; set; }
@@ -29,7 +29,7 @@ namespace SEP3_Tier1.Models.Users
 
         public override string ToString()
         {
-            return username + " " + password + " " + role + " " + postcode + " " + address + " " + firstName + " " + lastName + " " + email + " " + phoneNumber + " " + rating;
+            return username + " " + password + " " + role + " " + postCode + " " + address + " " + firstName + " " + lastName + " " + email + " " + phoneNumber + " " + rating;
         }
     }
 }

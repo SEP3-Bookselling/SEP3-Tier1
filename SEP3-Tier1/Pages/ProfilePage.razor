@@ -144,7 +144,7 @@ else
                 {
                     <tr>
                         <td>
-                            <input type="text" class="form-control" placeholder="@customer.postcode" @bind="customer.postcode">
+                            <input type="text" class="form-control" placeholder="@customer.postCode" @bind="customer.postCode">
                         </td>
                         <td>
                             <input type="text" class="form-control" placeholder="@customer.address" @bind="customer.address">
@@ -181,7 +181,7 @@ else
                     <td>@customer.username</td>
                     <td>@customer.password</td>
                     <td>@customer.role</td>
-                    <td>@customer.postcode</td>
+                    <td>@customer.postCode</td>
                     <td>@customer.address</td>
                     <td>@customer.firstName</td>
                     <td>@customer.lastName</td>
@@ -269,7 +269,7 @@ else
             Customer customerToBeUpdated = currentUser.First(i => i.username == username);
 
 
-            postcode = customerToBeUpdated.postcode;
+            postcode = customerToBeUpdated.postCode;
             address = customerToBeUpdated.address;
             firstName = customerToBeUpdated.firstName;
             lastName = customerToBeUpdated.lastName;
