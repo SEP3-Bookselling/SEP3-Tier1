@@ -11,16 +11,20 @@
 
 <h3>Profile Page</h3>
 
-@if (salesToShow == null) {
+@if (salesToShow == null)
+{
     <p>
         <em>Loading...</em>
     </p>
-} else if (!salesToShow.Any()) {
+}
+else if (!salesToShow.Any())
+{
     <p>
         <em>No Sales Were Found</em>
     </p>
 }
-else {
+else
+{
     <table class="table">
         <thead>
         <tr>
@@ -38,8 +42,10 @@ else {
         </tr>
         </thead>
         <tbody>
-        @foreach (BookSale item in salesToShow) {
-            if (item.isEditing) {
+        @foreach (BookSale item in salesToShow)
+        {
+            if (item.isEditing)
+            {
                 <tr>
                     <td>
                         <input type="text" class="form-control" placeholder="@item.title" @bind="item.title">
@@ -73,10 +79,11 @@ else {
                             <i class="oi oi-file" style="color: blue"></i>
                         </button>
                     </td>
-                    
+
                 </tr>
             }
-            else {
+            else
+            {
                 <tr>
                     <td>@item.title</td>
                     <td>@item.author</td>
@@ -87,28 +94,32 @@ else {
                     <td>@item.price</td>
                     <td>@item.hardCopy</td>
                     <td>@item.description</td>
-                    <td><button @onclick="() => EnableEditing(true, item.bookSaleID)">
-                        <i class="oi oi-file" style="color: blue"></i>
-                    </button></td>
+                    <td>
+                        <button @onclick="() => EnableEditing(true, item.bookSaleID)">
+                            <i class="oi oi-file" style="color: blue"></i>
+                        </button>
+                    </td>
                 </tr>
             }
         }
         </tbody>
     </table>
-    
-    
 }
 
-@if (currentUser == null) {
+@if (currentUser == null)
+{
     <p>
         <em>Loading...</em>
     </p>
-} else if (!currentUser.Any()) {
+}
+else if (!currentUser.Any())
+{
     <p>
         <em>No User Were Found</em>
     </p>
 }
-else {
+else
+{
     <table class="table">
         <thead>
         <tr>
@@ -122,83 +133,174 @@ else {
             <th>Email</th>
             <th>Phone Number</th>
             <th>Rating</th>
+            <th>Update</th>
         </tr>
         </thead>
         <tbody>
-        @foreach (Customer customer in currentUser) {
-            <tr contenteditable="true">
-                <td>@customer.username</td>
-                <td>@customer.password</td>
-                <td>@customer.role</td>
-                <td>@customer.postcode</td>
-                <td>@customer.address</td>
-                <td>@customer.firstName</td>
-                <td>@customer.lastName</td>
-                <td>@customer.email</td>
-                <td>@customer.phoneNumber</td>
-                <td>@customer.rating</td>
+        @foreach (Customer customer in currentUser)
+        {
+            {
+                if (customer.isEditing)
+                {
+                    <tr>
+                        <td>
+                            <input type="text" class="form-control" placeholder="@customer.postCode" @bind="customer.postCode">
+                        </td>
+                        <td>
+                            <input type="text" class="form-control" placeholder="@customer.address" @bind="customer.address">
+                        </td>
+                        <td>
+                            <input type="text" class="form-control" placeholder="@customer.firstName" @bind="customer.firstName">
+                        </td>
+                        <td>
+                            <input type="text" class="form-control" placeholder="@customer.lastName" @bind="customer.lastName">
+                        </td>
+                        <td>
+                            <input type="text" class="form-control" placeholder="@customer.email" @bind="customer.email">
+                        </td>
+                        <td>
+                            <input type="text" class="form-control" placeholder="@customer.phoneNumber" @bind="customer.phoneNumber">
+                        </td>
+                        <td>
+                            <input type="text" class="form-control" placeholder="@customer.rating" @bind="customer.rating">
+                        </td>
+                        <td>
+                            <input type="text" class="form-control" placeholder="@customer.password" @bind="customer.password">
+                        </td>
+
+                        <td>
+                            <button @onclick="() => InitiateEditCustomer(customer.username)">
+                                <i class="oi oi-file" style="color: blue"></i>
+                            </button>
+                        </td>
+
+                    </tr>
+                }
+
+                <tr contenteditable="true">
+                    <td>@customer.username</td>
+                    <td>@customer.password</td>
+                    <td>@customer.role</td>
+                    <td>@customer.postCode</td>
+                    <td>@customer.address</td>
+                    <td>@customer.firstName</td>
+                    <td>@customer.lastName</td>
+                    <td>@customer.email</td>
+                    <td>@customer.phoneNumber</td>
+                    <td>@customer.rating</td>
+                    <td>
+                        <button @onclick="() => EnableEditingCustomer(true, customer.username)">
+                            <i class="oi oi-file" style="color: blue"></i>
+                        </button>
+                    </td>
                 </tr>
+            }
         }
         </tbody>
     </table>
     
-    
 }
 
 
 
-@code {
-    private IList<BookSale> allBookSalesForUser;
-    private IList<BookSale> salesToShow;
-    private IList<Customer> currentUser;
+    @code {
+        private IList<BookSale> allBookSalesForUser;
+        private IList<BookSale> salesToShow;
+        private IList<Customer> currentUser;
 
-    private string updatedTitle = "";
-    private string updatedAuthor = "";
-    private string updatedEdition = "";
-    private string updatedCondition = "";
-    private string updatedSubject = "";
-    private string updatedImage = "";
-    private double? updatedPrice = 0;
-    private bool updatedHardCopy = false;
-    private string updatedDescription = "";
-    
-    
+        private string updatedTitle = "";
+        private string updatedAuthor = "";
+        private string updatedEdition = "";
+        private string updatedCondition = "";
+        private string updatedSubject = "";
+        private string updatedImage = "";
+        private double? updatedPrice = 0;
+        private bool updatedHardCopy = false;
+        private string updatedDescription = "";
 
-    private void EnableEditing(bool flag, int id) {
-        BookSale saleToBeUpdated = salesToShow.First(i => i.bookSaleID == id);
-        saleToBeUpdated.isEditing = flag;
-    }
+        private string postcode = "";
+        private string address = "";
+        private string firstName = "";
+        private string lastName = "";
+        private string email = "";
+        private int phoneNumber = 0;
+        private double rating = 0;
+        private string password = "";
 
-    private void InitiateEdit(int id) {
-        BookSale saleToBeUpdated = salesToShow.First(i => i.bookSaleID == id);
 
-        updatedTitle = saleToBeUpdated.title;
-        updatedAuthor = saleToBeUpdated.author;
-        updatedEdition = saleToBeUpdated.edition;
-        updatedCondition = saleToBeUpdated.condition;
-        updatedSubject = saleToBeUpdated.subject;
-        updatedImage = saleToBeUpdated.image;
-        updatedPrice = saleToBeUpdated.price;
-        updatedHardCopy = saleToBeUpdated.hardCopy;
-        EditSale(id);
-    }
-
-    private void EditSale(int id) {
-        BookSale saleToBeUpdated = salesToShow.First(i => i.bookSaleID == id);
-        SaleService.UpdateAsync(saleToBeUpdated, updatedTitle, updatedAuthor, updatedEdition, updatedCondition, updatedSubject, updatedImage, updatedPrice, updatedHardCopy, updatedDescription);
-        saleToBeUpdated.isEditing = false;
-    }
-    
-    
-    
-    protected override async Task OnInitializedAsync() {
-        allBookSalesForUser = await SaleService.GetBookSaleAsync("Crisiluluman");
-        salesToShow = allBookSalesForUser;
-
-        foreach (var item in allBookSalesForUser) {
-            Console.WriteLine(item.ToString());
+        private void EnableEditing(bool flag, int id)
+        {
+            BookSale saleToBeUpdated = salesToShow.First(i => i.bookSaleID == id);
+            saleToBeUpdated.isEditing = flag;
         }
-        currentUser = await CustomerService.GetCustomerAsync("Crisiluluman");
-    }
 
-}
+        private void InitiateEdit(int id)
+        {
+            BookSale saleToBeUpdated = salesToShow.First(i => i.bookSaleID == id);
+
+            updatedTitle = saleToBeUpdated.title;
+            updatedAuthor = saleToBeUpdated.author;
+            updatedEdition = saleToBeUpdated.edition;
+            updatedCondition = saleToBeUpdated.condition;
+            updatedSubject = saleToBeUpdated.subject;
+            updatedImage = saleToBeUpdated.image;
+            updatedPrice = saleToBeUpdated.price;
+            updatedHardCopy = saleToBeUpdated.hardCopy;
+            EditSale(id);
+        }
+
+        private void EditSale(int id)
+        {
+            BookSale saleToBeUpdated = salesToShow.First(i => i.bookSaleID == id);
+            SaleService.UpdateAsync(saleToBeUpdated, updatedTitle, updatedAuthor, updatedEdition, updatedCondition, updatedSubject, updatedImage, updatedPrice, updatedHardCopy, updatedDescription);
+            saleToBeUpdated.isEditing = false;
+        }
+
+        // edit customer
+
+        private void EnableEditingCustomer(bool flag, string username)
+        {
+            Customer customerToBeUpdated = currentUser.First(i => i.username == username);
+            currentUser.First().isEditing = flag;
+        }
+
+        private void InitiateEditCustomer(string username)
+        {
+            Customer customerToBeUpdated = currentUser.First(i => i.username == username);
+
+
+            postcode = customerToBeUpdated.postCode;
+            address = customerToBeUpdated.address;
+            firstName = customerToBeUpdated.firstName;
+            lastName = customerToBeUpdated.lastName;
+            email = customerToBeUpdated.email;
+            phoneNumber = customerToBeUpdated.phoneNumber;
+            rating = customerToBeUpdated.rating;
+            password = customerToBeUpdated.password;
+
+            EditCustomer(username);
+        }
+
+        private void EditCustomer(string username)
+        {
+            Customer customerToBeUpdated = currentUser.First(i => i.username == username);
+            CustomerService.UpdateCustomerAsync(customerToBeUpdated, postcode, address, firstName, lastName, email, phoneNumber, rating, password);
+            customerToBeUpdated.isEditing = false;
+        }
+
+
+        protected override async Task OnInitializedAsync()
+        {
+            allBookSalesForUser = await SaleService.GetBookSaleAsync("Crisiluluman");
+            salesToShow = allBookSalesForUser;
+
+            foreach (var item in allBookSalesForUser)
+            {
+                Console.WriteLine(item.ToString());
+            }
+            currentUser = await CustomerService.GetCustomerAsync("Crisiluluman");
+        }
+
+
+
+    }
