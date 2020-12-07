@@ -2,6 +2,8 @@
 @using SEP3_Tier1.Models.Users
 @using SEP3_Tier1.Data.Users
 @inject IUserService UserService;
+@inject NavigationManager NavigationManager
+
 
 <h3>AdminstratorPage</h3>
 <EditForm Model="@user">
@@ -57,6 +59,8 @@
     public async Task CreateUser()
     {
         await UserService.CreateUserAsync(user);
+        NavigationManager.NavigateTo("/");
+
     }
 
 }

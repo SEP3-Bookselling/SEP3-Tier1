@@ -15,7 +15,7 @@ using SEP3_Tier1.Models.Users;
         private readonly IJSRuntime jsRuntime;
         private readonly IUserService _userService;
 
-        private User cachedUser;
+        public static User cachedUser { get; set; }
 
         public CustomAuthenticationStateProvider(IJSRuntime jsRuntime, IUserService userService) {
             this.jsRuntime = jsRuntime;
@@ -76,5 +76,7 @@ using SEP3_Tier1.Models.Users;
             ClaimsIdentity identity = new ClaimsIdentity(claims, "apiauth_type");
             return identity;
         }
+
     }
+
 }

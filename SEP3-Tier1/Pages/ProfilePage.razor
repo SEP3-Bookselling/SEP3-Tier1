@@ -1,12 +1,14 @@
 ﻿@page "/ProfilePage"
 @using SEP3_Tier1.Models.Users
 @using System.Dynamic
+@using SEP3_Tier1.Authentication
 @using SEP3_Tier1.Data
 @using SEP3_Tier1.Data.Users
 @using SEP3_Tier1.Models.BookSale
 
 @inject ISaleService SaleService
 @inject ICustomerService CustomerService
+
 
 
 <h3>Profile Page</h3>
@@ -291,10 +293,11 @@ else
 
         protected override async Task OnInitializedAsync()
         {
-            allBookSalesForUser = await SaleService.GetBookSaleAsync("Crisiluluman");
+            string username = CustomAuthenticationStateProvider.cachedUser.username; // Uses the cached User from Login to identify the specific username, and showing the related information to that user
+            allBookSalesForUser = await SaleService.GetBookSaleAsync(username);
             salesToShow = allBookSalesForUser;
             
-            currentUser = await CustomerService.GetCustomerAsync("Crisiluluman");
+            currentUser = await CustomerService.GetCustomerAsync(username);
         }
 
 
