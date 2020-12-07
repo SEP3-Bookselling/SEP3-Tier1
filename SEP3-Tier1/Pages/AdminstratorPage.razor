@@ -21,7 +21,7 @@
     <div class="form-group">
         Role: <br/>
         <InputSelect @bind-Value="user.role">
-            @foreach (string role in roles)
+            @foreach (var role in roles)
             {
                 <option>@role</option>
             }
@@ -42,12 +42,13 @@
 @code {
 
     private IList<string> roles;
-    private User user;
+    private User user = new User();
 
     protected override async Task OnInitializedAsync()
     {
         roles = new List<string>()
         {
+            "",
             "Admin",
             "Moderator"
         };
