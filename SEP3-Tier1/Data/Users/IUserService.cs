@@ -12,5 +12,6 @@ namespace SEP3_Tier1.Data.Users
         Task<IList<User>> GetAllUsersAsync(string username);
         Task<User> getSpecificUserAsync(string username);
 
+        Task CreateUserAsync(User user);
     }
 }

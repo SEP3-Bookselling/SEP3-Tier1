@@ -71,8 +71,8 @@ using SEP3_Tier1.Models.Users;
         private ClaimsIdentity SetupClaimsForUser(User user) {
             List<Claim> claims = new List<Claim>();
             claims.Add(new Claim(ClaimTypes.Name, user.username));
-            claims.Add(new Claim("Password", user.password));
-            claims.Add(new Claim("Role", user.role));
+            claims.Add(new Claim("password", user.password));
+            claims.Add(new Claim("role", user.role));
             ClaimsIdentity identity = new ClaimsIdentity(claims, "apiauth_type");
             return identity;
         }

@@ -24,11 +24,23 @@ namespace SEP3_Tier1.Data.Users
         }
 
 
+        public async Task CreateUserAsync(User user)
+        {
+            string userAsJson = JsonSerializer.Serialize(user);
+
+            HttpContent content = new StringContent(userAsJson,
+                Encoding.UTF8,
+                "application/json");
+
+            HttpResponseMessage responseMessage = await client.PostAsync(uri + "/Users", content);
+        }
+
+
         public async Task<IList<User>> GetAllUsersAsync(string username)
         {
-            string message = await client.GetStringAsync(uri + "/users"); 
+            string message = await client.GetStringAsync(uri + "/users");
             List<User> result = JsonSerializer.Deserialize<List<User>>(message);
-            return result;        
+            return result;
         }
 
         public async Task<User> getSpecificUserAsync(string username)
@@ -36,8 +48,8 @@ namespace SEP3_Tier1.Data.Users
             IList<User> users = await GetAllUsersAsync(username);
             User user = users.FirstOrDefault(user => user.username.Equals(username));
             string password = user.password;
-            Console.WriteLine($"\t\t USername: {user.username} : Password: {user.password}" );
-            
+            Console.WriteLine($"\t\t USername: {user.username} : Password: {user.password}");
+
             if (user == null)
             {
                 throw new Exception("User not found");
@@ -48,7 +60,7 @@ namespace SEP3_Tier1.Data.Users
                 throw new Exception("Password incorrect, try again");
             }
 
-            return user;        
+            return user;
         }
     }
 }

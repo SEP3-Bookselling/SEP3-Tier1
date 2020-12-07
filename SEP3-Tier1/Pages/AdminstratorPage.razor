@@ -1,0 +1,61 @@
+﻿@page "/AdminstratorPage"
+@using SEP3_Tier1.Models.Users
+@using SEP3_Tier1.Data.Users
+@inject IUserService UserService;
+
+<h3>AdminstratorPage</h3>
+<EditForm Model="@user">
+    <DataAnnotationsValidator/>
+
+    <div class="form-group">
+        Username: <br/>
+        <InputText @bind-Value="user.username"/>
+        <ValidationMessage For="() => user.username"/>
+    </div>
+    <div>
+        Password: <br/>
+        <InputText @bind-Value="user.password"/>
+        <ValidationMessage For="() => user.password"/>
+    </div>
+
+    <div class="form-group">
+        Role: <br/>
+        <InputSelect @bind-Value="user.role">
+            @foreach (string role in roles)
+            {
+                <option>@role</option>
+            }
+        </InputSelect>
+        <ValidationMessage For="() => user.role"/>
+    </div>
+
+
+    <p class="action">
+        <br/>
+        <button class="btn btn-primary" @onclick="CreateUser">
+            Create User
+        </button>
+    </p>
+
+</EditForm>
+
+@code {
+
+    private IList<string> roles;
+    private User user;
+
+    protected override async Task OnInitializedAsync()
+    {
+        roles = new List<string>()
+        {
+            "Admin",
+            "Moderator"
+        };
+    }
+
+    public async Task CreateUser()
+    {
+        await UserService.CreateUserAsync(user);
+    }
+
+}
