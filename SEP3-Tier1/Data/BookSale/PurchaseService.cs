@@ -24,9 +24,9 @@ namespace SEP3_Tier1.Data
             cartItems = new List<BookSale>();
         }
 
-        public async Task CreatePurchaseRequestAsync(PurchaseRequest purchaseRequest)
+        public async Task CreatePurchaseRequestAsync(IList<PurchaseRequest> purchaseRequests)
         {
-            string bookSaleAsJson = JsonSerializer.Serialize(purchaseRequest);
+            string bookSaleAsJson = JsonSerializer.Serialize(purchaseRequests);
             
             HttpContent content = new StringContent(bookSaleAsJson,
                 Encoding.UTF8,
@@ -48,7 +48,6 @@ namespace SEP3_Tier1.Data
         public async Task AddToCartAsync(BookSale bookSale)
         {
             cartItems.Add(bookSale);
-            Console.WriteLine(cartItems[0]);
             
         }
 

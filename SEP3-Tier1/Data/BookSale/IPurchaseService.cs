@@ -6,7 +6,7 @@ namespace SEP3_Tier1.Data
 {
     public interface IPurchaseService
     {
-        Task  CreatePurchaseRequestAsync(PurchaseRequest purchaseRequest);
+        Task  CreatePurchaseRequestAsync(IList<PurchaseRequest> purchaseRequest);
         Task<IList<PurchaseRequest>> GetPurchaseRequestAsync(string username);
         Task DeletePurchaseRequestAsync(int id);
 

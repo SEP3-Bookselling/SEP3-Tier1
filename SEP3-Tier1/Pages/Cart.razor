@@ -1,11 +1,12 @@
 ﻿@page "/Cart"
 @using SEP3_Tier1.Models
 @using SEP3_Tier1.Data
+@using SEP3_Tier1.Authentication
 @inject IPurchaseService PurchaseService
 <h3>Cart</h3>
 
 <div class="container">
-    @if (CartItems == null)
+    @if (CartItems == null || CartItems.Count == 0)
     {
         <p>
             <em>Cart is empty...</em>
@@ -42,12 +43,12 @@
                     <td>@item.price</td>
                     <td>@item.hardCopy</td>
                     <td>@item.username</td>
-                    <td><button @onclick="@(() => DeleteSale(item.bookSaleID))"></button></td>
+                    <td><button @onclick="@(() => DeleteSale(item))"></button></td>
                 </tr>
             }
             </tbody>
         </table>}
-    <button @onclick="@(() => ConfirmPurchase())"></button>
+    <button @onclick="@(ConfirmPurchase)">Confirm Purchase</button>
    
     
    
@@ -58,21 +59,38 @@
 @code {
 
     private IList<BookSale> CartItems;
+    private IList<PurchaseRequest> purchaseRequests;
+    private string username;
 
     protected override async Task OnInitializedAsync()
     {
         CartItems = await PurchaseService.GetCartItems();
+        purchaseRequests = new List<PurchaseRequest>();
+        username = CustomAuthenticationStateProvider.cachedUser.username;
     }
     
     
-    
-    private async Task DeleteSale(int id)
+    private async Task DeleteSale(BookSale sale)
     {
-        CartItems.RemoveAt(id);
+        CartItems.Remove(sale);
     }
 
-    private async Task ConfirmPurchase()
-    {
+    private async Task ConfirmPurchase() {
+        if (CartItems.Count == 0) {
+            throw new Exception("No Items In Cart");
+        }
+
+        foreach (BookSale item in CartItems) {
+            PurchaseRequest toAdd = new PurchaseRequest {
+                bookSale = item,
+                buyer = username,
+                seller = item.username
+            };
+
+            purchaseRequests.Add(toAdd);
+        }
+
+        await PurchaseService.CreatePurchaseRequestAsync(purchaseRequests);
         
     }
 
