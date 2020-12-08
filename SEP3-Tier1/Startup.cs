@@ -34,6 +34,7 @@ namespace SEP3_Tier1
             services.AddSingleton<IUserService, UserService>();
             services.AddSingleton<ICustomerService, CustomerService>();
             services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();
+            services.AddSingleton<IPurchaseService, PurchaseService>();
 
             services.AddAuthorization(options =>
             {

@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
-namespace SEP3_Tier1.Models.BookSale
+namespace SEP3_Tier1.Models
 {
     public class BookSale
     {
