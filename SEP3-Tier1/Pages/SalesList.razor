@@ -4,9 +4,34 @@
 @using SEP3_Tier1.Models.BookSale
 @using Syncfusion.Blazor.Navigations
 @using Syncfusion.Blazor.Grids
+@using ChangeEventArgs = Microsoft.AspNetCore.Components.ChangeEventArgs
 @inject ISaleService SaleService
 
 <h3>SalesList</h3>
+
+
+<p>
+    <input type="text" @oninput="@((arg) => ExecuteFilter(arg))" style="width:80vw"/>
+</p>
+
+
+<p>
+    Filter by:
+
+    <div class="form-group">
+        <select @bind="Selection" style="width:200px">
+            <option>Username</option>
+            <option>Title</option>
+            <option>Author</option>
+            <option>Subject</option>
+            <option>Price</option>
+            <option>Description</option>
+        </select>
+    </div>
+
+
+</p>
+
 
 <div class="container">
     @if (salesToShow == null)
@@ -29,10 +54,11 @@
                 <th>Price</th>
                 <th>HardCopy</th>
                 <th>Username</th>
-                <th>Id</th>
-                <th>Update</th>
-                <th>Delete</th>
 
+                <AuthorizeView Policy="Moderator">
+                    <th>Id</th>
+                    <th>Delete</th>
+                </AuthorizeView>
             </tr>
             </thead>
             <tbody>
@@ -48,18 +74,24 @@
                     <td>@item.price</td>
                     <td>@item.hardCopy</td>
                     <td>@item.username</td>
-                    <td>@item.bookSaleID</td>
-                    <td><button @onclick="@(() => UpdateSale(item))"></button></td>
-                    <td><button @onclick="@(() => DeleteSale(item.bookSaleID))"></button></td>
+                    <AuthorizeView Policy="Moderator">
+                        <td>@item.bookSaleID</td>
+                        <td>
+                            <button @onclick="@(() => DeleteSale(item.bookSaleID))">
+                                <i class="oi oi-trash" style="color: red"></i>
+                            </button>
+                        </td>
+
+                    </AuthorizeView>
                 </tr>
             }
             </tbody>
-        </table>}
-   
-    
-   
-</div>
+        </table>
+    }
 
+
+
+</div>
 
 
 @code{
@@ -67,25 +99,61 @@
 
     private IList<BookSale> allSales;
     private IList<BookSale> salesToShow;
-    
-    
 
-    private async Task DeleteSale(int id) {
+    private string Selection = "";
+    private string filterOptions;
+
+    private async Task DeleteSale(int id)
+    {
         BookSale toRemove = salesToShow.First(t => t.bookSaleID == id);
         await SaleService.RemoveSaleAsync(id);
         salesToShow.Remove(toRemove);
-    }
-
-    private async Task UpdateSale(BookSale saleToUpdate) {
-        
     }
 
     protected override async Task OnInitializedAsync()
     {
         allSales = await SaleService.GetBookSaleAsync("");
         salesToShow = allSales;
-        
+    }
 
+    private void ExecuteFilter(ChangeEventArgs changeEventArgs)
+    {
+        filterOptions = changeEventArgs.Value.ToString();
+
+        try
+        {
+            switch (Selection)
+            {
+                case "Username":
+                    salesToShow = allSales.Where(t => (filterOptions != null && t.username.Contains(filterOptions) || string.IsNullOrEmpty(filterOptions))).ToList();
+                    break;
+
+                case "Title":
+                    salesToShow = allSales.Where(t => (filterOptions != null && t.title.Contains(filterOptions) || string.IsNullOrEmpty(filterOptions))).ToList();
+                    break;
+
+                case "Author":
+                    salesToShow = allSales.Where(t => (filterOptions != null && t.author.Contains(filterOptions) || string.IsNullOrEmpty(filterOptions))).ToList();
+                    break;
+
+                case "Subject":
+                    salesToShow = allSales.Where(t => (filterOptions != null && t.subject.Contains(filterOptions) || string.IsNullOrEmpty(filterOptions))).ToList();
+                    break;
+
+                case "Price":
+                    salesToShow = allSales.Where(t => (filterOptions != null && t.price == Double.Parse(filterOptions) || string.IsNullOrEmpty(filterOptions))).ToList();
+                    break;
+
+                case "Description":
+                    salesToShow = allSales.Where(t => (filterOptions != null && t.description.Contains(filterOptions) || string.IsNullOrEmpty(filterOptions))).ToList();
+                    break;
+            }
+        }
+        catch (FormatException e)
+        {
+            Console.WriteLine(e);
+            salesToShow = allSales;
+        }
     }
 
 }
