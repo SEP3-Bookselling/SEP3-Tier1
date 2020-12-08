@@ -5,6 +5,8 @@
 @using SEP3_Tier1.Data
 @using SEP3_Tier1.Data.Users
 @using SEP3_Tier1.Models.BookSale
+@using Radzen.Blazor
+@using Radzen
 
 @inject ISaleService SaleService
 @inject ICustomerService CustomerService
@@ -12,6 +14,17 @@
 
 <h3>Profile Page</h3>
 
+<div class="row">
+    <div class="col-xl-6">
+        <h4>Rating</h4>
+        <RadzenRating Change=@(args => @OnChange(args))> </RadzenRating>
+        <p>Rating: @valueStar</p>
+    </div>
+
+</div>
+
+<br>
+<br> 
 
 
 @if (salesToShow == null)
@@ -241,8 +254,7 @@ else
     private double rating = 0;
     private string password = "";
 
-    private string nameValue;
-    private int valueStar;
+    private double valueStar;
 
     private void EnableEditing(bool flag, int id)
     {
@@ -308,7 +320,10 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        string username = CustomAuthenticationStateProvider.cachedUser.username; // Uses the cached User from Login to identify the specific username, and showing the related information to that user
+        valueStar = 4.8; //Rating get from database
+
+        //string username = CustomAuthenticationStateProvider.cachedUser.username; // Uses the cached User from Login to identify the specific username, and showing the related information to that user
+        string username = "Crisiluluman";
         allBookSalesForUser = await SaleService.GetBookSaleAsync(username);
         salesToShow = allBookSalesForUser;
 
@@ -323,10 +338,14 @@ else
         salesToShow.Remove(toBeRemoved);
     }
 
-    private void OnChange(object args, string ratingWithStars)
+    private double OnChange(double value)
     {
+        double avg = (valueStar + value) / 2;
+        
+        Console.Write($"{avg} <-- Star number \n");
 
-        Console.Write($"{nameValue} value changed to {valueStar}");
+        return avg;
     }
+
 
 }
