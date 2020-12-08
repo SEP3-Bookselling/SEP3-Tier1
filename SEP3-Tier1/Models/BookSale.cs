@@ -49,7 +49,6 @@ namespace SEP3_Tier1.Models
         [JsonIgnore]
         public bool isEditing { get; set; }
         
-        
         public string ToString()
         {
            // Converts the values into jsonFormat

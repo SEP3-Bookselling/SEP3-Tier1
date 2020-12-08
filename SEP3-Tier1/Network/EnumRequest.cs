@@ -27,9 +27,9 @@ namespace SEP3_Tier1.Network
         DeleteCustomer,
         
         //PurchaseRequest
-        CreateRequest,
-        GetRequest,
-        DeleteRequest,
+        CreatePurchaseRequest,
+        GetPurchaseRequest,
+        DeletePurchaseRequest,
         
         // Prototype
         recieveProofOfConcept,

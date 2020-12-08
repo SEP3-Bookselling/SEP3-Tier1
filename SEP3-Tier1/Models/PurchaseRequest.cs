@@ -6,8 +6,8 @@ namespace SEP3_Tier1.Models
 {
     public class PurchaseRequest
     {
-        [JsonPropertyName("requestID")]
-        public int requestID { get; set; }
+        [JsonPropertyName("requestID")] 
+        public int? requestID { get; set; } = null;
  
         [JsonPropertyName("bookSale")]
         public BookSale bookSale { get; set; }

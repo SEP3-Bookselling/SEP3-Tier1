@@ -32,7 +32,7 @@ namespace SEP3_Tier1.Data
                 Encoding.UTF8,
                 "application/json");
             
-            HttpResponseMessage responseMessage = await client.PostAsync(uri + "/PurchaseRequest", content);
+            HttpResponseMessage responseMessage = await client.PostAsync(uri + "/Purchase", content);
         }
 
         public async Task<IList<PurchaseRequest>> GetPurchaseRequestAsync(string username)

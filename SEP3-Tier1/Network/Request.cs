@@ -1,4 +1,5 @@
-﻿using SEP3_Tier1.Models;
+﻿using System.Collections.Generic;
+using SEP3_Tier1.Models;
 using SEP3_Tier1.Models.Users;
 
 namespace SEP3_Tier1.Network
@@ -12,6 +13,6 @@ namespace SEP3_Tier1.Network
         public User User { get; set; }
         public string GetAllBookSales { get; set; }
         public Customer Customer { get; set; }
-        public PurchaseRequest PurchaseRequest { get; set; }
+        public IList<PurchaseRequest> purchaseRequests { get; set; }
     }
 }
