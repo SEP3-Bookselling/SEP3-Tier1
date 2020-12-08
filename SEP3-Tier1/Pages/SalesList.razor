@@ -50,7 +50,7 @@
                     <td>@item.hardCopy</td>
                     <td>@item.username</td>
                     <td>@item.bookSaleID</td>
-                    <td><button @onclick="@(() => AddToCart(item))"></button></td>
+                    <td><button @onclick="@(() => AddToCart(item))">Add To Cart</button></td>
                     <td><button @onclick="@(() => UpdateSale(item))"></button></td>
                     <td><button @onclick="@(() => DeleteSale(item.bookSaleID))"></button></td>
                 </tr>
@@ -72,7 +72,7 @@
 
     private async Task AddToCart(BookSale bookSale)
     {
-        PurchaseService.AddToCartAsync(bookSale);
+        await PurchaseService.AddToCartAsync(bookSale);
     }
 
     private async Task DeleteSale(int id) {

@@ -19,8 +19,9 @@ namespace SEP3_Tier1.Data
         
 
         public PurchaseService()
-        {
+        { 
             client = new HttpClient();
+            cartItems = new List<BookSale>();
         }
 
         public async Task CreatePurchaseRequestAsync(PurchaseRequest purchaseRequest)
