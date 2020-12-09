@@ -82,10 +82,12 @@
 
         foreach (BookSale item in CartItems) {
             PurchaseRequest toAdd = new PurchaseRequest {
+                bookSaleId = item.bookSaleID,
                 buyer = username,
                 seller = item.username
             };
-
+            
+            Console.WriteLine(toAdd.buyer);
             purchaseRequests.Add(toAdd);
         }
 

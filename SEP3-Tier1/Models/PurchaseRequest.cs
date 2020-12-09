@@ -9,7 +9,7 @@ namespace SEP3_Tier1.Models
         [JsonPropertyName("requestID")] 
         public int? requestID { get; set; } = null;
  
-        [JsonPropertyName("bookSale")]
+        [JsonPropertyName("bookSaleId")]
         public int bookSaleId { get; set; }
         
         
