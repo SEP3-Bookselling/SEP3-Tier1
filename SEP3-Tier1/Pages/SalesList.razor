@@ -3,6 +3,7 @@
 @using SEP3_Tier1.Models
 @using Syncfusion.Blazor.Navigations
 @using Syncfusion.Blazor.Grids
+@using SEP3_Tier1.Authentication
 @inject ISaleService SaleService
 @inject IPurchaseService PurchaseService
 
@@ -37,22 +38,23 @@
             </tr>
             </thead>
             <tbody>
-            @foreach (BookSale item in salesToShow)
-            {
-                <tr contenteditable="true">
-                    <td>@item.title</td>
-                    <td>@item.author</td>
-                    <td>@item.edition</td>
-                    <td>@item.condition</td>
-                    <td>@item.subject</td>
-                    <td>@item.image</td>
-                    <td>@item.price</td>
-                    <td>@item.hardCopy</td>
-                    <td>@item.username</td>
-                    <td>@item.bookSaleID</td>
-                    <td><button @onclick="@(() => AddToCart(item))">Add To Cart</button></td>
-                    <td><button @onclick="@(() => UpdateSale(item))"></button></td>
-                    <td><button @onclick="@(() => DeleteSale(item.bookSaleID))"></button></td>
+            
+            @for (int i = 0; i < salesToShow.Count; i++) {
+                int localI = i;
+                <tr contenteditable="true" name="">
+                    <td>@salesToShow[i].title</td>
+                    <td>@salesToShow[i].author</td>
+                    <td>@salesToShow[i].edition</td>
+                    <td>@salesToShow[i].condition</td>
+                    <td>@salesToShow[i].subject</td>
+                    <td>@salesToShow[i].image</td>
+                    <td>@salesToShow[i].price</td>
+                    <td>@salesToShow[i].hardCopy</td>
+                    <td>@salesToShow[i].username</td>
+                    <td>@salesToShow[i].bookSaleID</td>
+                    <td><button @onclick="@(() => AddToCart(salesToShow[localI]))">Add To Cart</button>@if (errorValue) { @errorMessage }</td>
+                    <td><button @onclick="@(() => UpdateSale(salesToShow[localI]))"></button></td>
+                    <td><button @onclick="@(() => DeleteSale(salesToShow[localI].bookSaleID))"></button></td>
                 </tr>
             }
             </tbody>
@@ -69,10 +71,19 @@
 
     private IList<BookSale> allSales;
     private IList<BookSale> salesToShow;
+    private bool errorValue;
+    private string errorMessage = "";
 
     private async Task AddToCart(BookSale bookSale)
     {
-        await PurchaseService.AddToCartAsync(bookSale);
+        if (bookSale.username.Equals(CustomAuthenticationStateProvider.cachedUser.username)) {
+            errorValue = true;
+            errorMessage = "Cannot add own sale to cart";
+        }
+        else {
+            errorValue = false;
+            await PurchaseService.AddToCartAsync(bookSale);
+        }
     }
 
     private async Task DeleteSale(int id) {
