@@ -9,9 +9,6 @@
 @inject ICustomerService CustomerService
 
 
-
-<h3>Profile Page</h3>
-
 @if (salesToShow == null)
 {
     <p>
@@ -26,6 +23,8 @@ else if (!salesToShow.Any())
 }
 else
 {
+    <h1>Books for sale</h1>
+    
     <table class="table">
         <thead>
         <tr>
@@ -106,6 +105,46 @@ else
         </tbody>
     </table>
 }
+
+
+<h1>Book reservations</h1>
+
+<table class="table">
+    <thread>
+        <tr>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Edition</th>
+            <th>Condition</th>
+            <th>Subject</th>
+            <th>Image</th>
+            <th>Price</th>
+            <th>HardCopy</th>
+            <th>Seller</th>
+        </tr>
+    </thread>
+@*         <tbody> *@
+@*                     @foreach (PurchaseRequest item in purchaseRequests) *@
+@*                     { *@
+@*                         <tr contenteditable="true"> *@
+@*                             <td>@item.bookSale.title</td> *@
+@*                             <td>@item.bookSale.author</td> *@
+@*                             <td>@item.bookSale.edition</td> *@
+@*                             <td>@item.bookSale.condition</td> *@
+@*                             <td>@item.bookSale.subject</td> *@
+@*                             <td>@item.bookSale.image</td> *@
+@*                             <td>@item.bookSale.price</td> *@
+@*                             <td>@item.bookSale.hardCopy</td> *@
+@*                             <td>@item.bookSale.username</td> *@
+@*                              *@
+@*                             $1$ <td><button @onclick="@(() => DeletePurchaseRequest(item.RequestID))"></button></td> #1# *@
+@*                         </tr> *@
+@*                     } *@
+@*         </tbody> *@
+</table>
+ 
+
+<h1>Update profile</h1>
 
 @if (currentUser == null)
 {
@@ -208,6 +247,7 @@ else
         private IList<BookSale> allBookSalesForUser;
         private IList<BookSale> salesToShow;
         private IList<Customer> currentUser;
+        private IList<PurchaseRequest> purchaseRequests;
 
         private string updatedTitle = "";
         private string updatedAuthor = "";
@@ -295,10 +335,45 @@ else
             string username = CustomAuthenticationStateProvider.cachedUser.username; // Uses the cached User from Login to identify the specific username, and showing the related information to that user
             allBookSalesForUser = await SaleService.GetBookSaleAsync(username);
             salesToShow = allBookSalesForUser;
-            
             currentUser = await CustomerService.GetCustomerAsync(username);
+            
+            
+            
+            
+            //todo -- test skal bare slettes når tier2+3 virker.
+            
+            BookSale testBookSale = new BookSale
+            {
+                title = "Lalaland",
+                author = "John",
+                bookSaleID = 1,
+                condition = "good",
+                description = "Lalaland",
+                edition = "3",
+                hardCopy = true,
+                image = "null",
+                isEditing = false,
+                price = 199.50,
+                subject = "economics",
+                username = "Crisiluluman"
+            };
+
+            PurchaseRequest testPurchaseRequest = new PurchaseRequest
+            {
+                RequestID = 1,
+                bookSale = testBookSale,
+                buyer = "SonSon",
+                seller = "Crisiluluman"
+            };
+            
+            purchaseRequests = new List<PurchaseRequest>();
+            purchaseRequests.Insert(0,testPurchaseRequest);
         }
 
 
+        private void DeletePurchaseRequest(int RequestId)
+        {
+            // 
+        }
 
     }
