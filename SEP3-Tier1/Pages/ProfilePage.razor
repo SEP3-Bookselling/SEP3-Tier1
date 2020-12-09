@@ -8,6 +8,7 @@
 @inject ISaleService SaleService
 @inject ICustomerService CustomerService
 
+<!--#region UserSales-->
 
 @if (salesToShow == null)
 {
@@ -106,11 +107,24 @@ else
     </table>
 }
 
+<!--#endregion-->
+
+<!--#region PendingPurchises-->
 
 <h1>Book reservations</h1>
 
-<table class="table">
-    <thread>
+@if (purchaseRequests == null) {
+    <p>
+        <em>Loading...</em>
+    </p>
+} else if (!purchaseRequests.Any()) {
+    <p>
+        <em>No requests pending</em>
+    </p>
+}
+else {
+    <table class="table">
+        <thead>
         <tr>
             <th>Title</th>
             <th>Author</th>
@@ -122,28 +136,30 @@ else
             <th>HardCopy</th>
             <th>Seller</th>
         </tr>
-    </thread>
-@*         <tbody> *@
-@*                     @foreach (PurchaseRequest item in purchaseRequests) *@
-@*                     { *@
-@*                         <tr contenteditable="true"> *@
-@*                             <td>@item.bookSale.title</td> *@
-@*                             <td>@item.bookSale.author</td> *@
-@*                             <td>@item.bookSale.edition</td> *@
-@*                             <td>@item.bookSale.condition</td> *@
-@*                             <td>@item.bookSale.subject</td> *@
-@*                             <td>@item.bookSale.image</td> *@
-@*                             <td>@item.bookSale.price</td> *@
-@*                             <td>@item.bookSale.hardCopy</td> *@
-@*                             <td>@item.bookSale.username</td> *@
-@*                              *@
-@*                             $1$ <td><button @onclick="@(() => DeletePurchaseRequest(item.RequestID))"></button></td> #1# *@
-@*                         </tr> *@
-@*                     } *@
-@*         </tbody> *@
-</table>
- 
+        </thead>
+        <tbody>
+        @foreach (PurchaseRequest purchaseRequest in purchaseRequests) {
+            <tr contenteditable="true">
+                <td>@purchaseRequest.bookSale.title</td>
+                <td>@purchaseRequest.bookSale.author</td>
+                <td>@purchaseRequest.bookSale.edition</td>
+                <td>@purchaseRequest.bookSale.condition</td>
+                <td>@purchaseRequest.bookSale.subject</td>
+                <td>@purchaseRequest.bookSale.image</td>
+                <td>@purchaseRequest.bookSale.price</td>
+                <td>@purchaseRequest.bookSale.hardCopy</td>
+                <td>@purchaseRequest.bookSale.username</td>
 
+                <td><button @onclick="@(() => DeletePurchaseRequest(purchaseRequest.requestID))"></button></td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+
+<!--#endregion-->
+
+<!--#region userInformation-->
 <h1>Update profile</h1>
 
 @if (currentUser == null)
@@ -238,142 +254,152 @@ else
         }
         </tbody>
     </table>
-    
+   
+
 }
 
+<!--#endregion-->
 
 
-    @code {
-        private IList<BookSale> allBookSalesForUser;
-        private IList<BookSale> salesToShow;
-        private IList<Customer> currentUser;
-        private IList<PurchaseRequest> purchaseRequests;
 
-        private string updatedTitle = "";
-        private string updatedAuthor = "";
-        private string updatedEdition = "";
-        private string updatedCondition = "";
-        private string updatedSubject = "";
-        private string updatedImage = "";
-        private double? updatedPrice = 0;
-        private bool updatedHardCopy = false;
-        private string updatedDescription = "";
+@code {
+    private IList<BookSale> allBookSalesForUser;
+    private IList<BookSale> salesToShow;
+    private IList<Customer> currentUser;
+    private IList<PurchaseRequest> purchaseRequests;
 
-        private string postcode = "";
-        private string address = "";
-        private string firstName = "";
-        private string lastName = "";
-        private string email = "";
-        private int phoneNumber = 0;
-        private double rating = 0;
-        private string password = "";
+    #region updateInformation
+    
+    private string updatedTitle = "";
+    private string updatedAuthor = "";
+    private string updatedEdition = "";
+    private string updatedCondition = "";
+    private string updatedSubject = "";
+    private string updatedImage = "";
+    private double? updatedPrice = 0;
+    private bool updatedHardCopy = false;
+    private string updatedDescription = "";
 
+    private string postcode = "";
+    private string address = "";
+    private string firstName = "";
+    private string lastName = "";
+    private string email = "";
+    private int phoneNumber = 0;
+    private double rating = 0;
+    private string password = "";
 
-        private void EnableEditing(bool flag, int id)
-        {
-            BookSale saleToBeUpdated = salesToShow.First(i => i.bookSaleID == id);
-            saleToBeUpdated.isEditing = flag;
-        }
-
-        private void InitiateEdit(int id)
-        {
-            BookSale saleToBeUpdated = salesToShow.First(i => i.bookSaleID == id);
-
-            updatedTitle = saleToBeUpdated.title;
-            updatedAuthor = saleToBeUpdated.author;
-            updatedEdition = saleToBeUpdated.edition;
-            updatedCondition = saleToBeUpdated.condition;
-            updatedSubject = saleToBeUpdated.subject;
-            updatedImage = saleToBeUpdated.image;
-            updatedPrice = saleToBeUpdated.price;
-            updatedHardCopy = saleToBeUpdated.hardCopy;
-            EditSale(id);
-        }
-
-        private void EditSale(int id)
-        {
-            BookSale saleToBeUpdated = salesToShow.First(i => i.bookSaleID == id);
-            SaleService.UpdateAsync(saleToBeUpdated, updatedTitle, updatedAuthor, updatedEdition, updatedCondition, updatedSubject, updatedImage, updatedPrice, updatedHardCopy, updatedDescription);
-            saleToBeUpdated.isEditing = false;
-        }
-
-        // edit customer
-
-        private void EnableEditingCustomer(bool flag, string username)
-        {
-            Customer customerToBeUpdated = currentUser.First(i => i.username == username);
-            currentUser.First().isEditing = flag;
-        }
-
-        private void InitiateEditCustomer(string username)
-        {
-            Customer customerToBeUpdated = currentUser.First(i => i.username == username);
-
-
-            postcode = customerToBeUpdated.postCode;
-            address = customerToBeUpdated.address;
-            firstName = customerToBeUpdated.firstName;
-            lastName = customerToBeUpdated.lastName;
-            email = customerToBeUpdated.email;
-            phoneNumber = customerToBeUpdated.phoneNumber;
-            rating = customerToBeUpdated.rating;
-            password = customerToBeUpdated.password;
-
-            EditCustomer(username);
-        }
-
-        private void EditCustomer(string username)
-        {
-            Customer customerToBeUpdated = currentUser.First(i => i.username == username);
-            CustomerService.UpdateCustomerAsync(customerToBeUpdated, postcode, address, firstName, lastName, email, phoneNumber, rating, password);
-            customerToBeUpdated.isEditing = false;
-        }
-
-
-        protected override async Task OnInitializedAsync()
-        {
-            string username = CustomAuthenticationStateProvider.cachedUser.username; // Uses the cached User from Login to identify the specific username, and showing the related information to that user
-            allBookSalesForUser = await SaleService.GetBookSaleAsync(username);
-            salesToShow = allBookSalesForUser;
-            currentUser = await CustomerService.GetCustomerAsync(username);
-            
-            
-            
-            
-            //todo -- test skal bare slettes når tier2+3 virker.
-            
-            BookSale testBookSale = new BookSale
-            {
-                title = "Lalaland",
-                author = "John",
-                bookSaleID = 1,
-                condition = "good",
-                description = "Lalaland",
-                edition = "3",
-                hardCopy = true,
-                image = "null",
-                isEditing = false,
-                price = 199.50,
-                subject = "economics",
-                username = "Crisiluluman"
-            };
-
-            PurchaseRequest testPurchaseRequest = new PurchaseRequest
-            {
-                RequestID = 1,
-                bookSale = testBookSale,
-                buyer = "SonSon",
-                seller = "Crisiluluman"
-            };
-            
-            purchaseRequests = new List<PurchaseRequest>();
-            purchaseRequests.Insert(0,testPurchaseRequest);
-        }
-
-
-        private void DeletePurchaseRequest(int RequestId)
-        {
-            // 
-        }
-
+    #endregion
+    
+    #region updateMethods
+    
+    private void EnableEditing(bool flag, int id)
+    {
+        BookSale saleToBeUpdated = salesToShow.First(i => i.bookSaleID == id);
+        saleToBeUpdated.isEditing = flag;
     }
+
+    private void InitiateEdit(int id)
+    {
+        BookSale saleToBeUpdated = salesToShow.First(i => i.bookSaleID == id);
+
+        updatedTitle = saleToBeUpdated.title;
+        updatedAuthor = saleToBeUpdated.author;
+        updatedEdition = saleToBeUpdated.edition;
+        updatedCondition = saleToBeUpdated.condition;
+        updatedSubject = saleToBeUpdated.subject;
+        updatedImage = saleToBeUpdated.image;
+        updatedPrice = saleToBeUpdated.price;
+        updatedHardCopy = saleToBeUpdated.hardCopy;
+        EditSale(id);
+    }
+
+    private void EditSale(int id)
+    {
+        BookSale saleToBeUpdated = salesToShow.First(i => i.bookSaleID == id);
+        SaleService.UpdateAsync(saleToBeUpdated, updatedTitle, updatedAuthor, updatedEdition, updatedCondition, updatedSubject, updatedImage, updatedPrice, updatedHardCopy, updatedDescription);
+        saleToBeUpdated.isEditing = false;
+    }
+
+    // edit customer
+
+    private void EnableEditingCustomer(bool flag, string username)
+    {
+        Customer customerToBeUpdated = currentUser.First(i => i.username == username);
+        currentUser.First().isEditing = flag;
+    }
+
+    private void InitiateEditCustomer(string username)
+    {
+        Customer customerToBeUpdated = currentUser.First(i => i.username == username);
+
+
+        postcode = customerToBeUpdated.postCode;
+        address = customerToBeUpdated.address;
+        firstName = customerToBeUpdated.firstName;
+        lastName = customerToBeUpdated.lastName;
+        email = customerToBeUpdated.email;
+        phoneNumber = customerToBeUpdated.phoneNumber;
+        rating = customerToBeUpdated.rating;
+        password = customerToBeUpdated.password;
+
+        EditCustomer(username);
+    }
+
+    private void EditCustomer(string username)
+    {
+        Customer customerToBeUpdated = currentUser.First(i => i.username == username);
+        CustomerService.UpdateCustomerAsync(customerToBeUpdated, postcode, address, firstName, lastName, email, phoneNumber, rating, password);
+        customerToBeUpdated.isEditing = false;
+    }
+
+    #endregion
+
+    protected override async Task OnInitializedAsync()
+    {
+        string username = CustomAuthenticationStateProvider.cachedUser.username; // Uses the cached User from Login to identify the specific username, and showing the related information to that user
+        allBookSalesForUser = await SaleService.GetBookSaleAsync(username);
+        salesToShow = allBookSalesForUser;
+        currentUser = await CustomerService.GetCustomerAsync(username);
+        
+        
+        
+        
+        //todo -- test skal bare slettes når tier2+3 virker.
+        
+        BookSale testBookSale = new BookSale
+        {
+            title = "Lalaland",
+            author = "John",
+            bookSaleID = 1,
+            condition = "good",
+            description = "Lalaland",
+            edition = "3",
+            hardCopy = true,
+            image = "null",
+            isEditing = false,
+            price = 199.50,
+            subject = "economics",
+            username = "Crisiluluman"
+        };
+
+        PurchaseRequest testPurchaseRequest = new PurchaseRequest
+        {
+            requestID = 1,
+            bookSale = testBookSale,
+            buyer = "SonSon",
+            seller = "Crisiluluman"
+        };
+        
+        purchaseRequests = new List<PurchaseRequest>();
+        purchaseRequests.Insert(0,testPurchaseRequest);
+        
+    }
+
+
+    private void DeletePurchaseRequest(int? requestId)
+    {
+        // 
+    }
+
+}
