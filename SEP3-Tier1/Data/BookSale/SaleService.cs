@@ -22,7 +22,7 @@ namespace SEP3_Tier1.Data
         }
 
 
-        public async Task<IList<BookSale>> GetBookSaleAsync(string username, string IdList)
+        public async Task<IList<BookSale>> GetBookSaleAsync(string username)
         {
             Task<string> stringAsync = client.GetStringAsync(uri + $"/Sales?username={username}");
             string message = await stringAsync;

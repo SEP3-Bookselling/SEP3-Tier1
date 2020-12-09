@@ -39,6 +39,7 @@ namespace SEP3_Tier1.Data
             Task<string> stringAsync = client.GetStringAsync(uri + $"/Purchase?buyer={username}");
             string message = await stringAsync;
             List<PurchaseRequest> result = JsonSerializer.Deserialize<List<PurchaseRequest>>(message);
+            Console.WriteLine(message);
             return result;
         }
 
