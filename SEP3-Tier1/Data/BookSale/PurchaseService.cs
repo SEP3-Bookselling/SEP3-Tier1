@@ -19,19 +19,20 @@ namespace SEP3_Tier1.Data
         
 
         public PurchaseService()
-        {
+        { 
             client = new HttpClient();
+            cartItems = new List<BookSale>();
         }
 
-        public async Task CreatePurchaseRequestAsync(PurchaseRequest purchaseRequest)
+        public async Task CreatePurchaseRequestAsync(IList<PurchaseRequest> purchaseRequests)
         {
-            string bookSaleAsJson = JsonSerializer.Serialize(purchaseRequest);
+            string bookSaleAsJson = JsonSerializer.Serialize(purchaseRequests);
             
             HttpContent content = new StringContent(bookSaleAsJson,
                 Encoding.UTF8,
                 "application/json");
             
-            HttpResponseMessage responseMessage = await client.PostAsync(uri + "/PurchaseRequest", content);
+            HttpResponseMessage responseMessage = await client.PostAsync(uri + "/Purchase", content);
         }
 
         public async Task<IList<PurchaseRequest>> GetPurchaseRequestAsync(string username)
@@ -47,7 +48,6 @@ namespace SEP3_Tier1.Data
         public async Task AddToCartAsync(BookSale bookSale)
         {
             cartItems.Add(bookSale);
-            Console.WriteLine(cartItems[0]);
             
         }
 
