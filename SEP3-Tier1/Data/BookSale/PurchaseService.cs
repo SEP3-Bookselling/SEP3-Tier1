@@ -35,9 +35,11 @@ namespace SEP3_Tier1.Data
             HttpResponseMessage responseMessage = await client.PostAsync(uri + "/Purchase", content);
         }
 
-        public async Task<IList<PurchaseRequest>> GetPurchaseRequestAsync(string username)
-        {
-            throw new System.NotImplementedException();
+        public async Task<IList<PurchaseRequest>> GetPurchaseRequestAsync(string username) {
+            Task<string> stringAsync = client.GetStringAsync(uri + $"/Purchase?buyer={username}");
+            string message = await stringAsync;
+            List<PurchaseRequest> result = JsonSerializer.Deserialize<List<PurchaseRequest>>(message);
+            return result;
         }
 
         public async Task DeletePurchaseRequestAsync(int id)
