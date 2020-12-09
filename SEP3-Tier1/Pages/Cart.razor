@@ -82,6 +82,7 @@
 
         foreach (BookSale item in CartItems) {
             PurchaseRequest toAdd = new PurchaseRequest {
+                bookSale = item,
                 buyer = username,
                 seller = item.username
             };
