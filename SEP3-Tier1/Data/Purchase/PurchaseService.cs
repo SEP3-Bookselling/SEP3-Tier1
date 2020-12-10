@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
@@ -47,7 +49,14 @@ namespace SEP3_Tier1.Data.Purchase
 
         public async Task AddToCartAsync(Models.BookSale bookSale)
         {
-            cartItems.Add(bookSale);
+            if (cartItems.Any(sale => sale.bookSaleID == bookSale.bookSaleID)) {
+                Console.WriteLine("Cannot add two of the same item to cart");
+            }
+            else {
+                cartItems.Add(bookSale);
+            }
+            
+            
             
         }
 

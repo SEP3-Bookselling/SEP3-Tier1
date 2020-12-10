@@ -1,21 +1,14 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
 using SEP3_Tier1.Authentication;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using SEP3_Tier1.Data;
 using SEP3_Tier1.Data.BookSale;
 using SEP3_Tier1.Data.Purchase;
 using SEP3_Tier1.Data.Users;
+using Blazored.Modal;
 
 namespace SEP3_Tier1
 {
@@ -32,11 +25,14 @@ namespace SEP3_Tier1
         public void ConfigureServices(IServiceCollection services) {
             services.AddRazorPages();
             services.AddServerSideBlazor();
+            
             services.AddSingleton<ISaleService, SaleService>();
             services.AddSingleton<IUserService, UserService>();
             services.AddSingleton<ICustomerService, CustomerService>();
             services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();
             services.AddSingleton<IPurchaseService, PurchaseService>();
+            
+            services.AddBlazoredModal();
 
             services.AddAuthorization(options =>
             {

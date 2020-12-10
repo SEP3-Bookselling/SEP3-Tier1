@@ -6,20 +6,23 @@
 @using SEP3_Tier1.Authentication
 @using SEP3_Tier1.Data.BookSale
 @using SEP3_Tier1.Data.Purchase
+@using Blazored.Modal.Services
 @inject ISaleService SaleService
 @inject IPurchaseService PurchaseService
+@inject IModalService Modal
 
 <h3>SalesList</h3>
 
 <div class="container">
-    @if (salesToShow == null)
-    {
+    
+    
+
+    @if (salesToShow == null) {
         <p>
             <em>Loading...</em>
         </p>
     }
-    else
-    {
+    else {
         <table class="table table-bordered">
             <thead>
             <tr>
@@ -39,31 +42,31 @@
 
             </tr>
             </thead>
+
             <tbody>
-            
-            @for (int i = 0; i < salesToShow.Count; i++) {
-                int localI = i;
+            @foreach (BookSale sale in salesToShow) {
                 <tr contenteditable="true" name="">
-                    <td>@salesToShow[i].title</td>
-                    <td>@salesToShow[i].author</td>
-                    <td>@salesToShow[i].edition</td>
-                    <td>@salesToShow[i].condition</td>
-                    <td>@salesToShow[i].subject</td>
-                    <td>@salesToShow[i].image</td>
-                    <td>@salesToShow[i].price</td>
-                    <td>@salesToShow[i].hardCopy</td>
-                    <td>@salesToShow[i].username</td>
-                    <td>@salesToShow[i].bookSaleID</td>
-                    <td><button @onclick="@(() => AddToCart(salesToShow[localI]))">Add To Cart</button>@if (errorValue) { @errorMessage }</td>
-                    <td><button @onclick="@(() => UpdateSale(salesToShow[localI]))"></button></td>
-                    <td><button @onclick="@(() => DeleteSale(salesToShow[localI].bookSaleID))"></button></td>
+                    <td>@sale.title</td>
+                    <td>@sale.author</td>
+                    <td>@sale.edition</td>
+                    <td>@sale.condition</td>
+                    <td>@sale.subject</td>
+                    <td>@sale.image</td>
+                    <td>@sale.price</td>
+                    <td>@sale.hardCopy</td>
+                    <td>@sale.username</td>
+                    <td>@sale.bookSaleID</td>
+                    <td><button @onclick="@(() => AddToCart(sale))">Add To Cart</button></td>
+                    <td><button @onclick="@(() => UpdateSale(sale))"></button></td>
+                    <td><button @onclick="@(() => DeleteSale(sale.bookSaleID))"></button></td>
                 </tr>
             }
             </tbody>
         </table>}
    
-    
    
+    
+
 </div>
 
 
@@ -73,17 +76,20 @@
 
     private IList<BookSale> allSales;
     private IList<BookSale> salesToShow;
-    private bool errorValue;
-    private string errorMessage = "";
+    private IList<BookSale> cartItems;
+
 
     private async Task AddToCart(BookSale bookSale)
     {
         if (bookSale.username.Equals(CustomAuthenticationStateProvider.cachedUser.username)) {
-            errorValue = true;
-            errorMessage = "Cannot add own sale to cart";
-        }
+            Modal.Show<ErrorPage>("Cannot add own sale to cart");
+            
+        } 
+        else if(cartItems.Any(sale => sale.bookSaleID == bookSale.bookSaleID)) {
+            Modal.Show<ErrorPage>("Item is already in cart");
+
+        } 
         else {
-            errorValue = false;
             await PurchaseService.AddToCartAsync(bookSale);
         }
     }
@@ -102,6 +108,7 @@
     {
         allSales = await SaleService.GetBookSaleAsync("");
         salesToShow = allSales;
+        cartItems = await PurchaseService.GetCartItems();
     }
 
 }
