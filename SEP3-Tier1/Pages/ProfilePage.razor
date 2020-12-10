@@ -142,9 +142,17 @@ else {
         </thead>
         <tbody>
         @foreach (PurchaseRequest purchaseRequest in purchaseRequests) {
+            BookSale sale = purchaseRequest.bookSale;
             <tr contenteditable="true">
-                
-
+                <td>@sale.title</td>
+                <td>@sale.author</td>
+                <td>@sale.edition</td>
+                <td>@sale.condition</td>
+                <td>@sale.subject</td>
+                <td>@sale.image</td>
+                <td>@sale.price</td>
+                <td>@sale.hardCopy</td>
+                <td>@sale.username</td>
                 <td><button @onclick="@(() => DeletePurchaseRequest(purchaseRequest.requestID))"></button></td>
             </tr>
         }
@@ -262,7 +270,6 @@ else
     private IList<BookSale> salesToShow;
     private IList<Customer> currentUser;
     private IList<PurchaseRequest> purchaseRequests;
-    private IList<BookSale> pBookSales;
 
     #region updateInformation
     
@@ -359,6 +366,7 @@ else
         salesToShow = allBookSalesForUser;
         currentUser = await CustomerService.GetCustomerAsync(username);
         purchaseRequests = await PurchaseService.GetPurchaseRequestAsync(username);
+        
         
     }
 
