@@ -144,6 +144,7 @@ else {
         <tbody>
         @foreach (PurchaseRequest purchaseRequest in purchaseRequests) {
             BookSale sale = purchaseRequest.bookSale;
+            
             <tr contenteditable="true">
                 <td>@sale.title</td>
                 <td>@sale.author</td>
@@ -369,8 +370,10 @@ else
         purchaseRequests = await PurchaseService.GetPurchaseRequestAsync(username);
     }
     
-    private void DeletePurchaseRequest(int requestId)
+    private async Task DeletePurchaseRequest(int requestId)
     {
-        PurchaseService.DeletePurchaseRequestAsync(requestId);
+        PurchaseRequest toRemove = purchaseRequests.First(t => t.requestID == requestId);
+        await PurchaseService.DeletePurchaseRequestAsync(requestId);
+        purchaseRequests.Remove(toRemove);
     }
 }
