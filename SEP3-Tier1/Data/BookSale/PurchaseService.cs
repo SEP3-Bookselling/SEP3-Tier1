@@ -36,11 +36,9 @@ namespace SEP3_Tier1.Data
         }
 
         public async Task<IList<PurchaseRequest>> GetPurchaseRequestAsync(string username) {
-            Console.WriteLine("username in get purchase in service: " + username);
             Task<string> stringAsync = client.GetStringAsync(uri + $"/Purchase?username={username}");
             string message = await stringAsync;
             List<PurchaseRequest> result = JsonSerializer.Deserialize<List<PurchaseRequest>>(message);
-            Console.WriteLine("Get purchase request in PurchaseService: " + message);
             return result;
         }
 
