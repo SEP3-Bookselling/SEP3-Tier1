@@ -7,10 +7,12 @@
 @using SEP3_Tier1.Data.BookSale
 @using SEP3_Tier1.Data.Purchase
 @using SEP3_Tier1.Data.Users
+@using Syncfusion.Blazor.Navigations
 
 @inject ISaleService SaleService
 @inject ICustomerService CustomerService
 @inject IPurchaseService PurchaseService
+@inject IModalService Modal
 
 <!--#region UserSales-->
 
@@ -44,6 +46,7 @@ else
             <th>Description</th>
             <th>Update</th>
             <th>Delete</th>
+            <th>Pending</th>
         </tr>
         </thead>
         <tbody>
@@ -99,10 +102,15 @@ else
                     <td>@item.price</td>
                     <td>@item.hardCopy</td>
                     <td>@item.description</td>
+                    <td></td>
                     <td>
                         <button @onclick="() => EnableEditing(true, item.bookSaleID)">
                             <i class="oi oi-file" style="color: blue"></i>
                         </button>
+                    </td>
+                    <td></td>
+                    <td>
+                        <button @onclick="() => ShowPendingBuyers(item.bookSaleID)"></button>
                     </td>
                 </tr>
             }
@@ -266,12 +274,12 @@ else
 <!--#endregion-->
 
 
-
 @code {
     private IList<BookSale> allBookSalesForUser;
     private IList<BookSale> salesToShow;
     private IList<Customer> currentUser;
     private IList<PurchaseRequest> purchaseRequests;
+    
 
     #region updateInformation
     
@@ -375,5 +383,12 @@ else
         PurchaseRequest toRemove = purchaseRequests.First(t => t.requestID == requestId);
         await PurchaseService.DeletePurchaseRequestAsync(requestId);
         purchaseRequests.Remove(toRemove);
+    }
+
+    private async Task ShowPendingBuyers(int id) {
+        var parameters = new ModalParameters();
+        parameters.Add(nameof(PendingSales.SaleId), id);
+        
+        Modal.Show<PendingSales>("Pending Sale", parameters);
     }
 }

@@ -42,6 +42,13 @@ namespace SEP3_Tier1.Data.Purchase
             return result;
         }
 
+        public async Task<IList<PurchaseRequest>> GetPurchaseRequestFromIdAsync(int id) {
+            Task<string> stringAsync = client.GetStringAsync(uri + $"/Purchase/saleId?={id}");
+            string message = await stringAsync;
+            List<PurchaseRequest> result = JsonSerializer.Deserialize<List<PurchaseRequest>>(message);
+            return result;
+        }
+
         public async Task DeletePurchaseRequestAsync(int id)
         {
             await client.DeleteAsync($"{uri}/purchase/{id}");

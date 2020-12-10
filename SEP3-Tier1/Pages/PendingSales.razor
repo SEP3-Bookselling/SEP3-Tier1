@@ -1,0 +1,61 @@
+﻿@page "/PendingSales"
+@using SEP3_Tier1.Models
+@using SEP3_Tier1.Data.Purchase
+@inject IPurchaseService PurchaseService
+
+<h3>Pending Sales</h3>
+
+@if (pendingSales == null)
+{
+    <p>
+        <em>Loading...</em>
+    </p>
+}
+else if (!pendingSales.Any())
+{
+    <p>
+        <em>No Sales Were Found</em>
+    </p>
+}
+else {
+    <table>
+        <thead>
+        <tr>
+            <th>Buyer</th>
+            <th>Confirm</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (PurchaseRequest request in pendingSales) {
+            <tr>
+                <td>@request.buyer</td>
+                <td>
+                    <button @onclick="ConfirmPurchase">
+                        <i class="oi oi-file" style="color: blue"></i>
+                    </button></td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+
+
+@code {
+    [CascadingParameter] BlazoredModalInstance BlazoredModal { get; set; }
+    
+    [Parameter]  public int SaleId { get; set; }
+
+    private IList<PurchaseRequest> pendingSales;
+
+    private void ConfirmPurchase() {
+        Console.WriteLine("Confirm Pressed");
+    }
+    
+
+    protected override async Task OnInitializedAsync() {
+        pendingSales = await PurchaseService.GetPurchaseRequestFromIdAsync(SaleId);
+    }
+    
+
+
+}

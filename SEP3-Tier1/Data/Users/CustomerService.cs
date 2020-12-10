@@ -28,7 +28,9 @@ namespace SEP3_Tier1.Data.Users
                 IList<Customer> result = JsonSerializer.Deserialize<IList<Customer>>(message);    
                 return result;
             }
-
+            
+            
+            
             public async Task CreateCustomerAsync(Customer customer)
             {
                 string customerJson = JsonSerializer.Serialize(customer);

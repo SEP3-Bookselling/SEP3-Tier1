@@ -29,6 +29,7 @@ namespace SEP3_Tier1.Network
         //PurchaseRequest
         CreatePurchaseRequest,
         GetPurchaseRequest,
+        GetPurchaseRequestFromId,
         DeletePurchaseRequest,
         
         // Prototype
