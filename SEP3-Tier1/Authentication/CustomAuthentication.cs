@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.JSInterop;
 using SEP3_Tier1.Data.Users;
-using SEP3_Tier1.Models.Users;
+using SEP3_Tier1.Models;
 
-  namespace SEP3_Tier1.Authentication
+namespace SEP3_Tier1.Authentication
 {
     public class CustomAuthenticationStateProvider : AuthenticationStateProvider {
         private readonly IJSRuntime jsRuntime;

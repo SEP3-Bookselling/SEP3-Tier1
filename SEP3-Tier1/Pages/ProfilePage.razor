@@ -4,8 +4,9 @@
 @using System.Dynamic
 @using SEP3_Tier1.Authentication
 @using SEP3_Tier1.Data
+@using SEP3_Tier1.Data.BookSale
+@using SEP3_Tier1.Data.Purchase
 @using SEP3_Tier1.Data.Users
-@using SEP3_Tier1.Models.Users
 
 @inject ISaleService SaleService
 @inject ICustomerService CustomerService
@@ -366,15 +367,10 @@ else
         salesToShow = allBookSalesForUser;
         currentUser = await CustomerService.GetCustomerAsync(username);
         purchaseRequests = await PurchaseService.GetPurchaseRequestAsync(username);
-        
-        
-    }
-
-
-    private void DeletePurchaseRequest(int? requestId)
-    {
-        // 
     }
     
-
+    private void DeletePurchaseRequest(int requestId)
+    {
+        PurchaseService.DeletePurchaseRequestAsync(requestId);
+    }
 }

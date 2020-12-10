@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using SEP3_Tier1.Models;
-using Syncfusion.Blazor.PivotView;
 
-namespace SEP3_Tier1.Data
+namespace SEP3_Tier1.Data.Purchase
 {
     public class PurchaseService : IPurchaseService
     {
@@ -15,13 +13,13 @@ namespace SEP3_Tier1.Data
         private string uri = "https://localhost:5010";
         private readonly HttpClient client;
 
-        public IList<BookSale> cartItems;
+        public IList<Models.BookSale> cartItems;
         
 
         public PurchaseService()
         { 
             client = new HttpClient();
-            cartItems = new List<BookSale>();
+            cartItems = new List<Models.BookSale>();
         }
 
         public async Task CreatePurchaseRequestAsync(IList<PurchaseRequest> purchaseRequests)
@@ -44,16 +42,16 @@ namespace SEP3_Tier1.Data
 
         public async Task DeletePurchaseRequestAsync(int id)
         {
-            throw new System.NotImplementedException();
+            await client.DeleteAsync($"{uri}/purchase/{id}");
         }
 
-        public async Task AddToCartAsync(BookSale bookSale)
+        public async Task AddToCartAsync(Models.BookSale bookSale)
         {
             cartItems.Add(bookSale);
             
         }
 
-        public async Task<IList<BookSale>> GetCartItems()
+        public async Task<IList<Models.BookSale>> GetCartItems()
         {
             return cartItems;
         }

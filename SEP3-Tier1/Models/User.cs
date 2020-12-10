@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace SEP3_Tier1.Models.Users
+namespace SEP3_Tier1.Models
 {
     public class User
     {

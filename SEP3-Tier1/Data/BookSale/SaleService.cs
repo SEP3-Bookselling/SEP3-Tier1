@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
-using SEP3_Tier1.Models;
-using SEP3_Tier1.Network;
 
-
-namespace SEP3_Tier1.Data
+namespace SEP3_Tier1.Data.BookSale
 {
     public class SaleService : ISaleService
     {
@@ -22,22 +18,22 @@ namespace SEP3_Tier1.Data
         }
 
 
-        public async Task<IList<BookSale>> GetBookSaleAsync(string username)
+        public async Task<IList<Models.BookSale>> GetBookSaleAsync(string username)
         {
             Task<string> stringAsync = client.GetStringAsync(uri + $"/Sales?username={username}");
             string message = await stringAsync;
-            List<BookSale> result = JsonSerializer.Deserialize<List<BookSale>>(message);
+            List<Models.BookSale> result = JsonSerializer.Deserialize<List<Models.BookSale>>(message);
             return result;
         }
 
-        public async Task<BookSale> GetSaleAsync() {
+        public async Task<Models.BookSale> GetSaleAsync() {
             Task<string> stringAsync = client.GetStringAsync(uri + "/Sales");
             string message = await stringAsync;
-            BookSale result = JsonSerializer.Deserialize<BookSale>(message);
+            Models.BookSale result = JsonSerializer.Deserialize<Models.BookSale>(message);
             return result;
         }
 
-        public async Task CreateBookSale(BookSale bookSale) {
+        public async Task CreateBookSale(Models.BookSale bookSale) {
             string bookSaleAsJson = JsonSerializer.Serialize(bookSale);
             
             HttpContent content = new StringContent(bookSaleAsJson,
@@ -49,11 +45,11 @@ namespace SEP3_Tier1.Data
         }
 
         
-        public async Task RemoveSaleAsync(int saleId) {
+        public async Task DeleteSaleAsync(int saleId) {
             await client.DeleteAsync($"{uri}/sales/{saleId}");
         }
 
-        public async Task UpdateAsync(BookSale sale,  string title, string author, string edition, string condition, string subject, string image, double? price, bool hardCopy, string description) {
+        public async Task UpdateAsync(Models.BookSale sale,  string title, string author, string edition, string condition, string subject, string image, double? price, bool hardCopy, string description) {
             sale.title = title;
             sale.author = author;
             sale.edition = edition;

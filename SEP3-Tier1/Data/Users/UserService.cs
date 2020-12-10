@@ -6,7 +6,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using SEP3_Tier1.Data.Users;
-using SEP3_Tier1.Models.Users;
+using SEP3_Tier1.Models;
 using SEP3_Tier1.Network;
 using JsonSerializer = System.Text.Json.JsonSerializer;
 

@@ -4,6 +4,8 @@
 @using Syncfusion.Blazor.Navigations
 @using Syncfusion.Blazor.Grids
 @using SEP3_Tier1.Authentication
+@using SEP3_Tier1.Data.BookSale
+@using SEP3_Tier1.Data.Purchase
 @inject ISaleService SaleService
 @inject IPurchaseService PurchaseService
 
@@ -88,7 +90,7 @@
 
     private async Task DeleteSale(int id) {
         BookSale toRemove = salesToShow.First(t => t.bookSaleID == id);
-        await SaleService.RemoveSaleAsync(id);
+        await SaleService.DeleteSaleAsync(id);
         salesToShow.Remove(toRemove);
     }
 

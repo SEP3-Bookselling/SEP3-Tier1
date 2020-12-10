@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using SEP3_Tier1.Models;
 
-namespace SEP3_Tier1.Data
+namespace SEP3_Tier1.Data.Purchase
 {
     public interface IPurchaseService
     {
@@ -10,8 +10,8 @@ namespace SEP3_Tier1.Data
         Task<IList<PurchaseRequest>> GetPurchaseRequestAsync(string username);
         Task DeletePurchaseRequestAsync(int id);
 
-        Task AddToCartAsync(BookSale bookSale);
+        Task AddToCartAsync(Models.BookSale bookSale);
 
-        Task<IList<BookSale>> GetCartItems();
+        Task<IList<Models.BookSale>> GetCartItems();
     }
 }
