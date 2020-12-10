@@ -10,21 +10,122 @@
 
 @inject ISaleService SaleService
 @inject ICustomerService CustomerService
+@inject IUserService UserService
+
+<AuthorizeView>
+    <NotAuthorized>
+        <h3>Profile Page. Nothing to show</h3>
+        <br>
+        <p>Please create a profile.</p>
+    </NotAuthorized>
+</AuthorizeView>
+
+<AuthorizeView Policy="Moderator">
+    <h3>Profile Page of @user.username</h3>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Username</th>
+            <th>Role</th>
+            <th>Password</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        @if (user.isEditing)
+        {
+        <tr>
+            <td>
+            </td>
+            <td>
+            </td>
+            <td>
+                <input type="text" class="form-control" placeholder="@user.password" @bind="user.password">
+            </td>
+            <td>
+                <button @onclick="() => InitiateEditUser(user.username)">
+                    <i class="oi oi-file" style="color: blue"></i>
+                </button>
+            </td>
+
+        </tr>
+        }
+        else
+        {
+        <tr contenteditable="true">
+            <td>@user.username</td>
+            <td>@user.role</td>
+            <td>@user.password</td>
+            <td>
+                <button @onclick="() => EnableEditingUser(true, user.username)">
+                    <i class="oi oi-file" style="color: blue"></i>
+                </button>
+            </td>
+        </tr>
 
 
-<h3>Profile Page</h3>
+        }
+        </tbody>
+    </table>
 
-<div class="row">
-    <div class="col-xl-6">
-        <h4>Rating</h4>
-        <RadzenRating Change=@(args => @OnChange(args))> </RadzenRating>
-        <p>Rating: @valueStar</p>
-    </div>
+</AuthorizeView>
 
-</div>
+<AuthorizeView Policy="Admin">
+    <h3>Profile Page of @user.username</h3>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Username</th>
+            <th>Role</th>
+            <th>Password</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        @if (user.isEditing)
+        {
+        <tr>
+            <td>
+            </td>
+            <td>
+            </td>
+            <td>
+                <input type="text" class="form-control" placeholder="@user.password" @bind="user.password">
+            </td>
+            <td>
+                <button @onclick="() => InitiateEditUser(user.username)">
+                    <i class="oi oi-file" style="color: blue"></i>
+                </button>
+            </td>
+
+        </tr>
+        }
+        else
+        {
+        <tr contenteditable="true">
+            <td>@user.username</td>
+            <td>@user.role</td>
+            <td>@user.password</td>
+            <td>
+                <button @onclick="() => EnableEditingUser(true, user.username)">
+                    <i class="oi oi-file" style="color: blue"></i>
+                </button>
+            </td>
+        </tr>
+
+
+        }
+        </tbody>
+    </table>
+</AuthorizeView>
+
+<AuthorizeView Policy="Customer">
+<h3>Profile Page of @user.username</h3>
+
+
+<h4>Rating: @starValue</h4>
 
 <br>
-<br> 
 
 
 @if (salesToShow == null)
@@ -152,7 +253,6 @@ else
             <th>Last Name</th>
             <th>Email</th>
             <th>Phone Number</th>
-            <th>Rating</th>
             <th>Update</th>
         </tr>
         </thead>
@@ -167,7 +267,7 @@ else
                         </td>
                         <td>
                         </td>
-                       <td>
+                        <td>
                             <input type="text" class="form-control" placeholder="@customer.password" @bind="customer.password">
                         </td>
                         <td>
@@ -188,10 +288,7 @@ else
                         <td>
                             <input type="text" class="form-control" placeholder="@customer.phoneNumber" @bind="customer.phoneNumber">
                         </td>
-                        <td>
-                            <input type="text" class="form-control" placeholder="@customer.rating" @bind="customer.rating">
-                        </td>
- 
+
 
                         <td>
                             <button @onclick="() => InitiateEditCustomer(customer.username)">
@@ -214,7 +311,6 @@ else
                         <td>@customer.lastName</td>
                         <td>@customer.email</td>
                         <td>@customer.phoneNumber</td>
-                        <td>@customer.rating</td>
                         <td>
                             <button @onclick="() => EnableEditingCustomer(true, customer.username)">
                                 <i class="oi oi-file" style="color: blue"></i>
@@ -227,7 +323,7 @@ else
         </tbody>
     </table>
 }
-
+</AuthorizeView>
 
 
 @code {
@@ -235,6 +331,9 @@ else
     private IList<BookSale> salesToShow;
     private IList<Customer> currentUser;
 
+    private User user;
+
+    private string updatedRole = "";
     private string updatedTitle = "";
     private string updatedAuthor = "";
     private string updatedEdition = "";
@@ -245,6 +344,7 @@ else
     private bool updatedHardCopy = false;
     private string updatedDescription = "";
 
+    private string role = "";
     private string postcode = "";
     private string address = "";
     private string firstName = "";
@@ -254,7 +354,7 @@ else
     private double rating = 0;
     private string password = "";
 
-    private double valueStar;
+    private double starValue;
 
     private void EnableEditing(bool flag, int id)
     {
@@ -296,15 +396,13 @@ else
     private void InitiateEditCustomer(string username)
     {
         Customer customerToBeUpdated = currentUser.First(i => i.username == username);
-
-
+        
         postcode = customerToBeUpdated.postCode;
         address = customerToBeUpdated.address;
         firstName = customerToBeUpdated.firstName;
         lastName = customerToBeUpdated.lastName;
         email = customerToBeUpdated.email;
         phoneNumber = customerToBeUpdated.phoneNumber;
-        rating = customerToBeUpdated.rating;
         password = customerToBeUpdated.password;
 
         EditCustomer(username);
@@ -317,17 +415,48 @@ else
         customerToBeUpdated.isEditing = false;
     }
 
+    //private User user;
 
     protected override async Task OnInitializedAsync()
     {
-        valueStar = 4.8; //Rating get from database
+        string username;
+        string role;
+        try
+        {
+            user = CustomAuthenticationStateProvider.cachedUser; // Uses the cached User from Login to identify the specific username, and showing the related information to that user
+            username = user.username;
+            role = user.role;
+        }
+        catch (NullReferenceException e)
+        {
+            user = null;
+            username = "";
+            role = "";
+            Console.WriteLine(e);
+            // Handles the NullPointerReferenceException, without crashing the entire system. Cause it still works, but it's an exception, so yeah
+        }
 
-        //string username = CustomAuthenticationStateProvider.cachedUser.username; // Uses the cached User from Login to identify the specific username, and showing the related information to that user
-        string username = "Crisiluluman";
-        allBookSalesForUser = await SaleService.GetBookSaleAsync(username);
-        salesToShow = allBookSalesForUser;
+        if (!String.IsNullOrEmpty(username) && role.Equals("Customer"))
+        {
+            username = CustomAuthenticationStateProvider.cachedUser.username; // Uses the cached User from Login to identify the specific username, and showing the related information to that user
 
-        currentUser = await CustomerService.GetCustomerAsync(username);
+            starValue = await CustomerService.GetRatingAsync(username); //Rating get from database
+
+            allBookSalesForUser = await SaleService.GetBookSaleAsync(username);
+            salesToShow = allBookSalesForUser;
+
+            currentUser = await CustomerService.GetCustomerAsync(username);
+        }
+        else if (!String.IsNullOrEmpty(username) && role.Equals("Moderator"))
+        {
+            User user = CustomAuthenticationStateProvider.cachedUser;
+            Console.WriteLine($"We a Moderator: {user.username} : {user.role} : {user.password}");
+        }
+        else if (!String.IsNullOrEmpty(username) && role.Equals("Admin"))
+        {
+            User user = CustomAuthenticationStateProvider.cachedUser;
+            Console.WriteLine($"We an Admin: {user.username} : {user.role} : {user.password}");
+        }
     }
 
 
@@ -338,14 +467,25 @@ else
         salesToShow.Remove(toBeRemoved);
     }
 
-    private double OnChange(double value)
+    //Editing User section
+    private void EnableEditingUser(bool flag, string username)
     {
-        double avg = (valueStar + value) / 2;
+        user.isEditing = flag;
+    }
+    
+    
+    private void InitiateEditUser(string username)
+    {
+        password = user.password;
+       // EditUser(username);
         
-        Console.Write($"{avg} <-- Star number \n");
-
-        return avg;
+        UserService.UpdateUserAsync(user, password);
+        user.isEditing = false;
     }
 
+    private void EditUser(string username)
+    {
+
+    }
 
 }

@@ -5,7 +5,9 @@
 @using Syncfusion.Blazor.Navigations
 @using Syncfusion.Blazor.Grids
 @using ChangeEventArgs = Microsoft.AspNetCore.Components.ChangeEventArgs
+@using SEP3_Tier1.Authentication
 @inject ISaleService SaleService
+@inject NavigationManager NavigationManager;
 
 <h3>SalesList</h3>
 
@@ -53,7 +55,9 @@
                 <th>Image</th>
                 <th>Price</th>
                 <th>HardCopy</th>
-                <th>Username</th>
+                <AuthorizeView Policy="Customer">
+                    <th>Username</th>
+                </AuthorizeView>
 
                 <AuthorizeView Policy="Moderator">
                     <th>Id</th>
@@ -73,7 +77,14 @@
                     <td>@item.image</td>
                     <td>@item.price</td>
                     <td>@item.hardCopy</td>
-                    <td>@item.username</td>
+                    <AuthorizeView Policy="Customer">
+                        <td>
+                            @item.username
+                            <button @onclick="(() => GoToProfilePage(item.username))">
+                                <i class="oi oi-person" style="color:cornflowerblue"></i>
+                            </button>
+                        </td>
+                    </AuthorizeView>
                     <AuthorizeView Policy="Moderator">
                         <td>@item.bookSaleID</td>
                         <td>
@@ -96,6 +107,8 @@
 
 @code{
 
+    public static string usernameOfOtherGuy { get; set; }
+    string username = CustomAuthenticationStateProvider.cachedUser.username;
 
     private IList<BookSale> allSales;
     private IList<BookSale> salesToShow;
@@ -154,6 +167,21 @@
             Console.WriteLine(e);
             salesToShow = allSales;
         }
+    }
+
+    public void GoToProfilePage(string username)
+    {
+        usernameOfOtherGuy = username;
+        Console.WriteLine(username);
+        if (this.username.Equals(username))
+        {
+            NavigationManager.NavigateTo("/ProfilePage");
+        }
+        else
+        {
+            NavigationManager.NavigateTo("/OtherProfilePages");
+        }
+        
     }
 
 }

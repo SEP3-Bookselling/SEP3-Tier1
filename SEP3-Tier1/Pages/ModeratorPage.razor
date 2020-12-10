@@ -17,6 +17,7 @@
     }
     else
     {
+        <h4>List of all customers</h4>
         <table class="table table-bordered">
             <thead>
             <tr>
@@ -70,7 +71,7 @@
     protected override async Task OnInitializedAsync()
     {
     //users = await userservice.GetAllUsersAsync(username);
-        customers = await CustomerService.GetAllCustomersAsync();
+        customers = await CustomerService.GetCustomerAsync(username);
     //user = await userservice.getSpecificUserAsync("AnneLindberg");
     //Console.WriteLine(user.username);
     }
@@ -78,7 +79,7 @@
 
     public async Task DeleteCustomer(string username)
     {
-        Customer toRemove = customers.First(t => t.username == username);
+        Customer toRemove = customers.First(t => t.username.Equals(username));
         await CustomerService.DeleteCustomerAsync(username);
         customers.Remove(toRemove);
     }

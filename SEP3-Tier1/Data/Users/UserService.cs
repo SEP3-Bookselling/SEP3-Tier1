@@ -43,12 +43,13 @@ namespace SEP3_Tier1.Data.Users
             return result;
         }
 
-        public async Task<User> getSpecificUserAsync(string username)
+        public async Task<User> getSpecificUserAsync(string username, string password)
         {
-            IList<User> users = await GetAllUsersAsync(username);
-            User user = users.FirstOrDefault(user => user.username.Equals(username));
-            string password = user.password;
-            Console.WriteLine($"\t\t USername: {user.username} : Password: {user.password}");
+            Console.WriteLine($"Logged in as: {username} pass = {password}");
+            string message = await client.GetStringAsync(uri + $"/users/Login?username={username}&password={password}");
+            User user = JsonSerializer.Deserialize<User>(message);
+            
+            Console.WriteLine($"\t\t Username: {user.username} : Password: {user.password}");
 
             if (user == null)
             {
@@ -62,5 +63,24 @@ namespace SEP3_Tier1.Data.Users
 
             return user;
         }
+
+        public async Task UpdateUserAsync(User user, string password)
+        {
+            user.password = password;
+
+            string userAsJson = JsonSerializer.Serialize(user);
+            
+            HttpContent content = new StringContent(userAsJson, Encoding.UTF8, "application/json");
+
+            await client.PatchAsync($"{uri}/users/{user.username}", content);
+        }
+        
+
+        public async Task DeleteUserAsync(string username)
+        {
+            await client.DeleteAsync($"{uri}/users/{username}");
+        }
+
+
     }
 }

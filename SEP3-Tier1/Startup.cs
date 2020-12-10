@@ -43,6 +43,12 @@ namespace SEP3_Tier1
             
             services.AddAuthorization(options =>
             {
+                options.AddPolicy("Customer", a =>
+                    a.RequireAuthenticatedUser().RequireClaim("Role", "Customer"));
+            });
+            
+            services.AddAuthorization(options =>
+            {
                 options.AddPolicy("Moderator", a =>
                     a.RequireAuthenticatedUser().RequireClaim("Role", "Moderator"));
             });

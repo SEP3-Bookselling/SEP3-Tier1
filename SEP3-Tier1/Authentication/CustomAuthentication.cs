@@ -48,13 +48,13 @@ using SEP3_Tier1.Models.Users;
             
             ClaimsIdentity identity = new ClaimsIdentity();
             try {
-                User user = await _userService.getSpecificUserAsync(username);
+                User user = await _userService.getSpecificUserAsync(username,password);
                 identity = SetupClaimsForUser(user);
                 string serialisedData = JsonSerializer.Serialize(user);
                 jsRuntime.InvokeVoidAsync("sessionStorage.setItem", "currentUser", serialisedData);
                 cachedUser = user;
             } catch (Exception e) {
-                throw e;
+                throw new Exception("Incorrect Username or Password ");
             }
 
             NotifyAuthenticationStateChanged(
