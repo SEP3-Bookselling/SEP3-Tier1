@@ -14,7 +14,11 @@
 @inject IPurchaseService PurchaseService
 @inject IModalService Modal
 
+<h3>Profile Page</h3>
+
 <!--#region UserSales-->
+
+
 
 @if (salesToShow == null)
 {
@@ -87,7 +91,6 @@ else
                             <i class="oi oi-file" style="color: blue"></i>
                         </button>
                     </td>
-
                 </tr>
             }
             else
@@ -111,6 +114,11 @@ else
                     <td></td>
                     <td>
                         <button @onclick="() => ShowPendingBuyers(item.bookSaleID)"></button>
+                    </td>
+                    <td>
+                        <button @onclick="() => DeleteBookSale(item.bookSaleID)">
+                            <i class="oi oi-trash" style="color: red"></i>
+                        </button>
                     </td>
                 </tr>
             }
@@ -193,8 +201,8 @@ else
         <thead>
         <tr>
             <th>Username</th>
-            <th>Password</th>
             <th>Role</th>
+            <th>Password</th>
             <th>Postcode</th>
             <th>Address</th>
             <th>First Name</th>
@@ -212,6 +220,13 @@ else
                 if (customer.isEditing)
                 {
                     <tr>
+                        <td>
+                        </td>
+                        <td>
+                        </td>
+                       <td>
+                            <input type="text" class="form-control" placeholder="@customer.password" @bind="customer.password">
+                        </td>
                         <td>
                             <input type="text" class="form-control" placeholder="@customer.postCode" @bind="customer.postCode">
                         </td>
@@ -233,9 +248,7 @@ else
                         <td>
                             <input type="text" class="form-control" placeholder="@customer.rating" @bind="customer.rating">
                         </td>
-                        <td>
-                            <input type="text" class="form-control" placeholder="@customer.password" @bind="customer.password">
-                        </td>
+ 
 
                         <td>
                             <button @onclick="() => InitiateEditCustomer(customer.username)">
@@ -246,23 +259,26 @@ else
                     </tr>
                 }
 
-                <tr contenteditable="true">
-                    <td>@customer.username</td>
-                    <td>@customer.password</td>
-                    <td>@customer.role</td>
-                    <td>@customer.postCode</td>
-                    <td>@customer.address</td>
-                    <td>@customer.firstName</td>
-                    <td>@customer.lastName</td>
-                    <td>@customer.email</td>
-                    <td>@customer.phoneNumber</td>
-                    <td>@customer.rating</td>
-                    <td>
-                        <button @onclick="() => EnableEditingCustomer(true, customer.username)">
-                            <i class="oi oi-file" style="color: blue"></i>
-                        </button>
-                    </td>
-                </tr>
+                else
+                {
+                    <tr contenteditable="true">
+                        <td>@customer.username</td>
+                        <td>@customer.role</td>
+                        <td>@customer.password</td>
+                        <td>@customer.postCode</td>
+                        <td>@customer.address</td>
+                        <td>@customer.firstName</td>
+                        <td>@customer.lastName</td>
+                        <td>@customer.email</td>
+                        <td>@customer.phoneNumber</td>
+                        <td>@customer.rating</td>
+                        <td>
+                            <button @onclick="() => EnableEditingCustomer(true, customer.username)">
+                                <i class="oi oi-file" style="color: blue"></i>
+                            </button>
+                        </td>
+                    </tr>
+                }
             }
         }
         </tbody>
@@ -302,6 +318,14 @@ else
     private double rating = 0;
     private string password = "";
 
+    private string nameValue;
+    private int valueStar;
+
+    private void EnableEditing(bool flag, int id)
+    {
+        BookSale saleToBeUpdated = salesToShow.First(i => i.bookSaleID == id);
+        saleToBeUpdated.isEditing = flag;
+    }
     #endregion
     
     #region updateMethods
@@ -324,6 +348,7 @@ else
         updatedImage = saleToBeUpdated.image;
         updatedPrice = saleToBeUpdated.price;
         updatedHardCopy = saleToBeUpdated.hardCopy;
+        updatedDescription = saleToBeUpdated.description;
         EditSale(id);
     }
 
@@ -391,4 +416,18 @@ else
         
         Modal.Show<PendingSales>("Pending Sale", parameters);
     }
+
+    private async Task DeleteBookSale(int itemBookSaleId)
+    {
+        BookSale toBeRemoved = allBookSalesForUser.First(t => t.bookSaleID == itemBookSaleId);
+        await SaleService.RemoveSaleAsync(itemBookSaleId);
+        salesToShow.Remove(toBeRemoved);
+    }
+
+    private void OnChange(object args, string ratingWithStars)
+    {
+
+        Console.Write($"{nameValue} value changed to {valueStar}");
+    }
+
 }
