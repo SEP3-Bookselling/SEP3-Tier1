@@ -7,6 +7,8 @@
 
     <ItemGroup>
       <PackageReference Include="Blazored.Modal" Version="5.1.0" />
+      <PackageReference Include="Microsoft.AspNetCore.OData.Radzen" Version="1.0.12" />
+      <PackageReference Include="Radzen.Blazor" Version="2.18.3" />
       <PackageReference Include="Syncfusion.Blazor" Version="18.3.0.52" />
     </ItemGroup>
 

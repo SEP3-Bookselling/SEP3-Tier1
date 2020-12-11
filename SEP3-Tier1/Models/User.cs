@@ -13,6 +13,8 @@ namespace SEP3_Tier1.Models
        
         [JsonPropertyName("role")]
         public string role { get; set; }
+        
+        [JsonIgnore] public bool isEditing { get; set; }
 
     }
 }

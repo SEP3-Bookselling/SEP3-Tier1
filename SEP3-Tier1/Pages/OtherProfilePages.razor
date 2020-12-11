@@ -1,0 +1,105 @@
+﻿@page "/OtherProfilePages"
+@using SEP3_Tier1.Authentication
+@using SEP3_Tier1.Data
+@using SEP3_Tier1.Data.Users
+@using SEP3_Tier1.Models
+@using SEP3_Tier1.Models.BookSale
+@inject ICustomerService CustomerService
+@inject ISaleService SaleService
+
+
+<h3>Profile page of @otherUsername</h3>
+
+<div class="row">
+    <div class="col-xl-6">
+        <h4>Rating</h4>
+        <RadzenRating Change=@(args => RateCustomer(args))> </RadzenRating>
+        <p>Rating: @starValue</p>
+    </div>
+
+</div>
+
+
+@if (bookSalesToShow == null)
+{
+    <p>
+        <em>Loading...</em>
+    </p>
+}
+else if (!bookSalesToShow.Any())
+{
+    <p>
+        <em>No Sales Were Found</em>
+    </p>
+}
+else
+{
+
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Edition</th>
+            <th>Condition</th>
+            <th>Subject</th>
+            <th>Image</th>
+            <th>Price</th>
+            <th>HardCopy</th>
+            <th>Description</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (BookSale item in bookSalesToShow)
+        {
+            <tr>
+                <td>@item.title</td>
+                <td>@item.author</td>
+                <td>@item.edition</td>
+                <td>@item.condition</td>
+                <td>@item.subject</td>
+                <td>@item.image</td>
+                <td>@item.price</td>
+                <td>@item.hardCopy</td>
+                <td>@item.description</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+
+@code {
+
+    private string username = CustomAuthenticationStateProvider.cachedUser.username;
+    private string otherUsername = SalesList.usernameOfOtherGuy;
+    private double starValue;
+    private double rateValue;
+
+    private Rating rating;
+    
+    private IList<BookSale> allBookSales;
+    private IList<BookSale> bookSalesToShow;
+
+    protected override async Task OnInitializedAsync()
+    {
+        rating = new Rating();
+        starValue = await CustomerService.GetRatingAsync(otherUsername); //Rating get from database
+
+        allBookSales = await SaleService.GetBookSaleAsync(otherUsername);
+        bookSalesToShow = allBookSales;
+        
+    }
+
+
+    public async Task RateCustomer(double value)
+    {
+        rating.rating = value;
+        rating.username = username;
+        rating.otherUsername = otherUsername;
+        await CustomerService.RateCustomerAsync(rating);
+        Console.WriteLine($"Rating object: {rating.username} + {rating.rating} + {rating.otherUsername}");
+
+    }
+
+}

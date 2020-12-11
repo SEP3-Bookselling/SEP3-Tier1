@@ -41,10 +41,52 @@
 
 </EditForm>
 
+
+<div class="container">
+    @if (users == null)
+    {
+        <p>
+            <em>Loading...</em>
+        </p>
+    }
+    else
+    {
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>Username</th>
+                <th>Role</th>
+                <th>Delete</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (User user in users)
+            {
+                <tr contenteditable="true">
+                    <td>@user.username</td>
+                    <td>@user.role</td>
+                    <td>
+                        <button @onclick="(() => DeleteUser(user.username))">
+                            <i class="oi oi-trash" style="color:red"/>
+                        </button>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    }
+
+
+
+</div>
+
 @code {
 
     private IList<string> roles;
+    private IList<User> users;
+    
     private User user = new User();
+    private string username = null;
 
     protected override async Task OnInitializedAsync()
     {
@@ -54,6 +96,8 @@
             "Admin",
             "Moderator"
         };
+        
+        users = await UserService.GetAllUsersAsync(username);
     }
 
     public async Task CreateUser()
@@ -62,5 +106,13 @@
         NavigationManager.NavigateTo("/");
 
     }
+
+    private async Task DeleteUser(string userUsername)
+    {
+        User toRemove = users.First(t => t.username.Equals(userUsername));
+        await UserService.DeleteUserAsync(userUsername);
+        users.Remove(toRemove);
+    }
+    
 
 }
