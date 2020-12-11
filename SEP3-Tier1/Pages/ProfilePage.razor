@@ -7,7 +7,6 @@
 @using SEP3_Tier1.Data.BookSale
 @using SEP3_Tier1.Data.Purchase
 @using SEP3_Tier1.Data.Users
-@using SEP3_Tier1.Models.BookSale
 @using Radzen.Blazor
 @using Radzen
 @using Syncfusion.Blazor.Navigations
@@ -505,12 +504,8 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        string username = CustomAuthenticationStateProvider.cachedUser.username; // Uses the cached User from Login to identify the specific username, and showing the related information to that user
         
-        allBookSalesForUser = await SaleService.GetBookSaleAsync(username);
-        salesToShow = allBookSalesForUser;
-        currentUser = await CustomerService.GetCustomerAsync(username);
-        purchaseRequests = await PurchaseService.GetPurchaseRequestAsync(username);
+        
         
         string username;
         string role;
@@ -532,13 +527,14 @@ else
         if (!String.IsNullOrEmpty(username) && role.Equals("Customer"))
         {
             username = CustomAuthenticationStateProvider.cachedUser.username; // Uses the cached User from Login to identify the specific username, and showing the related information to that user
-
+            
             starValue = await CustomerService.GetRatingAsync(username); //Rating get from database
 
             allBookSalesForUser = await SaleService.GetBookSaleAsync(username);
             salesToShow = allBookSalesForUser;
-
             currentUser = await CustomerService.GetCustomerAsync(username);
+            purchaseRequests = await PurchaseService.GetPurchaseRequestAsync(username);
+            
         }
         else if (!String.IsNullOrEmpty(username) && role.Equals("Moderator"))
         {
