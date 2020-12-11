@@ -43,7 +43,7 @@ namespace SEP3_Tier1.Data.Purchase
         }
 
         public async Task<IList<PurchaseRequest>> GetPurchaseRequestFromIdAsync(int id) {
-            Task<string> stringAsync = client.GetStringAsync(uri + $"/Purchase/saleId?={id}");
+            Task<string> stringAsync = client.GetStringAsync(uri + $"/Purchase/saleId?id={id}");
             string message = await stringAsync;
             List<PurchaseRequest> result = JsonSerializer.Deserialize<List<PurchaseRequest>>(message);
             return result;
@@ -52,6 +52,10 @@ namespace SEP3_Tier1.Data.Purchase
         public async Task DeletePurchaseRequestAsync(int id)
         {
             await client.DeleteAsync($"{uri}/purchase/{id}");
+        }
+
+        public async Task DeletePurchaseRequestFromSaleIdAsync(int id) {
+            await client.DeleteAsync($"{uri}/purchase/sale/{id}");
         }
 
         public async Task AddToCartAsync(Models.BookSale bookSale)

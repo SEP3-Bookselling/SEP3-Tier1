@@ -1,9 +1,14 @@
 ﻿@page "/PendingSales"
 @using SEP3_Tier1.Models
 @using SEP3_Tier1.Data.Purchase
+@using SEP3_Tier1.Data.Users
+@using System.Collections
 @inject IPurchaseService PurchaseService
+@inject ICustomerService CustomerService
+@inject IModalService Modal
 
-<h3>Pending Sales</h3>
+
+
 
 @if (pendingSales == null)
 {
@@ -18,17 +23,22 @@ else if (!pendingSales.Any())
     </p>
 }
 else {
-    <table>
+    <table class="table">
         <thead>
         <tr>
             <th>Buyer</th>
+            <th>Phone Number</th>
+            <th>Email</th>
             <th>Confirm</th>
         </tr>
         </thead>
         <tbody>
         @foreach (PurchaseRequest request in pendingSales) {
+            Customer buyer = pendingCustomers.First(item => item.username == request.buyer);
             <tr>
                 <td>@request.buyer</td>
+                <td>@buyer.phoneNumber</td>
+                <td>@buyer.email</td>
                 <td>
                     <button @onclick="ConfirmPurchase">
                         <i class="oi oi-check" style="color: dodgerblue"></i>
@@ -46,14 +56,28 @@ else {
     [Parameter]  public int SaleId { get; set; }
 
     private IList<PurchaseRequest> pendingSales;
+    private IList<Customer> pendingCustomers;
 
     private void ConfirmPurchase() {
-        Console.WriteLine("Confirm Pressed");
+        Console.WriteLine("From pendingSales page: " + SaleId);
+        var parameters = new ModalParameters();
+        parameters.Add(nameof(Confirm.Id), SaleId);
+        
+        Modal.Show<Confirm>("Confirm", parameters);
+        BlazoredModal.Close();
     }
     
 
     protected override async Task OnInitializedAsync() {
         pendingSales = await PurchaseService.GetPurchaseRequestFromIdAsync(SaleId);
+        
+        pendingCustomers = new List<Customer>();
+
+        foreach (var username in pendingSales) {
+            IList<Customer> tempStorage = await CustomerService.GetCustomerAsync(username.buyer);
+            pendingCustomers.Add(tempStorage[0]);
+        }
+        
     }
     
 

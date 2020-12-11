@@ -11,6 +11,9 @@ namespace SEP3_Tier1.Data.Purchase
 
         Task<IList<PurchaseRequest>> GetPurchaseRequestFromIdAsync(int id);
         Task DeletePurchaseRequestAsync(int id);
+        Task DeletePurchaseRequestFromSaleIdAsync(int id);
+
+        
 
         Task AddToCartAsync(Models.BookSale bookSale);
 

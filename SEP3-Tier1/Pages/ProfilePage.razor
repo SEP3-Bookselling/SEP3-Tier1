@@ -17,7 +17,7 @@
 @inject IModalService Modal
 @inject IUserService UserService
 
-
+<!--#region ViewAuth-->
 <AuthorizeView>
     <NotAuthorized>
         <h3>Profile Page. Nothing to show</h3>
@@ -129,6 +129,8 @@
 
 <br>
 
+<!--#endregion-->
+
 <!--#region UserSales-->
 
 @if (salesToShow == null)
@@ -146,7 +148,7 @@ else if (!salesToShow.Any())
 else
 {
     <h1>Books for sale</h1>
-
+    
     <table class="table">
         <thead>
         <tr>
@@ -245,20 +247,16 @@ else
 
 <h1>Book reservations</h1>
 
-@if (purchaseRequests == null)
-{
+@if (purchaseRequests == null) {
     <p>
         <em>Loading...</em>
     </p>
-}
-else if (!purchaseRequests.Any())
-{
+} else if (!purchaseRequests.Any()) {
     <p>
         <em>No requests pending</em>
     </p>
 }
-else
-{
+else {
     <table class="table">
         <thead>
         <tr>
@@ -275,10 +273,8 @@ else
         </tr>
         </thead>
         <tbody>
-        @foreach (PurchaseRequest purchaseRequest in purchaseRequests)
-        {
+        @foreach (PurchaseRequest purchaseRequest in purchaseRequests) {
             BookSale sale = purchaseRequest.bookSale;
-
             <tr contenteditable="true">
                 <td>@sale.title</td>
                 <td>@sale.author</td>
@@ -557,8 +553,8 @@ else
     {
         var parameters = new ModalParameters();
         parameters.Add(nameof(PendingSales.SaleId), id);
-
-        Modal.Show<PendingSales>("Pending Sale", parameters);
+        
+        Modal.Show<PendingSales>("Pending Sales", parameters);
     }
 
     private async Task DeleteBookSale(int itemBookSaleId)

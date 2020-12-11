@@ -65,13 +65,15 @@
 
     private IList<BookSale> CartItems;
     private IList<PurchaseRequest> purchaseRequests;
-    private string username;
+    private User user;
+    private string username = "";
 
     protected override async Task OnInitializedAsync()
     {
         CartItems = await PurchaseService.GetCartItems();
         purchaseRequests = new List<PurchaseRequest>();
-        username = CustomAuthenticationStateProvider.cachedUser.username;
+        user = CustomAuthenticationStateProvider.cachedUser;
+        username = user.username;
     }
     
     
@@ -84,6 +86,7 @@
         if (CartItems.Count == 0) {
             throw new Exception("No Items In Cart");
         }
+        
 
         foreach (BookSale item in CartItems) {
             PurchaseRequest toAdd = new PurchaseRequest {
@@ -92,12 +95,12 @@
                 seller = item.username
             };
             
-            Console.WriteLine(toAdd.buyer);
             purchaseRequests.Add(toAdd);
         }
 
         await PurchaseService.CreatePurchaseRequestAsync(purchaseRequests);
-        
+        CartItems.Clear();
+
     }
 
 }
