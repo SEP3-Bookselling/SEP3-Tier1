@@ -1,0 +1,50 @@
+﻿@page "/Confirm"
+@using SEP3_Tier1.Data.Purchase
+@using SEP3_Tier1.Data.BookSale
+@using System.Threading
+@using SEP3_Tier1.Pages
+@inject IPurchaseService PurchaseService
+@inject ISaleService SaleService
+@inject NavigationManager NavigationManager
+
+
+<h3>Are you sure you wish to accept this sale?</h3>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>
+            <button @onclick="() => Accept(Id)">
+                <i class="oi oi-file" style="color: blue">Confirm</i>
+            </button>
+        </th>
+        <th>
+            <button @onclick="() => Cancel()">
+                <i class="oi oi-file" style="color: blue">Cancel</i>
+            </button>
+        </th>
+    </tr>
+    </thead>
+</table>
+
+@code {
+    [CascadingParameter] BlazoredModalInstance BlazoredModal { get; set; }
+    
+    [Parameter] public int Id { get; set; }
+
+    private async Task Accept(int id) {
+        Console.WriteLine("From confirm page: " + id);
+        await PurchaseService.DeletePurchaseRequestFromSaleIdAsync(id);
+        Thread.Sleep(500);
+        await SaleService.DeleteSaleAsync(id);
+        await BlazoredModal.Close();
+        
+        NavigationManager.NavigateTo("/ProfilePage", true);
+    }
+
+    private async Task Cancel() {
+        await BlazoredModal.Close();
+        
+    }
+    
+}

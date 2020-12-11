@@ -17,7 +17,7 @@
 @inject IModalService Modal
 @inject IUserService UserService
 
-
+<!--#region ViewAuth-->
 <AuthorizeView>
     <NotAuthorized>
         <h3>Profile Page. Nothing to show</h3>
@@ -133,6 +133,8 @@
 <h4>Rating: @starValue</h4>
 
 <br>
+
+<!--#endregion-->
 
 <!--#region UserSales-->
 
@@ -504,9 +506,6 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        
-        
-        
         string username;
         string role;
         try
@@ -559,7 +558,7 @@ else
         var parameters = new ModalParameters();
         parameters.Add(nameof(PendingSales.SaleId), id);
         
-        Modal.Show<PendingSales>("Pending Sale", parameters);
+        Modal.Show<PendingSales>("Pending Sales", parameters);
     }
 
     private async Task DeleteBookSale(int itemBookSaleId)
