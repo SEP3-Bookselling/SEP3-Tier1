@@ -2,6 +2,7 @@
 @using SEP3_Tier1.Data
 @using SEP3_Tier1.Data.BookSale
 @using SEP3_Tier1.Models
+@using SEP3_Tier1.Authentication
 @inject ISaleService SaleService
 
 <h3>CreateSale</h3>
@@ -94,7 +95,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        bookSale = new BookSale {username = "Crisiluluman"}; // TODO Fix username
+        bookSale = new BookSale {username = CustomAuthenticationStateProvider.cachedUser.username};
         conditions = new List<string>()
         {
             "",

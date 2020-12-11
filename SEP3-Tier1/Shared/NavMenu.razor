@@ -13,13 +13,8 @@
             </NavLink>
         </li>
         <li class="nav-item px-3">
-            <NavLink class="nav-link" href="buybook">
-                <span class="oi oi-plus" aria-hidden="true"></span> Buy Book
-            </NavLink>
-        </li>
-        <li class="nav-item px-3">
             <NavLink class="nav-link" href="SalesList">
-                <span class="oi oi-plus" aria-hidden="true"></span> Sales List
+                <span class="oi oi-spreadsheet" aria-hidden="true"></span> Sales List
             </NavLink>
         </li>
         <AuthorizeView Policy="Customer">
@@ -32,33 +27,40 @@
         <AuthorizeView Policy="Admin">
             <li class="nav-item px-3">
                 <NavLink class="nav-link" href="AdminstratorPage">
-                    <span class="oi oi-plus" aria-hidden="true"></span> Adminstrator page
+                    <span class="oi oi-person" aria-hidden="true"></span> Adminstrator page
                 </NavLink>
             </li>
         </AuthorizeView>
         <AuthorizeView Policy="Moderator">
             <li class="nav-item px-3">
                 <NavLink class="nav-link" href="ModeratorPage">
-                    <span class="oi oi-plus" aria-hidden="true"></span> ModeratorPage
+                    <span class="oi oi-person" aria-hidden="true"></span> ModeratorPage
                 </NavLink>
             </li>
         </AuthorizeView>
 
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="CreateCustomer">
-                <span class="oi oi-plus" aria-hidden="true"></span> Signup
-            </NavLink>
-        </li>
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="ProfilePage">
-                <span class="oi oi-plus" aria-hidden="true"></span> Profile page
-            </NavLink>
-        </li>
-         <li class="nav-item px-3">
-                    <NavLink class="nav-link" href="Cart">
-                        <span class="oi oi-plus" aria-hidden="true"></span> Cart
+        <AuthorizeView>
+            <NotAuthorized>
+                <li class="nav-item px-3">
+                    <NavLink class="nav-link" href="CreateCustomer">
+                        <span class="oi oi-plus" aria-hidden="true"></span> Signup
                     </NavLink>
                 </li>
+            </NotAuthorized>
+        </AuthorizeView>
+
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="ProfilePage">
+                <span class="oi oi-person" aria-hidden="true"></span> Profile page
+            </NavLink>
+        </li>
+        <AuthorizeView>
+            <li class="nav-item px-3">
+                <NavLink class="nav-link" href="Cart">
+                    <span class="oi oi-cart" aria-hidden="true"></span> Cart
+                </NavLink>
+            </li>
+        </AuthorizeView>
     </ul>
 </div>
 

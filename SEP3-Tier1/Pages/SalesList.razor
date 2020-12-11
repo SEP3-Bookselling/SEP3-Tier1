@@ -86,7 +86,9 @@
                     <td>@item.hardCopy</td>
                     <AuthorizeView Policy="Customer">
                         <td>
-                            <button @onclick="@(() => AddToCart(item))">Add To Cart</button>
+                            <button style="background-color: dodgerblue" @onclick="@(() => AddToCart(item))">
+                                <p style="font-weight: bold ; color: whitesmoke">Add To Cart</p>
+                            </button>
                         </td>
                         <td>
                             @item.username
@@ -114,7 +116,7 @@
 @code{
 
     public static string usernameOfOtherGuy { get; set; }
-    string username = CustomAuthenticationStateProvider.cachedUser.username;
+    string username;
 
     private IList<BookSale> allSales;
     private IList<BookSale> salesToShow;
@@ -146,6 +148,16 @@
 
     protected override async Task OnInitializedAsync()
     {
+        try
+        {
+            username = CustomAuthenticationStateProvider.cachedUser.username;
+        }
+        catch (NullReferenceException e)
+        {
+            username = "";
+            Console.WriteLine(e);
+        }
+        
         allSales = await SaleService.GetBookSaleAsync("");
         salesToShow = allSales;
         cartItems = await PurchaseService.GetCartItems();

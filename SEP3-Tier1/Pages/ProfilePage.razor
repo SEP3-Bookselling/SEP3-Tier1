@@ -40,37 +40,34 @@
 
         @if (user.isEditing)
         {
-        <tr>
-            <td>
-            </td>
-            <td>
-            </td>
-            <td>
-                <input type="text" class="form-control" placeholder="@user.password" @bind="user.password">
-            </td>
-            <td>
-                <button @onclick="() => InitiateEditUser(user.username)">
-                    <i class="oi oi-file" style="color: blue"></i>
-                </button>
-            </td>
+            <tr>
+                <td>
+                </td>
+                <td>
+                </td>
+                <td>
+                    <input type="text" class="form-control" placeholder="@user.password" @bind="user.password">
+                </td>
+                <td>
+                    <button @onclick="() => InitiateEditUser(user.username)">
+                        <i class="oi oi-circle-check" style="color: dodgerblue"></i>
+                    </button>
+                </td>
 
-        </tr>
+            </tr>
         }
         else
         {
-        <tr contenteditable="true">
-            <td>@user.username</td>
-            <td>@user.role</td>
-            <td>@user.password</td>
-            <td>
-                <button @onclick="() => EnableEditingUser(true, user.username)">
-                    <i class="oi oi-file" style="color: blue"></i>
-                </button>
-            </td>
-        </tr>
-
-
-
+            <tr contenteditable="true">
+                <td>@user.username</td>
+                <td>@user.role</td>
+                <td>@user.password</td>
+                <td>
+                    <button @onclick="() => EnableEditingUser(true, user.username)">
+                        <i class="oi oi-pencil" style="color: cornflowerblue"></i>
+                    </button>
+                </td>
+            </tr>
         }
         </tbody>
     </table>
@@ -91,36 +88,34 @@
 
         @if (user.isEditing)
         {
-        <tr>
-            <td>
-            </td>
-            <td>
-            </td>
-            <td>
-                <input type="text" class="form-control" placeholder="@user.password" @bind="user.password">
-            </td>
-            <td>
-                <button @onclick="() => InitiateEditUser(user.username)">
-                    <i class="oi oi-file" style="color: blue"></i>
-                </button>
-            </td>
+            <tr>
+                <td>
+                </td>
+                <td>
+                </td>
+                <td>
+                    <input type="text" class="form-control" placeholder="@user.password" @bind="user.password">
+                </td>
+                <td>
+                    <button @onclick="() => InitiateEditUser(user.username)">
+                        <i class="oi oi-circle-check" style="color: dodgerblue"></i>
+                    </button>
+                </td>
 
-        </tr>
+            </tr>
         }
         else
         {
-        <tr contenteditable="true">
-            <td>@user.username</td>
-            <td>@user.role</td>
-            <td>@user.password</td>
-            <td>
-                <button @onclick="() => EnableEditingUser(true, user.username)">
-                    <i class="oi oi-file" style="color: blue"></i>
-                </button>
-            </td>
-        </tr>
-
-
+            <tr contenteditable="true">
+                <td>@user.username</td>
+                <td>@user.role</td>
+                <td>@user.password</td>
+                <td>
+                    <button @onclick="() => EnableEditingUser(true, user.username)">
+                        <i class="oi oi-pencil" style="color: cornflowerblue"></i>
+                    </button>
+                </td>
+            </tr>
         }
         </tbody>
     </table>
@@ -151,7 +146,7 @@ else if (!salesToShow.Any())
 else
 {
     <h1>Books for sale</h1>
-    
+
     <table class="table">
         <thead>
         <tr>
@@ -204,7 +199,7 @@ else
                     </td>
                     <td>
                         <button @onclick="() => InitiateEdit(item.bookSaleID)">
-                            <i class="oi oi-file" style="color: blue"></i>
+                            <i class="oi oi-circle-check" style="color: dodgerblue"></i>
                         </button>
                     </td>
                 </tr>
@@ -221,15 +216,16 @@ else
                     <td>@item.price</td>
                     <td>@item.hardCopy</td>
                     <td>@item.description</td>
-                    <td></td>
                     <td>
                         <button @onclick="() => EnableEditing(true, item.bookSaleID)">
-                            <i class="oi oi-file" style="color: blue"></i>
+                            <i class="oi oi-pencil" style="color: cornflowerblue"></i>
                         </button>
                     </td>
-                    <td></td>
                     <td>
-                        <button @onclick="() => ShowPendingBuyers(item.bookSaleID)"></button>
+                        <button @onclick="() => ShowPendingBuyers(item.bookSaleID)">
+                            <i class="oi oi-clock" style="color: cornflowerblue"></i>
+
+                        </button>
                     </td>
                     <td>
                         <button @onclick="() => DeleteBookSale(item.bookSaleID)">
@@ -249,16 +245,20 @@ else
 
 <h1>Book reservations</h1>
 
-@if (purchaseRequests == null) {
+@if (purchaseRequests == null)
+{
     <p>
         <em>Loading...</em>
     </p>
-} else if (!purchaseRequests.Any()) {
+}
+else if (!purchaseRequests.Any())
+{
     <p>
         <em>No requests pending</em>
     </p>
 }
-else {
+else
+{
     <table class="table">
         <thead>
         <tr>
@@ -271,12 +271,14 @@ else {
             <th>Price</th>
             <th>HardCopy</th>
             <th>Seller</th>
+            <th>Delete</th>
         </tr>
         </thead>
         <tbody>
-        @foreach (PurchaseRequest purchaseRequest in purchaseRequests) {
+        @foreach (PurchaseRequest purchaseRequest in purchaseRequests)
+        {
             BookSale sale = purchaseRequest.bookSale;
-            
+
             <tr contenteditable="true">
                 <td>@sale.title</td>
                 <td>@sale.author</td>
@@ -287,7 +289,11 @@ else {
                 <td>@sale.price</td>
                 <td>@sale.hardCopy</td>
                 <td>@sale.username</td>
-                <td><button @onclick="@(() => DeletePurchaseRequest(purchaseRequest.requestID))"></button></td>
+                <td>
+                    <button @onclick="@(() => DeletePurchaseRequest(purchaseRequest.requestID))">
+                        <i class="oi oi-trash" style="color: red"></i>
+                    </button>
+                </td>
             </tr>
         }
         </tbody>
@@ -364,7 +370,7 @@ else
 
                         <td>
                             <button @onclick="() => InitiateEditCustomer(customer.username)">
-                                <i class="oi oi-file" style="color: blue"></i>
+                                <i class="oi oi-circle-check" style="color: dodgerblue"></i>
                             </button>
                         </td>
 
@@ -385,7 +391,7 @@ else
                         <td>@customer.phoneNumber</td>
                         <td>
                             <button @onclick="() => EnableEditingCustomer(true, customer.username)">
-                                <i class="oi oi-file" style="color: blue"></i>
+                                <i class="oi oi-pencil" style="color: cornflowerblue"></i>
                             </button>
                         </td>
                     </tr>
@@ -394,8 +400,6 @@ else
         }
         </tbody>
     </table>
-   
-
 }
 </AuthorizeView>
 
@@ -407,11 +411,10 @@ else
     private IList<BookSale> salesToShow;
     private IList<Customer> currentUser;
     private IList<PurchaseRequest> purchaseRequests;
-    
+
     private User user;
 
     #region updateInformation
-    
 
     private string updatedRole = "";
     private string updatedTitle = "";
@@ -436,11 +439,10 @@ else
 
     private double starValue;
 
-    
     #endregion
-    
+
     #region updateMethods
-    
+
     private void EnableEditing(bool flag, int id)
     {
         BookSale saleToBeUpdated = salesToShow.First(i => i.bookSaleID == id);
@@ -481,7 +483,7 @@ else
     private void InitiateEditCustomer(string username)
     {
         Customer customerToBeUpdated = currentUser.First(i => i.username == username);
-        
+
         postcode = customerToBeUpdated.postCode;
         address = customerToBeUpdated.address;
         firstName = customerToBeUpdated.firstName;
@@ -504,9 +506,6 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        
-        
-        
         string username;
         string role;
         try
@@ -527,14 +526,13 @@ else
         if (!String.IsNullOrEmpty(username) && role.Equals("Customer"))
         {
             username = CustomAuthenticationStateProvider.cachedUser.username; // Uses the cached User from Login to identify the specific username, and showing the related information to that user
-            
+
             starValue = await CustomerService.GetRatingAsync(username); //Rating get from database
 
             allBookSalesForUser = await SaleService.GetBookSaleAsync(username);
             salesToShow = allBookSalesForUser;
             currentUser = await CustomerService.GetCustomerAsync(username);
             purchaseRequests = await PurchaseService.GetPurchaseRequestAsync(username);
-            
         }
         else if (!String.IsNullOrEmpty(username) && role.Equals("Moderator"))
         {
@@ -547,7 +545,7 @@ else
             Console.WriteLine($"We an Admin: {user.username} : {user.role} : {user.password}");
         }
     }
-    
+
     private async Task DeletePurchaseRequest(int requestId)
     {
         PurchaseRequest toRemove = purchaseRequests.First(t => t.requestID == requestId);
@@ -555,10 +553,11 @@ else
         purchaseRequests.Remove(toRemove);
     }
 
-    private async Task ShowPendingBuyers(int id) {
+    private async Task ShowPendingBuyers(int id)
+    {
         var parameters = new ModalParameters();
         parameters.Add(nameof(PendingSales.SaleId), id);
-        
+
         Modal.Show<PendingSales>("Pending Sale", parameters);
     }
 
@@ -574,20 +573,19 @@ else
     {
         user.isEditing = flag;
     }
-    
-    
+
+
     private void InitiateEditUser(string username)
     {
         password = user.password;
-       // EditUser(username);
-        
+    // EditUser(username);
+
         UserService.UpdateUserAsync(user, password);
         user.isEditing = false;
     }
 
     private void EditUser(string username)
     {
-
     }
 
 }
