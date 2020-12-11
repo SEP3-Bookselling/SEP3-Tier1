@@ -321,11 +321,7 @@ else
     private string nameValue;
     private int valueStar;
 
-    private void EnableEditing(bool flag, int id)
-    {
-        BookSale saleToBeUpdated = salesToShow.First(i => i.bookSaleID == id);
-        saleToBeUpdated.isEditing = flag;
-    }
+    
     #endregion
     
     #region updateMethods
@@ -420,7 +416,7 @@ else
     private async Task DeleteBookSale(int itemBookSaleId)
     {
         BookSale toBeRemoved = allBookSalesForUser.First(t => t.bookSaleID == itemBookSaleId);
-        await SaleService.RemoveSaleAsync(itemBookSaleId);
+        await SaleService.DeleteSaleAsync(itemBookSaleId);
         salesToShow.Remove(toBeRemoved);
     }
 
