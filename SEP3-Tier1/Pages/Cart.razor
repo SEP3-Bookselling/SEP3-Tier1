@@ -4,6 +4,8 @@
 @using SEP3_Tier1.Authentication
 @using SEP3_Tier1.Data.Purchase
 @inject IPurchaseService PurchaseService
+@inject IModalService Modal
+
 <h3>Cart</h3>
 
 <div class="container">
@@ -83,24 +85,23 @@
     }
 
     private async Task ConfirmPurchase() {
-        if (CartItems.Count == 0) {
-            throw new Exception("No Items In Cart");
+        if (CartItems.Count != 0) {
+            foreach (BookSale item in CartItems) {
+                PurchaseRequest toAdd = new PurchaseRequest {
+                    bookSale = item,
+                    buyer = username,
+                    seller = item.username
+                };
+            
+                purchaseRequests.Add(toAdd);
+            }
+            await PurchaseService.CreatePurchaseRequestAsync(purchaseRequests);
+            CartItems.Clear();
+        }
+        else {
+            Modal.Show<ErrorPage>("No items in cart");
         }
         
-
-        foreach (BookSale item in CartItems) {
-            PurchaseRequest toAdd = new PurchaseRequest {
-                bookSale = item,
-                buyer = username,
-                seller = item.username
-            };
-            
-            purchaseRequests.Add(toAdd);
-        }
-
-        await PurchaseService.CreatePurchaseRequestAsync(purchaseRequests);
-        CartItems.Clear();
-
     }
 
 }
