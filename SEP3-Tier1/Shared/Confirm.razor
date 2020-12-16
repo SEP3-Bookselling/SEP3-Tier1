@@ -13,18 +13,24 @@
 <table class="table">
     <thead>
     <tr>
-        <th>
+        <th>Confirm</th>
+        <th>Cancel</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>
             <button @onclick="() => Accept(Id)">
                 <i class="oi oi-check" style="color: limegreen"></i>
             </button>
-        </th>
-        <th>
+        </td>
+        <td>
             <button @onclick="() => Cancel()">
                 <i class="oi oi-x" style="color: red"></i>
             </button>
-        </th>
+        </td>
     </tr>
-    </thead>
+    </tbody>
 </table>
 
 @code {
