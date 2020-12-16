@@ -1,5 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
+using SEP3_Tier1.Shared;
+using SEP3_Tier1.Validation;
 
 namespace SEP3_Tier1.Models
 {
@@ -7,36 +9,44 @@ namespace SEP3_Tier1.Models
     {
         [JsonPropertyName("title")]
         [Required(ErrorMessage = "Please enter a title")]
+        [MaxLength(256, ErrorMessage = "Book's title is too long, please enter a shorter one")]
         public string title { get; set; }
         
         [JsonPropertyName("author")]
         [Required(ErrorMessage = "Please enter an author")]
+        [MaxLength(256, ErrorMessage = "Author's name is too long, please enter a shorter one")]
         public string author { get; set; }
         
         [JsonPropertyName("edition")]
         [Required(ErrorMessage = "Please specify the edition")]
+        [MaxLength(50, ErrorMessage = "Edition too long, please enter shorter edition")]
         public string edition { get; set; }
         
         [JsonPropertyName("condition")]
         [Required(ErrorMessage = "Please specify the condition")]
+        [MaxLength(10)]
         public string condition { get; set; }
         
         [JsonPropertyName("subject")]
         [Required(ErrorMessage = "Please enter a subject")]
+        [MaxLength(50, ErrorMessage = "Subject is too long, please enter a shorter one")]
         public string subject { get; set; }
         
         [JsonPropertyName("image")]
         [Required(ErrorMessage = "Please enter an image")]
+        [MaxLength(256, ErrorMessage = "Image is too large, please enter a smaller one")]
         public string image { get; set; }
         
         [JsonPropertyName("price")]
         [Required(ErrorMessage = "Please enter a price")]
-        public double? price { get; set; }
+        [DoubleValidation]
+        public double price { get; set; }
         
         [JsonPropertyName("hardCopy")]
         public bool hardCopy { get; set; }
         
         [JsonPropertyName("description")]
+        [MaxLength(256, ErrorMessage = "Description is too long, please enter a shorter one")]
         public string description { get; set; }
         
         [JsonPropertyName("username")]
