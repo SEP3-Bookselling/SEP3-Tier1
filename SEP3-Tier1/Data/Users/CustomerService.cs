@@ -13,7 +13,6 @@ namespace SEP3_Tier1.Data.Users
         {
             private string uri = "https://localhost:5010";
             private HttpClient client;
-            private IList<Customer> customers;
 
             public CustomerService()
             {

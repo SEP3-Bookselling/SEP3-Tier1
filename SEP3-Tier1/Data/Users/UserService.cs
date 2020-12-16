@@ -16,7 +16,6 @@ namespace SEP3_Tier1.Data.Users
     {
         private string uri = "https://localhost:5010";
         private HttpClient client;
-        private IList<User> _users;
 
         public UserService()
         {
@@ -43,7 +42,7 @@ namespace SEP3_Tier1.Data.Users
             return result;
         }
 
-        public async Task<User> getSpecificUserAsync(string username, string password)
+        public async Task<User> GetSpecificUserAsync(string username, string password)
         {
             Console.WriteLine($"Logged in as: {username} pass = {password}");
             string message = await client.GetStringAsync(uri + $"/users/Login?username={username}&password={password}");

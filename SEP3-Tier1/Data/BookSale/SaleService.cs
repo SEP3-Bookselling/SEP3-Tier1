@@ -33,7 +33,7 @@ namespace SEP3_Tier1.Data.BookSale
             return result;
         }
 
-        public async Task CreateBookSale(Models.BookSale bookSale) {
+        public async Task CreateBookSaleAsync(Models.BookSale bookSale) {
             string bookSaleAsJson = JsonSerializer.Serialize(bookSale);
             
             HttpContent content = new StringContent(bookSaleAsJson,
@@ -45,27 +45,27 @@ namespace SEP3_Tier1.Data.BookSale
         }
 
         
-        public async Task DeleteSaleAsync(int saleId) {
+        public async Task DeleteBookSaleAsync(int saleId) {
             await client.DeleteAsync($"{uri}/sales/{saleId}");
         }
 
-        public async Task UpdateAsync(Models.BookSale sale,  string title, string author, string edition, string condition, string subject, string image, double? price, bool hardCopy, string description) {
-            sale.title = title;
-            sale.author = author;
-            sale.edition = edition;
-            sale.condition = condition;
-            sale.subject = subject;
-            sale.image = image;
-            sale.price = price;
-            sale.hardCopy = hardCopy;
-            sale.description = description;
+        public async Task UpdateBookSaleAsync(Models.BookSale bookSale,  string title, string author, string edition, string condition, string subject, string image, double? price, bool hardCopy, string description) {
+            bookSale.title = title;
+            bookSale.author = author;
+            bookSale.edition = edition;
+            bookSale.condition = condition;
+            bookSale.subject = subject;
+            bookSale.image = image;
+            bookSale.price = price;
+            bookSale.hardCopy = hardCopy;
+            bookSale.description = description;
             
             
-            string saleAsJson = JsonSerializer.Serialize(sale);
+            string saleAsJson = JsonSerializer.Serialize(bookSale);
             
             HttpContent content = new StringContent(saleAsJson, Encoding.UTF8, "application/json");
 
-            await client.PatchAsync($"{uri}/sales/{sale.bookSaleID}", content);
+            await client.PatchAsync($"{uri}/sales/{bookSale.bookSaleID}", content);
         }
     }
 }

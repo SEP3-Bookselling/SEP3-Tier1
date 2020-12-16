@@ -13,7 +13,7 @@
 <div class="row">
     <div class="col-xl-6">
         <h4>Rating</h4>
-        <RadzenRating Change=@(args => RateCustomer(args))> </RadzenRating>
+        <RadzenRating Change=@(args => RateCustomerAsync(args))> </RadzenRating>
         <p>Rating: @starValue</p>
     </div>
 
@@ -92,7 +92,7 @@ else
     }
 
 
-    public async Task RateCustomer(double value)
+    public async Task RateCustomerAsync(double value)
     {
         rating.rating = value;
         rating.username = username;

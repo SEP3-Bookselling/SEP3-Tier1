@@ -87,7 +87,7 @@
                     <td>@item.hardCopy</td>
                     <AuthorizeView Policy="Customer">
                         <td>
-                            <button style="background-color: dodgerblue" @onclick="@(() => AddToCart(item))">
+                            <button style="background-color: dodgerblue" @onclick="@(() => AddToCartAsync(item))">
                                 <p style="font-weight: bold ; color: whitesmoke">Add To Cart</p>
                             </button>
                         </td>
@@ -101,7 +101,7 @@
                     <AuthorizeView Policy="Moderator">
                         <td>@item.bookSaleID</td>
                         <td>
-                            <button @onclick="@(() => DeleteSale(item.bookSaleID))">
+                            <button @onclick="@(() => DeleteBookSaleAsync(item.bookSaleID))">
                                 <i class="oi oi-trash" style="color: red"></i>
                             </button>
                         </td>
@@ -117,7 +117,7 @@
 @code{
 
     public static string usernameOfOtherGuy { get; set; }
-    string username;
+    public string username;
 
     private IList<BookSale> allSales;
     private IList<BookSale> salesToShow;
@@ -125,27 +125,6 @@
 
     private string Selection = "";
     private string filterOptions;
-    
-    private async Task AddToCart(BookSale bookSale)
-    {
-        if (bookSale.username.Equals(CustomAuthenticationStateProvider.cachedUser.username)) {
-            Modal.Show<ErrorPage>("Cannot add own sale to cart");
-            
-        } 
-        else if(cartItems.Any(sale => sale.bookSaleID == bookSale.bookSaleID)) {
-            Modal.Show<ErrorPage>("Item is already in cart");
-            
-        } 
-        else {
-            await PurchaseService.AddToCartAsync(bookSale);
-        }
-    }
-
-    private async Task DeleteSale(int id) {
-        BookSale toRemove = salesToShow.First(t => t.bookSaleID == id);
-        await SaleService.DeleteSaleAsync(id);
-        salesToShow.Remove(toRemove);
-    }
 
     protected override async Task OnInitializedAsync()
     {
@@ -162,6 +141,27 @@
         allSales = await SaleService.GetBookSaleAsync("");
         salesToShow = allSales;
         cartItems = await PurchaseService.GetCartItems();
+    }
+
+    private async Task AddToCartAsync(BookSale bookSale)
+    {
+        if (bookSale.username.Equals(CustomAuthenticationStateProvider.cachedUser.username)) {
+            Modal.Show<ErrorPage>("Cannot add own sale to cart");
+            
+        } 
+        else if(cartItems.Any(sale => sale.bookSaleID == bookSale.bookSaleID)) {
+            Modal.Show<ErrorPage>("Item is already in cart");
+            
+        } 
+        else {
+            await PurchaseService.AddToCartAsync(bookSale);
+        }
+    }
+
+    private async Task DeleteBookSaleAsync(int id) {
+        BookSale toRemove = salesToShow.First(t => t.bookSaleID == id);
+        await SaleService.DeleteBookSaleAsync(id);
+        salesToShow.Remove(toRemove);
     }
 
     private void ExecuteFilter(ChangeEventArgs changeEventArgs)

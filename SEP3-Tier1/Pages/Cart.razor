@@ -46,14 +46,14 @@
                     <td>@item.price</td>
                     <td>@item.hardCopy</td>
                     <td>@item.username</td>
-                    <td><button @onclick="@(() => DeleteSale(item))">
+                    <td><button @onclick="@(() => DeleteBookSaleAsync(item))">
                         <i class="oi oi-trash" style="color: red"></i>
                     </button></td>
                 </tr>
             }
             </tbody>
         </table>}
-    <button style="background-color: dodgerblue" @onclick="@(ConfirmPurchase)">
+    <button style="background-color: dodgerblue" @onclick="@(ConfirmPurchaseAsync)">
         <p style="font-weight: bold ; color: whitesmoke" >Confirm Purchase</p>
     </button>
    
@@ -79,12 +79,12 @@
     }
     
     
-    private async Task DeleteSale(BookSale sale)
+    private async Task DeleteBookSaleAsync(BookSale sale)
     {
         CartItems.Remove(sale);
     }
 
-    private async Task ConfirmPurchase() {
+    private async Task ConfirmPurchaseAsync() {
         if (CartItems.Count != 0) {
             foreach (BookSale item in CartItems) {
                 PurchaseRequest toAdd = new PurchaseRequest {

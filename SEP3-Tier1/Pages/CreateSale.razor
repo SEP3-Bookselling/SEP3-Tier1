@@ -4,6 +4,7 @@
 @using SEP3_Tier1.Models
 @using SEP3_Tier1.Authentication
 @inject ISaleService SaleService
+@inject NavigationManager NavigationManager;
 
 <h3>CreateSale</h3>
 
@@ -63,7 +64,7 @@
 
     <p class="action">
         <br/>
-        <button class="btn btn-primary" @onclick="SaveSale">
+        <button class="btn btn-primary" @onclick="SaveSaleAsync">
             Create Sale
         </button>
     </p>
@@ -75,23 +76,8 @@
     //Branch Created?
 
     private BookSale bookSale;
+
     private IList<string> conditions;
-
-    private void CheckBoxClicked(object checkedValue)
-    {
-        if ((bool) checkedValue)
-        {
-            bookSale.hardCopy = true;
-        }
-        else
-            bookSale.hardCopy = false;
-    }
-
-
-    private async Task SaveSale()
-    {
-        await SaleService.CreateBookSale(bookSale);
-    }
 
     protected override async Task OnInitializedAsync()
     {
@@ -105,6 +91,23 @@
             "Bad"
         };
 
+    }
+
+    private void CheckBoxClicked(object checkedValue)
+    {
+        if ((bool) checkedValue)
+        {
+            bookSale.hardCopy = true;
+        }
+        else
+            bookSale.hardCopy = false;
+    }
+
+
+    private async Task SaveSaleAsync()
+    {
+        await SaleService.CreateBookSaleAsync(bookSale);
+        NavigationManager.NavigateTo("/");
     }
 
     // Todo figure out how to send images through tiers

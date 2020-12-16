@@ -36,7 +36,7 @@
         Console.WriteLine("From confirm page: " + id);
         await PurchaseService.DeletePurchaseRequestFromSaleIdAsync(id);
         Thread.Sleep(500);
-        await SaleService.DeleteSaleAsync(id);
+        await SaleService.DeleteBookSaleAsync(id);
         await BlazoredModal.Close();
         
         NavigationManager.NavigateTo("/ProfilePage", true);

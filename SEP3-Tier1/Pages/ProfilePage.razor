@@ -224,13 +224,13 @@ else
                         </button>
                     </td>
                     <td>
-                        <button @onclick="() => ShowPendingBuyers(item.bookSaleID)">
+                        <button @onclick="() => ShowPendingBuyersAsync(item.bookSaleID)">
                             <i class="oi oi-clock" style="color: cornflowerblue"></i>
 
                         </button>
                     </td>
                     <td>
-                        <button @onclick="() => DeleteBookSale(item.bookSaleID)">
+                        <button @onclick="() => DeleteBookSaleAsync(item.bookSaleID)">
                             <i class="oi oi-trash" style="color: red"></i>
                         </button>
                     </td>
@@ -286,7 +286,7 @@ else {
                 <td>@sale.hardCopy</td>
                 <td>@sale.username</td>
                 <td>
-                    <button @onclick="@(() => DeletePurchaseRequest(purchaseRequest.requestID))">
+                    <button @onclick="@(() => DeletePurchaseRequestAsync(purchaseRequest.requestID))">
                         <i class="oi oi-trash" style="color: red"></i>
                     </button>
                 </td>
@@ -437,69 +437,6 @@ else
 
     #endregion
 
-    #region updateMethods
-
-    private void EnableEditing(bool flag, int id)
-    {
-        BookSale saleToBeUpdated = salesToShow.First(i => i.bookSaleID == id);
-        saleToBeUpdated.isEditing = flag;
-    }
-
-    private void InitiateEdit(int id)
-    {
-        BookSale saleToBeUpdated = salesToShow.First(i => i.bookSaleID == id);
-
-        updatedTitle = saleToBeUpdated.title;
-        updatedAuthor = saleToBeUpdated.author;
-        updatedEdition = saleToBeUpdated.edition;
-        updatedCondition = saleToBeUpdated.condition;
-        updatedSubject = saleToBeUpdated.subject;
-        updatedImage = saleToBeUpdated.image;
-        updatedPrice = saleToBeUpdated.price;
-        updatedHardCopy = saleToBeUpdated.hardCopy;
-        updatedDescription = saleToBeUpdated.description;
-        EditSale(id);
-    }
-
-    private void EditSale(int id)
-    {
-        BookSale saleToBeUpdated = salesToShow.First(i => i.bookSaleID == id);
-        SaleService.UpdateAsync(saleToBeUpdated, updatedTitle, updatedAuthor, updatedEdition, updatedCondition, updatedSubject, updatedImage, updatedPrice, updatedHardCopy, updatedDescription);
-        saleToBeUpdated.isEditing = false;
-    }
-
-    // edit customer
-
-    private void EnableEditingCustomer(bool flag, string username)
-    {
-        Customer customerToBeUpdated = currentUser.First(i => i.username == username);
-        currentUser.First().isEditing = flag;
-    }
-
-    private void InitiateEditCustomer(string username)
-    {
-        Customer customerToBeUpdated = currentUser.First(i => i.username == username);
-
-        postcode = customerToBeUpdated.postCode;
-        address = customerToBeUpdated.address;
-        firstName = customerToBeUpdated.firstName;
-        lastName = customerToBeUpdated.lastName;
-        email = customerToBeUpdated.email;
-        phoneNumber = customerToBeUpdated.phoneNumber;
-        password = customerToBeUpdated.password;
-
-        EditCustomer(username);
-    }
-
-    private void EditCustomer(string username)
-    {
-        Customer customerToBeUpdated = currentUser.First(i => i.username == username);
-        CustomerService.UpdateCustomerAsync(customerToBeUpdated, postcode, address, firstName, lastName, email, phoneNumber, rating, password);
-        customerToBeUpdated.isEditing = false;
-    }
-
-    #endregion
-
     protected override async Task OnInitializedAsync()
     {
         string username;
@@ -542,14 +479,78 @@ else
         }
     }
 
-    private async Task DeletePurchaseRequest(int requestId)
+    #region updateMethods
+
+    private void EnableEditing(bool flag, int id)
+    {
+        BookSale saleToBeUpdated = salesToShow.First(i => i.bookSaleID == id);
+        saleToBeUpdated.isEditing = flag;
+    }
+
+    private void InitiateEdit(int id)
+    {
+        BookSale saleToBeUpdated = salesToShow.First(i => i.bookSaleID == id);
+
+        updatedTitle = saleToBeUpdated.title;
+        updatedAuthor = saleToBeUpdated.author;
+        updatedEdition = saleToBeUpdated.edition;
+        updatedCondition = saleToBeUpdated.condition;
+        updatedSubject = saleToBeUpdated.subject;
+        updatedImage = saleToBeUpdated.image;
+        updatedPrice = saleToBeUpdated.price;
+        updatedHardCopy = saleToBeUpdated.hardCopy;
+        updatedDescription = saleToBeUpdated.description;
+        EditSale(id);
+    }
+
+    private void EditSale(int id)
+    {
+        BookSale saleToBeUpdated = salesToShow.First(i => i.bookSaleID == id);
+        SaleService.UpdateBookSaleAsync(saleToBeUpdated, updatedTitle, updatedAuthor, updatedEdition, updatedCondition, updatedSubject, updatedImage, updatedPrice, updatedHardCopy, updatedDescription);
+        saleToBeUpdated.isEditing = false;
+    }
+
+    // edit customer
+
+
+    private void EnableEditingCustomer(bool flag, string username)
+    {
+        Customer customerToBeUpdated = currentUser.First(i => i.username == username);
+        currentUser.First().isEditing = flag;
+    }
+
+    private void InitiateEditCustomer(string username)
+    {
+        Customer customerToBeUpdated = currentUser.First(i => i.username == username);
+
+        postcode = customerToBeUpdated.postCode;
+        address = customerToBeUpdated.address;
+        firstName = customerToBeUpdated.firstName;
+        lastName = customerToBeUpdated.lastName;
+        email = customerToBeUpdated.email;
+        phoneNumber = customerToBeUpdated.phoneNumber;
+        password = customerToBeUpdated.password;
+
+        EditCustomer(username);
+    }
+
+    private void EditCustomer(string username)
+    {
+        Customer customerToBeUpdated = currentUser.First(i => i.username == username);
+        CustomerService.UpdateCustomerAsync(customerToBeUpdated, postcode, address, firstName, lastName, email, phoneNumber, rating, password);
+        customerToBeUpdated.isEditing = false;
+    }
+
+    #endregion
+
+    private async Task DeletePurchaseRequestAsync(int requestId)
     {
         PurchaseRequest toRemove = purchaseRequests.First(t => t.requestID == requestId);
         await PurchaseService.DeletePurchaseRequestAsync(requestId);
         purchaseRequests.Remove(toRemove);
     }
 
-    private async Task ShowPendingBuyers(int id)
+    private async Task ShowPendingBuyersAsync(int id)
     {
         var parameters = new ModalParameters();
         parameters.Add(nameof(PendingSales.SaleId), id);
@@ -557,10 +558,10 @@ else
         Modal.Show<PendingSales>("Pending Sales", parameters);
     }
 
-    private async Task DeleteBookSale(int itemBookSaleId)
+    private async Task DeleteBookSaleAsync(int itemBookSaleId)
     {
         BookSale toBeRemoved = allBookSalesForUser.First(t => t.bookSaleID == itemBookSaleId);
-        await SaleService.DeleteSaleAsync(itemBookSaleId);
+        await SaleService.DeleteBookSaleAsync(itemBookSaleId);
         salesToShow.Remove(toBeRemoved);
     }
 
@@ -578,10 +579,6 @@ else
 
         UserService.UpdateUserAsync(user, password);
         user.isEditing = false;
-    }
-
-    private void EditUser(string username)
-    {
     }
 
 }

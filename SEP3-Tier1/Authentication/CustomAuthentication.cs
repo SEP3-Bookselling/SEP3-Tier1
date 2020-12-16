@@ -47,7 +47,7 @@ namespace SEP3_Tier1.Authentication
             
             ClaimsIdentity identity = new ClaimsIdentity();
             try {
-                User user = await _userService.getSpecificUserAsync(username,password);
+                User user = await _userService.GetSpecificUserAsync(username,password);
                 identity = SetupClaimsForUser(user);
                 string serialisedData = JsonSerializer.Serialize(user);
                 jsRuntime.InvokeVoidAsync("sessionStorage.setItem", "currentUser", serialisedData);

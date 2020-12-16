@@ -34,7 +34,7 @@
 
     <p class="action">
         <br/>
-        <button class="btn btn-primary" @onclick="CreateUser">
+        <button class="btn btn-primary" @onclick="CreateUserAsync">
             Create User
         </button>
     </p>
@@ -66,7 +66,7 @@
                     <td>@user.username</td>
                     <td>@user.role</td>
                     <td>
-                        <button @onclick="(() => DeleteUser(user.username))">
+                        <button @onclick="(() => DeleteUserAsync(user.username))">
                             <i class="oi oi-trash" style="color:red"/>
                         </button>
                     </td>
@@ -100,14 +100,14 @@
         users = await UserService.GetAllUsersAsync(username);
     }
 
-    public async Task CreateUser()
+    public async Task CreateUserAsync()
     {
         await UserService.CreateUserAsync(user);
         NavigationManager.NavigateTo("/");
 
     }
 
-    private async Task DeleteUser(string userUsername)
+    private async Task DeleteUserAsync(string userUsername)
     {
         User toRemove = users.First(t => t.username.Equals(userUsername));
         await UserService.DeleteUserAsync(userUsername);

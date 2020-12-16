@@ -58,16 +58,6 @@ else {
     private IList<PurchaseRequest> pendingSales;
     private IList<Customer> pendingCustomers;
 
-    private void ConfirmPurchase() {
-        Console.WriteLine("From pendingSales page: " + SaleId);
-        var parameters = new ModalParameters();
-        parameters.Add(nameof(Confirm.Id), SaleId);
-        
-        Modal.Show<Confirm>("Confirm", parameters);
-        BlazoredModal.Close();
-    }
-    
-
     protected override async Task OnInitializedAsync() {
         pendingSales = await PurchaseService.GetPurchaseRequestFromIdAsync(SaleId);
         
@@ -79,7 +69,17 @@ else {
         }
         
     }
-    
+
+    private void ConfirmPurchase() {
+        Console.WriteLine("From pendingSales page: " + SaleId);
+        var parameters = new ModalParameters();
+        parameters.Add(nameof(Confirm.Id), SaleId);
+        
+        Modal.Show<Confirm>("Confirm", parameters);
+        BlazoredModal.Close();
+    }
+
+
 
 
 }
