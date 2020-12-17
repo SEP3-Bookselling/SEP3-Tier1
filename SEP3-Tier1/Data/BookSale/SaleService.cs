@@ -49,7 +49,7 @@ namespace SEP3_Tier1.Data.BookSale
             await client.DeleteAsync($"{uri}/sales/{saleId}");
         }
 
-        public async Task UpdateBookSaleAsync(Models.BookSale bookSale,  string title, string author, string edition, string condition, string subject, string image, double price, bool hardCopy, string description) {
+        public async Task UpdateBookSaleAsync(Models.BookSale bookSale,  string title, string author, string edition, string condition, string subject, string image, double? price, bool hardCopy, string description) {
             bookSale.title = title;
             bookSale.author = author;
             bookSale.edition = edition;

@@ -10,6 +10,6 @@ namespace SEP3_Tier1.Data.BookSale
        // Task<Models.BookSale> GetSaleAsync();
         Task CreateBookSaleAsync(Models.BookSale bookSale);
         Task DeleteBookSaleAsync(int saleId);
-        Task UpdateBookSaleAsync(Models.BookSale bookSale, string title, string author, string edition, string condition, string subject, string image, double price, bool hardCopy, string description);
+        Task UpdateBookSaleAsync(Models.BookSale bookSale, string title, string author, string edition, string condition, string subject, string image, double? price, bool hardCopy, string description);
     }
 }

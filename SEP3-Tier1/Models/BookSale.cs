@@ -40,7 +40,7 @@ namespace SEP3_Tier1.Models
         [JsonPropertyName("price")]
         [Required(ErrorMessage = "Please enter a price")]
         [DoubleValidation]
-        public double price { get; set; }
+        public double? price { get; set; }
         
         [JsonPropertyName("hardCopy")]
         public bool hardCopy { get; set; }

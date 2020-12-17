@@ -14,6 +14,7 @@ namespace SEP3_Tier1.Models
         
         [JsonPropertyName("password")]
         [Required]
+        [RegularExpression(@"^[a-zA-Z0-9]+$", ErrorMessage = "Special characters are not allowed")]
         [MaxLength(256, ErrorMessage = "Password is too long, please enter a shorter one")]
         public string password { get; set; }
        
